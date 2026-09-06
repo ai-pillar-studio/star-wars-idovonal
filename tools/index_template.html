@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Star Wars – Galaktikus idővonal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Pathway+Gothic+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#ffe81f; --accent2:#ffd76a; --glowA:rgba(255,232,31,.10); --glowB:rgba(90,140,255,.07);
+  --bg:#050608; --card:#0d1117; --line:rgba(255,232,31,.75);
+  --text:#e8e6df; --muted:#9aa0ac;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:'Barlow',system-ui,sans-serif;
+  overflow-x:hidden; min-height:100vh;
+  transition:background-color 1s ease;
+}
+/* ---------- csillagmező + éra háttérfények ---------- */
+#stars{position:fixed;inset:0;z-index:-3;pointer-events:none}
+#bg{position:fixed;inset:0;z-index:-2;pointer-events:none}
+.bglayer{position:absolute;inset:0;opacity:0;transition:opacity 1.4s ease}
+body[data-era="highrepublic"] .bglayer[data-era="highrepublic"],
+body[data-era="fall"]         .bglayer[data-era="fall"],
+body[data-era="reign"]        .bglayer[data-era="reign"],
+body[data-era="rebellion"]    .bglayer[data-era="rebellion"],
+body[data-era="newrepublic"]  .bglayer[data-era="newrepublic"],
+body[data-era="firstorder"]   .bglayer[data-era="firstorder"],
+body[data-era="newjedi"]      .bglayer[data-era="newjedi"],
+body[data-era="outside"]      .bglayer[data-era="outside"]{opacity:1}
+.bglayer[data-era="highrepublic"]{background:radial-gradient(ellipse 80% 55% at 75% 12%,rgba(255,216,120,.14),transparent 60%),radial-gradient(ellipse 60% 45% at 12% 75%,rgba(120,190,255,.10),transparent 65%)}
+.bglayer[data-era="fall"]{background:radial-gradient(ellipse 80% 55% at 70% 15%,rgba(224,140,70,.13),transparent 60%),radial-gradient(ellipse 60% 45% at 15% 80%,rgba(200,60,70,.11),transparent 60%)}
+.bglayer[data-era="reign"]{background:radial-gradient(ellipse 80% 55% at 70% 12%,rgba(150,170,190,.10),transparent 60%),radial-gradient(ellipse 65% 50% at 15% 80%,rgba(255,45,40,.10),transparent 60%)}
+.bglayer[data-era="rebellion"]{background:radial-gradient(ellipse 80% 55% at 72% 14%,rgba(255,150,50,.13),transparent 60%),radial-gradient(ellipse 60% 45% at 12% 78%,rgba(255,90,60,.09),transparent 60%)}
+.bglayer[data-era="newrepublic"]{background:radial-gradient(ellipse 80% 55% at 72% 12%,rgba(110,180,255,.12),transparent 60%),radial-gradient(ellipse 60% 45% at 14% 80%,rgba(200,225,255,.07),transparent 60%)}
+.bglayer[data-era="firstorder"]{background:radial-gradient(ellipse 80% 55% at 70% 12%,rgba(255,50,50,.13),transparent 55%),radial-gradient(ellipse 60% 50% at 15% 82%,rgba(120,20,25,.14),transparent 60%)}
+.bglayer[data-era="newjedi"]{background:radial-gradient(ellipse 80% 55% at 72% 12%,rgba(100,225,190,.12),transparent 60%),radial-gradient(ellipse 60% 45% at 15% 80%,rgba(255,215,105,.08),transparent 60%)}
+.bglayer[data-era="outside"]{background:radial-gradient(ellipse 80% 55% at 70% 15%,rgba(180,130,255,.12),transparent 60%)}
+.bgsym{position:absolute;right:-6vw;top:18vh;width:52vw;max-width:640px;opacity:.055;filter:drop-shadow(0 0 30px currentColor)}
+/* éra-akcentszínek */
+body[data-era="highrepublic"]{--accent:#ffd76a;--accent2:#9fd9ff;--line:rgba(255,215,106,.7)}
+body[data-era="fall"]{--accent:#e8a54b;--accent2:#d95f6a;--line:rgba(232,165,75,.7)}
+body[data-era="reign"]{--accent:#adc3d4;--accent2:#ff453a;--line:rgba(173,195,212,.65)}
+body[data-era="rebellion"]{--accent:#ffb13d;--accent2:#ff6a45;--line:rgba(255,177,61,.75)}
+body[data-era="newrepublic"]{--accent:#8ac6ff;--accent2:#d9ecff;--line:rgba(138,198,255,.7)}
+body[data-era="firstorder"]{--accent:#ff5450;--accent2:#c9ced6;--line:rgba(255,84,80,.7)}
+body[data-era="newjedi"]{--accent:#77e6c4;--accent2:#ffd76a;--line:rgba(119,230,196,.7)}
+body[data-era="outside"]{--accent:#c09aff;--accent2:#e8dcff;--line:rgba(192,154,255,.7)}
+
+/* ---------- fejléc ---------- */
+header{position:relative;text-align:center;padding:9vh 20px 5vh;z-index:2}
+.pre-title{font-style:italic;color:#6fa8dc;font-size:clamp(15px,2.2vw,21px);letter-spacing:.06em;margin-bottom:26px}
+.sw-logo{font-family:'Anton',Impact,sans-serif;color:#ffe81f;line-height:.86;letter-spacing:.02em;
+  font-size:clamp(64px,13vw,150px);text-transform:uppercase;
+  text-shadow:0 0 24px rgba(255,232,31,.28),0 0 90px rgba(255,232,31,.12);}
+.sw-logo .l1,.sw-logo .l2{display:block}
+.sub-title{font-family:'Pathway Gothic One',sans-serif;letter-spacing:.55em;text-indent:.55em;
+  font-size:clamp(16px,3vw,30px);color:var(--text);margin-top:22px;text-transform:uppercase}
+.intro{max-width:640px;margin:26px auto 0;color:var(--muted);font-size:15.5px;line-height:1.65}
+.intro b{color:var(--text)}
+.scroll-hint{margin-top:34px;color:var(--muted);font-size:13px;letter-spacing:.25em;text-transform:uppercase;animation:bob 2.2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0);opacity:.55}50%{transform:translateY(7px);opacity:1}}
+
+/* ---------- vezérlősáv ---------- */
+#controls{position:sticky;top:0;z-index:50;
+  background:rgba(5,6,8,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  padding:10px 16px;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;justify-content:center}
+#eraHud{display:flex;align-items:center;gap:9px;min-width:210px;justify-content:center}
+#eraHud svg{width:26px;height:26px;color:var(--accent);filter:drop-shadow(0 0 6px var(--accent))}
+#eraHudName{font-family:'Pathway Gothic One',sans-serif;font-size:19px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);white-space:nowrap;transition:color .8s}
+.ctl-group{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.chip{cursor:pointer;user-select:none;border:1px solid rgba(255,255,255,.22);border-radius:999px;
+  padding:5px 13px;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  background:transparent;transition:all .25s;font-family:'Barlow';font-weight:600}
+.chip:hover{border-color:var(--accent);color:var(--text)}
+.chip.on{color:#0a0b0d;background:var(--accent);border-color:var(--accent);box-shadow:0 0 14px color-mix(in srgb,var(--accent) 50%,transparent)}
+.chip.sw-canon.on{background:#4da3ff;border-color:#4da3ff;box-shadow:0 0 14px rgba(77,163,255,.5)}
+.chip.sw-legends.on{background:#f5a623;border-color:#f5a623;box-shadow:0 0 14px rgba(245,166,35,.5)}
+#count{font-size:12px;color:var(--muted);letter-spacing:.1em;white-space:nowrap}
+
+/* ---------- idővonal ---------- */
+#wrap{position:relative;max-width:1280px;margin:0 auto;padding:0 8px}
+#timeline{position:relative;transition:height .8s cubic-bezier(.6,.1,.25,1)}
+#snake{position:absolute;inset:0;overflow:visible;z-index:1;pointer-events:none}
+#snake path{fill:none;stroke-width:3;stroke-linecap:round;opacity:0;transition:opacity .6s;
+  filter:drop-shadow(0 0 6px currentColor)}
+#snake path.show{opacity:.55}
+#snake .nodedot{transition:opacity .6s;opacity:0}
+#snake .nodedot.show{opacity:.9}
+
+/* éra-sávok az idővonalon belül */
+.era-band{position:absolute;left:0;right:0;z-index:0;border-radius:22px;opacity:0;
+  transition:transform .8s cubic-bezier(.6,.1,.25,1),height .8s cubic-bezier(.6,.1,.25,1),opacity .6s;
+  background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,0) 130px)}
+.era-band.show{opacity:1}
+.era-head{position:absolute;left:0;right:0;z-index:2;text-align:center;opacity:0;pointer-events:none;
+  transition:transform .8s cubic-bezier(.6,.1,.25,1),opacity .6s;padding-top:34px}
+.era-head.show{opacity:1}
+.era-head .eh-sym{width:44px;height:44px;margin:0 auto 6px;display:block}
+.era-head h2{font-family:'Anton',Impact,sans-serif;font-size:clamp(26px,4.6vw,44px);letter-spacing:.1em;text-transform:uppercase;line-height:1.05}
+.era-head .eh-range{font-family:'Pathway Gothic One',sans-serif;font-size:15px;letter-spacing:.4em;text-indent:.4em;color:var(--muted);margin-top:6px;text-transform:uppercase}
+.era-head .eh-blurb{font-size:13.5px;color:var(--muted);margin-top:5px;font-style:italic}
+/* éra-fejléc színek */
+.era-head[data-era="highrepublic"] h2,.era-head[data-era="highrepublic"] .eh-sym{color:#ffd76a}
+.era-head[data-era="fall"] h2,.era-head[data-era="fall"] .eh-sym{color:#e8a54b}
+.era-head[data-era="reign"] h2,.era-head[data-era="reign"] .eh-sym{color:#adc3d4}
+.era-head[data-era="rebellion"] h2,.era-head[data-era="rebellion"] .eh-sym{color:#ffb13d}
+.era-head[data-era="newrepublic"] h2,.era-head[data-era="newrepublic"] .eh-sym{color:#8ac6ff}
+.era-head[data-era="firstorder"] h2,.era-head[data-era="firstorder"] .eh-sym{color:#ff5450}
+.era-head[data-era="newjedi"] h2,.era-head[data-era="newjedi"] .eh-sym{color:#77e6c4}
+.era-head h2{text-shadow:0 0 26px currentColor}
+.era-head .eh-sym{filter:drop-shadow(0 0 10px currentColor)}
+
+/* ---------- kártyák ---------- */
+.node{position:absolute;z-index:3;width:158px;margin-left:-79px;cursor:pointer;
+  transition:transform .8s cubic-bezier(.6,.1,.25,1),opacity .5s;
+  will-change:transform;text-align:center;border:none;background:none;color:inherit;font-family:inherit}
+.node.gone{opacity:0;pointer-events:none;transition:transform .5s,opacity .35s}
+.node.gone .inner{transform:scale(.55)}
+.node .inner{transition:transform .5s cubic-bezier(.34,1.4,.5,1)}
+.node:hover .inner,.node:focus-visible .inner{transform:translateY(-7px) scale(1.04)}
+.node:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:12px}
+.cover{position:relative;width:132px;height:194px;margin:0 auto;border-radius:9px;overflow:hidden;
+  background:linear-gradient(160deg,#161b26,#0a0d13);
+  box-shadow:0 6px 22px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.09);
+  transition:box-shadow .3s}
+.node:hover .cover{box-shadow:0 10px 30px rgba(0,0,0,.8),0 0 18px color-mix(in srgb,var(--accent) 32%,transparent),0 0 0 1px var(--accent)}
+.cover img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .6s}
+.cover img.ok{opacity:1}
+.cover .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:10px;
+  color:var(--muted);font-size:12px;line-height:1.35;text-align:center}
+.cover .ph .phico{font-size:30px;opacity:.7}
+.cover.hasimg .ph{display:none}
+.ribbon{position:absolute;top:9px;left:-32px;transform:rotate(-38deg);width:120px;padding:2.5px 0;
+  font-size:9.5px;font-weight:700;letter-spacing:.14em;text-align:center;text-transform:uppercase;z-index:2}
+.ribbon.legends{background:#f5a623;color:#20160a}
+.ribbon.soon{background:#3ddc84;color:#062315}
+.node .yr{margin-top:9px;font-family:'Pathway Gothic One',sans-serif;font-size:13.5px;letter-spacing:.22em;color:var(--accent);text-transform:uppercase;transition:color .8s}
+.node .ttl{margin-top:3px;font-size:13.5px;font-weight:600;line-height:1.25;color:var(--text);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.node .typ{margin-top:2px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+/* ---------- modál ---------- */
+#overlay{position:fixed;inset:0;z-index:100;background:rgba(2,3,5,.82);backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;padding:22px;opacity:0;pointer-events:none;transition:opacity .3s}
+#overlay.open{opacity:1;pointer-events:auto}
+#modal{position:relative;max-width:780px;width:100%;max-height:88vh;overflow:auto;border-radius:16px;
+  background:linear-gradient(165deg,#10151f 0%,#080b10 70%);
+  border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);
+  box-shadow:0 0 60px color-mix(in srgb,var(--accent) 18%,transparent),0 30px 80px rgba(0,0,0,.8);
+  display:flex;gap:26px;padding:28px;transform:translateY(18px) scale(.97);transition:transform .35s cubic-bezier(.3,1.3,.5,1)}
+#overlay.open #modal{transform:none}
+#modal .mcov{flex:0 0 228px}
+#modal .mcov .cover{width:228px;height:336px;border-radius:12px}
+#modal .minfo{flex:1;min-width:0}
+#modal h3{font-family:'Anton',Impact,sans-serif;font-size:clamp(22px,3.4vw,32px);letter-spacing:.04em;line-height:1.12;color:var(--accent);text-transform:uppercase;transition:color .8s}
+#modal .hu{font-size:16px;color:var(--text);font-style:italic;margin-top:5px}
+#modal .badges{display:flex;flex-wrap:wrap;gap:7px;margin:15px 0 13px}
+.badge{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-radius:5px;padding:4px 9px;
+  border:1px solid rgba(255,255,255,.2);color:var(--muted)}
+.badge.b-canon{background:rgba(77,163,255,.16);border-color:#4da3ff;color:#9dcbff}
+.badge.b-legends{background:rgba(245,166,35,.16);border-color:#f5a623;color:#ffd28a}
+.badge.b-era{background:color-mix(in srgb,var(--accent) 14%,transparent);border-color:var(--accent);color:var(--accent)}
+.badge.b-soon{background:rgba(61,220,132,.14);border-color:#3ddc84;color:#7fedb0}
+#modal .meta{font-size:14px;color:var(--muted);line-height:1.9;margin-bottom:14px}
+#modal .meta b{color:var(--text);font-weight:600}
+#modal .desc{font-size:15px;line-height:1.7;color:#d6d4cc}
+#mclose{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--muted);font-size:30px;line-height:1;cursor:pointer;padding:6px;transition:color .2s,transform .2s}
+#mclose:hover{color:var(--accent);transform:rotate(90deg)}
+
+/* ---------- idővonalon kívül + lábléc ---------- */
+#outside{max-width:1100px;margin:30px auto 0;padding:50px 20px 20px;text-align:center}
+#outside h2{font-family:'Anton',Impact,sans-serif;font-size:clamp(24px,4vw,38px);letter-spacing:.12em;color:#c09aff;text-transform:uppercase;text-shadow:0 0 26px rgba(192,154,255,.4)}
+#outside .ob{color:var(--muted);font-size:14px;margin-top:8px;margin-bottom:30px}
+#outside .orow{display:flex;gap:34px;justify-content:center;flex-wrap:wrap}
+#outside .node{position:static;margin-left:0}
+footer{text-align:center;padding:70px 20px 40px;color:var(--muted);font-size:12.5px;line-height:2;letter-spacing:.04em}
+footer .fin{font-family:'Pathway Gothic One',sans-serif;letter-spacing:.5em;text-indent:.5em;font-size:15px;color:var(--accent);margin-bottom:10px;text-transform:uppercase;transition:color .8s}
+
+/* ---------- mobil ---------- */
+@media (max-width:640px){
+  #modal{flex-direction:column;padding:20px;align-items:center;text-align:center}
+  #modal .mcov .cover{width:180px;height:265px}
+  #modal .badges{justify-content:center}
+  #eraHud{min-width:0}
+  #eraHudName{font-size:16px}
+  .chip{padding:4px 10px;font-size:11px}
+  .node{width:150px;margin-left:-75px}
+}
+</style>
+</head>
+<body data-era="highrepublic">
+<canvas id="stars"></canvas>
+<div id="bg"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <!-- Jedi rend (stilizált) -->
+  <symbol id="sym-jedi" viewBox="0 0 100 100">
+    <g fill="currentColor">
+      <rect x="47" y="14" width="6" height="46" rx="3"/>
+      <circle cx="50" cy="64" r="5"/>
+      <path d="M50 88 C30 88 14 74 10 54 C18 66 26 71 34 73 C26 64 22 55 21 44 C27 57 35 64 43 67 C40 60 39 52 41 44 C44 56 47 62 50 64 C53 62 56 56 59 44 C61 52 60 60 57 67 C65 64 73 57 79 44 C78 55 74 64 66 73 C74 71 82 66 90 54 C86 74 70 88 50 88 Z"/>
+    </g>
+  </symbol>
+  <!-- Galaktikus Köztársaság (fogaskerék-címer) -->
+  <symbol id="sym-republic" viewBox="0 0 100 100">
+    <g fill="none" stroke="currentColor" stroke-width="6">
+      <circle cx="50" cy="50" r="24"/>
+    </g>
+    <g fill="currentColor">
+      <g id="rsp"><rect x="46.5" y="8" width="7" height="16" rx="2.5"/></g>
+      <use href="#rsp" transform="rotate(45 50 50)"/><use href="#rsp" transform="rotate(90 50 50)"/>
+      <use href="#rsp" transform="rotate(135 50 50)"/><use href="#rsp" transform="rotate(180 50 50)"/>
+      <use href="#rsp" transform="rotate(225 50 50)"/><use href="#rsp" transform="rotate(270 50 50)"/>
+      <use href="#rsp" transform="rotate(315 50 50)"/>
+      <circle cx="50" cy="50" r="8"/>
+    </g>
+  </symbol>
+  <!-- Birodalom -->
+  <symbol id="sym-empire" viewBox="0 0 100 100">
+    <g fill="currentColor">
+      <path d="M50 4 A46 46 0 1 0 50 96 A46 46 0 1 0 50 4 Z M50 14 A36 36 0 1 1 50 86 A36 36 0 1 1 50 14 Z" fill-rule="evenodd"/>
+      <g id="esp"><path d="M43 8 L57 8 L53 26 L47 26 Z"/></g>
+      <use href="#esp" transform="rotate(60 50 50)"/><use href="#esp" transform="rotate(120 50 50)"/>
+      <use href="#esp" transform="rotate(180 50 50)"/><use href="#esp" transform="rotate(240 50 50)"/>
+      <use href="#esp" transform="rotate(300 50 50)"/>
+      <path d="M50 24 L58 38 A18 18 0 1 1 42 38 Z"/>
+      <circle cx="50" cy="50" r="13"/>
+    </g>
+  </symbol>
+  <!-- Lázadók / starbird -->
+  <symbol id="sym-rebel" viewBox="0 0 100 100">
+    <g fill="currentColor">
+      <path d="M50 6 C56 20 60 30 57 38 L68 24 C74 34 74 46 66 56 C78 52 86 56 92 66 C80 64 72 68 66 76 C60 84 56 90 50 94 C44 90 40 84 34 76 C28 68 20 64 8 66 C14 56 22 52 34 56 C26 46 26 34 32 24 L43 38 C40 30 44 20 50 6 Z"/>
+    </g>
+  </symbol>
+  <!-- Új Köztársaság -->
+  <symbol id="sym-newrepublic" viewBox="0 0 100 100">
+    <g fill="none" stroke="currentColor" stroke-width="5"><circle cx="50" cy="50" r="43" stroke-dasharray="52 16"/></g>
+    <g fill="currentColor" transform="translate(50 52) scale(.62) translate(-50 -50)">
+      <path d="M50 6 C56 20 60 30 57 38 L68 24 C74 34 74 46 66 56 C78 52 86 56 92 66 C80 64 72 68 66 76 C60 84 56 90 50 94 C44 90 40 84 34 76 C28 68 20 64 8 66 C14 56 22 52 34 56 C26 46 26 34 32 24 L43 38 C40 30 44 20 50 6 Z"/>
+    </g>
+  </symbol>
+  <!-- Első Rend -->
+  <symbol id="sym-firstorder" viewBox="0 0 100 100">
+    <g fill="currentColor">
+      <circle cx="50" cy="50" r="26"/>
+      <g id="fsp"><path d="M44 4 L56 4 L54 22 L46 22 Z"/></g>
+      <use href="#fsp" transform="rotate(22.5 50 50)"/><use href="#fsp" transform="rotate(45 50 50)"/>
+      <use href="#fsp" transform="rotate(67.5 50 50)"/><use href="#fsp" transform="rotate(90 50 50)"/>
+      <use href="#fsp" transform="rotate(112.5 50 50)"/><use href="#fsp" transform="rotate(135 50 50)"/>
+      <use href="#fsp" transform="rotate(157.5 50 50)"/><use href="#fsp" transform="rotate(180 50 50)"/>
+      <use href="#fsp" transform="rotate(202.5 50 50)"/><use href="#fsp" transform="rotate(225 50 50)"/>
+      <use href="#fsp" transform="rotate(247.5 50 50)"/><use href="#fsp" transform="rotate(270 50 50)"/>
+      <use href="#fsp" transform="rotate(292.5 50 50)"/><use href="#fsp" transform="rotate(315 50 50)"/>
+      <use href="#fsp" transform="rotate(337.5 50 50)"/>
+    </g>
+    <circle cx="50" cy="50" r="32" fill="none" stroke="currentColor" stroke-width="3"/>
+  </symbol>
+  <!-- Idővonalon kívül -->
+  <symbol id="sym-outside" viewBox="0 0 100 100">
+    <g fill="none" stroke="currentColor" stroke-width="5">
+      <circle cx="50" cy="50" r="30"/>
+      <ellipse cx="50" cy="50" rx="46" ry="16" transform="rotate(-22 50 50)"/>
+    </g>
+    <circle cx="50" cy="50" r="7" fill="currentColor"/>
+  </symbol>
+</defs>
+</svg>
+
+<header>
+  <p class="pre-title">Egy messzi-messzi galaxisban játszódó történetek…</p>
+  <h1 class="sw-logo"><span class="l1">Star</span><span class="l2">Wars</span></h1>
+  <p class="sub-title">Galaktikus idővonal</p>
+  <p class="intro">Filmek, sorozatok, videójátékok, regények és képregények <b>egyetlen tekergő idővonalon</b>,
+    a Fényes Köztársaság fénykorától az Új Jedi Rend hajnaláig — az univerzumon belüli időrendben.
+    Kattints bármelyik borítóra a részletekért, és kapcsold a <b>Legends</b>-műveket ki-be a felső sávban!</p>
+  <p class="scroll-hint">▼ görgess az időben ▼</p>
+</header>
+
+<div id="controls">
+  <div id="eraHud"><svg><use id="eraHudSym" href="#sym-jedi"/></svg><span id="eraHudName">A Fényes Köztársaság</span></div>
+  <div class="ctl-group" id="typeChips"></div>
+  <div class="ctl-group">
+    <button class="chip sw-canon on" id="chipCanon" title="Disney-kánon művek">Kánon</button>
+    <button class="chip sw-legends on" id="chipLegends" title="Legends (korábbi kiterjesztett univerzum) művek">Legends</button>
+  </div>
+  <span id="count"></span>
+</div>
+
+<div id="wrap">
+  <div id="timeline">
+    <svg id="snake"></svg>
+  </div>
+</div>
+
+<section id="outside">
+  <h2>Idővonalon kívül</h2>
+  <p class="ob">Történetek, amelyek a kánon idővonalán kívül — alternatív valóságokban vagy újramesélésként — játszódnak.</p>
+  <div class="orow" id="outsideRow"></div>
+</section>
+
+<footer>
+  <p class="fin">Az Erő legyen veled</p>
+  <p>Rajongói hobbioldal · Adatok: Wookieepedia (starwars.fandom.com) · Borítók: Fandom / Lucasfilm / Disney / Marvel / Del Rey</p>
+  <p>A Star Wars és minden kapcsolódó név a Lucasfilm Ltd. védjegye. Ez az oldal nem kereskedelmi célú.</p>
+</footer>
+
+<div id="overlay">
+  <div id="modal" role="dialog" aria-modal="true">
+    <button id="mclose" aria-label="Bezárás">×</button>
+    <div class="mcov"><div class="cover" id="mcover"></div></div>
+    <div class="minfo">
+      <h3 id="mtitle"></h3>
+      <p class="hu" id="mhu"></p>
+      <div class="badges" id="mbadges"></div>
+      <p class="meta" id="mmeta"></p>
+      <p class="desc" id="mdesc"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ================= ADATOK ================= */
+const DATA = /*__DATA__*/[];
+const ERAS = {
+  highrepublic:{name:"A Fényes Köztársaság",en:"The High Republic",range:"kb. 500–100 BBY",blurb:"A Köztársaság aranykora — a jedik a béke és a fény őrzői.",sym:"sym-jedi"},
+  fall:{name:"A Jedik bukása",en:"Fall of the Jedi",range:"kb. 45–19 BBY",blurb:"Baljós árnyak, klónháborúk — és a Köztársaság lassú halála.",sym:"sym-republic"},
+  reign:{name:"A Birodalom uralma",en:"Reign of the Empire",range:"19–5 BBY",blurb:"A Birodalom vasmarokkal szorít, a jedik bujdosnak.",sym:"sym-empire"},
+  rebellion:{name:"A Lázadás kora",en:"Age of Rebellion",range:"5 BBY–4 ABY",blurb:"Egy szikrából lángtenger: a Lázadó Szövetség háborúja.",sym:"sym-rebel"},
+  newrepublic:{name:"Az Új Köztársaság",en:"The New Republic",range:"4–34 ABY",blurb:"Újjáépítés a Birodalom romjain — de az árnyék nem tűnt el.",sym:"sym-newrepublic"},
+  firstorder:{name:"Az Első Rend felemelkedése",en:"Rise of the First Order",range:"kb. 28–35 ABY",blurb:"Az Első Rend árnyéka és az Ellenállás születése.",sym:"sym-firstorder"},
+  newjedi:{name:"Az Új Jedi Rend",en:"New Jedi Order",range:"35 ABY –",blurb:"Új nemzedék, új rend — a jövő története most íródik.",sym:"sym-jedi"},
+  outside:{name:"Idővonalon kívül",en:"Beyond the Timeline",range:"",blurb:"",sym:"sym-outside"}
+};
+const ERA_ORDER = ["highrepublic","fall","reign","rebellion","newrepublic","firstorder","newjedi"];
+const TYPES = {
+  film:"Film", tvfilm:"TV-film", liveaction:"Élőszereplős sorozat", animseries:"Animációs sorozat",
+  miniseries:"Minisorozat", game:"Videójáték", novel:"Regény", comic:"Képregény"
+};
+const TYPE_FILTERS = [
+  {id:"screen", label:"Filmek", types:["film","tvfilm"], ico:"🎬"},
+  {id:"live",   label:"Sorozatok", types:["liveaction"], ico:"📺"},
+  {id:"anim",   label:"Animáció", types:["animseries","miniseries"], ico:"✨"},
+  {id:"game",   label:"Játékok", types:["game"], ico:"🎮"},
+  {id:"novel",  label:"Regények", types:["novel"], ico:"📖"},
+  {id:"comic",  label:"Képregények", types:["comic"], ico:"💥"},
+];
+const TYPE_ICO = {film:"🎬",tvfilm:"🎬",liveaction:"📺",animseries:"✨",miniseries:"✨",game:"🎮",novel:"📖",comic:"💥"};
+const HU_MONTHS = ["január","február","március","április","május","június","július","augusztus","szeptember","október","november","december"];
+
+/* ================= CSILLAGMEZŐ ================= */
+const starCv = document.getElementById('stars');
+function drawStars(){
+  const c = starCv, dpr = Math.min(window.devicePixelRatio||1, 2);
+  c.width = innerWidth*dpr; c.height = innerHeight*dpr;
+  c.style.width = innerWidth+'px'; c.style.height = innerHeight+'px';
+  const g = c.getContext('2d'); g.scale(dpr,dpr);
+  g.clearRect(0,0,innerWidth,innerHeight);
+  const n = Math.round(innerWidth*innerHeight/3800);
+  for(let i=0;i<n;i++){
+    const x=Math.random()*innerWidth, y=Math.random()*innerHeight;
+    const r=Math.random(); const rad = r>.985?1.6:r>.9?1.1:.6;
+    g.globalAlpha = .25+Math.random()*.75;
+    g.fillStyle = r>.965 ? '#cfe4ff' : r<.06 ? '#ffe9c9' : '#ffffff';
+    g.beginPath(); g.arc(x,y,rad,0,7); g.fill();
+  }
+  g.globalAlpha = 1;
+}
+drawStars();
+
+/* háttér-fényrétegek + vízjel szimbólumok */
+const bg = document.getElementById('bg');
+for(const era of [...ERA_ORDER,"outside"]){
+  const d = document.createElement('div');
+  d.className='bglayer'; d.dataset.era=era;
+  d.innerHTML = `<svg class="bgsym" style="color:#fff" viewBox="0 0 100 100"><use href="#${ERAS[era].sym}"/></svg>`;
+  bg.appendChild(d);
+}
+
+/* ================= ÁLLAPOT ================= */
+const state = {
+  canon:true, legends:true,
+  types:new Set(TYPE_FILTERS.map(t=>t.id)),
+};
+function passFilters(it){
+  if(it.canon && !state.canon) return false;
+  if(!it.canon && !state.legends) return false;
+  const tf = TYPE_FILTERS.find(t=>t.types.includes(it.type));
+  return tf ? state.types.has(tf.id) : true;
+}
+
+/* ================= KÁRTYA-ELEM GYÁR ================= */
+const timeline = document.getElementById('timeline');
+const snake = document.getElementById('snake');
+const nodeEls = new Map();   // id -> element
+const eraEls  = new Map();   // era -> {head, band}
+
+function yearLabel(it){
+  if(it.y===null || it.y===undefined) return "";
+  const n = Math.round(Math.abs(it.y));
+  if(n===0) return "0 ABY";
+  return "kb. "+n+" "+(it.y<0?"BBY":"ABY");
+}
+function makeCover(it, big){
+  const cov = document.createElement('div');
+  cov.className='cover';
+  const ph = document.createElement('div');
+  ph.className='ph';
+  ph.innerHTML = `<span class="phico">${TYPE_ICO[it.type]||"⭐"}</span><span>${it.title}</span>`;
+  cov.appendChild(ph);
+  if(it.img){
+    const img = document.createElement('img');
+    img.loading='lazy'; img.referrerPolicy='no-referrer'; img.alt=it.title+" borító";
+    img.src=it.img;
+    img.onload = ()=>{ img.classList.add('ok'); cov.classList.add('hasimg'); };
+    img.onerror= ()=>{ img.remove(); };
+    cov.appendChild(img);
+  }
+  if(!it.canon){ const r=document.createElement('span'); r.className='ribbon legends'; r.textContent='Legends'; cov.appendChild(r); }
+  else if(it.upcoming){ const r=document.createElement('span'); r.className='ribbon soon'; r.textContent='Hamarosan'; cov.appendChild(r); }
+  return cov;
+}
+function makeNode(it){
+  const b = document.createElement('button');
+  b.className='node'; b.dataset.id=it.id;
+  const inner = document.createElement('div'); inner.className='inner';
+  inner.appendChild(makeCover(it));
+  const yr = document.createElement('div'); yr.className='yr'; yr.textContent = yearLabel(it);
+  const ttl= document.createElement('div'); ttl.className='ttl'; ttl.textContent = it.hu || it.title;
+  const typ= document.createElement('div'); typ.className='typ'; typ.textContent = TYPES[it.type];
+  inner.appendChild(yr); inner.appendChild(ttl); inner.appendChild(typ);
+  b.appendChild(inner);
+  b.addEventListener('click',()=>openModal(it));
+  return b;
+}
+/* fő idővonal node-ok */
+for(const it of DATA.filter(d=>d.era!=='outside')){
+  const el = makeNode(it);
+  el.classList.add('gone');
+  timeline.appendChild(el);
+  nodeEls.set(it.id, el);
+}
+/* éra fejlécek + sávok */
+for(const era of ERA_ORDER){
+  const band = document.createElement('div');
+  band.className='era-band'; band.dataset.era=era;
+  const head = document.createElement('div');
+  head.className='era-head'; head.dataset.era=era;
+  head.innerHTML = `<svg class="eh-sym" viewBox="0 0 100 100"><use href="#${ERAS[era].sym}"/></svg>
+    <h2>${ERAS[era].name}</h2>
+    <div class="eh-range">${ERAS[era].en} · ${ERAS[era].range}</div>
+    <div class="eh-blurb">${ERAS[era].blurb}</div>`;
+  timeline.appendChild(band); timeline.appendChild(head);
+  eraEls.set(era,{head,band});
+}
+/* idővonalon kívüli polc */
+const orow = document.getElementById('outsideRow');
+for(const it of DATA.filter(d=>d.era==='outside')) orow.appendChild(makeNode(it));
+
+/* ================= ELRENDEZÉS (kígyó) ================= */
+let eraZones = []; // {era, top, bottom} — a görgetéses éra-váltáshoz
+function layout(){
+  const W = Math.min(timeline.clientWidth, 1264);
+  const isMobile = W < 560;
+  const cols = isMobile ? 2 : W<800 ? 3 : W<1050 ? 4 : 5;
+  const colW = W/cols;
+  const rowH = 305, headH = 190, topPad = 20;
+  const eraIdx = e => ERA_ORDER.indexOf(e);
+  const visible = DATA.filter(d=>d.era!=='outside' && passFilters(d))
+    .sort((a,b)=> (eraIdx(a.era)-eraIdx(b.era)) || (a.y-b.y));
+
+  let yCur = topPad, idx = 0, dir = 1, prevEra = null;
+  const pts = [];
+  const zones = [];
+  const usedEras = new Set();
+
+  for(const it of visible){
+    if(it.era !== prevEra){
+      if(idx>0){ yCur += rowH; idx=0; dir=-dir; }
+      if(zones.length) zones[zones.length-1].bottom = yCur;
+      const eh = eraEls.get(it.era);
+      eh.head.style.transform = `translateY(${yCur}px)`;
+      eh.band.style.transform = `translateY(${yCur+12}px)`;
+      eh.head.classList.add('show'); eh.band.classList.add('show');
+      usedEras.add(it.era);
+      zones.push({era:it.era, top:yCur});
+      yCur += headH; prevEra = it.era;
+    }
+    const col = dir===1 ? idx : cols-1-idx;
+    const x = (col+.5)*colW;
+    const yC = yCur + rowH/2 - 22;
+    const el = nodeEls.get(it.id);
+    el.style.transform = `translate(${x}px,${yC-118}px)`;
+    el.classList.remove('gone');
+    pts.push({x,y:yC,era:it.era});
+    idx++;
+    if(idx===cols){ idx=0; yCur+=rowH; dir=-dir; }
+  }
+  if(idx>0) yCur += rowH;
+  if(zones.length) zones[zones.length-1].bottom = yCur;
+  /* sáv magasságok */
+  for(const z of zones){
+    const b = eraEls.get(z.era).band;
+    b.style.height = (z.bottom - z.top - 6)+'px';
+  }
+  for(const [era,eh] of eraEls){
+    if(!usedEras.has(era)){ eh.head.classList.remove('show'); eh.band.classList.remove('show'); }
+  }
+  /* eltűnő node-ok */
+  const visIds = new Set(visible.map(v=>v.id));
+  for(const [id,el] of nodeEls) if(!visIds.has(id)) el.classList.add('gone');
+
+  timeline.style.height = (yCur+30)+'px';
+  drawSnake(pts, W);
+  eraZones = zones.map(z=>({...z}));
+  document.getElementById('count').textContent = visible.length + " történet az idővonalon";
+  requestAnimationFrame(updateEraByScroll);
+}
+
+/* kígyóvonal kirajzolása éránként színezve */
+const ERA_LINE = {highrepublic:"#ffd76a",fall:"#e8a54b",reign:"#aebfd0",rebellion:"#ffb13d",
+                  newrepublic:"#8ac6ff",firstorder:"#ff5450",newjedi:"#77e6c4"};
+function drawSnake(pts, W){
+  snake.innerHTML='';
+  snake.setAttribute('width', timeline.clientWidth);
+  snake.setAttribute('height', parseFloat(timeline.style.height)||0);
+  if(pts.length<2) return;
+  let chunks=[], cur={era:pts[0].era, pts:[pts[0]]};
+  for(let i=1;i<pts.length;i++){
+    cur.pts.push(pts[i]);
+    if(pts[i].era!==cur.era){ chunks.push(cur); cur={era:pts[i].era, pts:[pts[i]]}; }
+  }
+  chunks.push(cur);
+  for(const ch of chunks){
+    if(ch.pts.length<2) continue;
+    let d=`M ${ch.pts[0].x} ${ch.pts[0].y}`;
+    for(let i=1;i<ch.pts.length;i++){
+      const a=ch.pts[i-1], b=ch.pts[i];
+      if(Math.abs(b.y-a.y)<1){
+        const mx=(a.x+b.x)/2;
+        d+=` C ${mx} ${a.y+26}, ${mx} ${b.y+26}, ${b.x} ${b.y}`;
+      }else{
+        const out = a.x>W/2 ? 1 : -1;
+        const ext = Math.min(150, W*0.12)*out;
+        d+=` C ${a.x+ext} ${a.y+40}, ${b.x+ext} ${b.y-40}, ${b.x} ${b.y}`;
+      }
+    }
+    const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('d',d); p.setAttribute('stroke',ERA_LINE[ch.era]||'#ffe81f');
+    p.style.color = ERA_LINE[ch.era]||'#ffe81f';
+    snake.appendChild(p);
+    requestAnimationFrame(()=>p.classList.add('show'));
+  }
+  for(const pt of pts){
+    const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',pt.x); c.setAttribute('cy',pt.y); c.setAttribute('r',4.5);
+    c.setAttribute('fill',ERA_LINE[pt.era]||'#ffe81f');
+    c.classList.add('nodedot');
+    c.style.filter=`drop-shadow(0 0 5px ${ERA_LINE[pt.era]})`;
+    snake.appendChild(c);
+    requestAnimationFrame(()=>c.classList.add('show'));
+  }
+}
+
+/* ================= ÉRA A GÖRGETÉS SZERINT ================= */
+const hudName = document.getElementById('eraHudName');
+const hudSym  = document.getElementById('eraHudSym');
+let curEra = null;
+function updateEraByScroll(){
+  const tlTop = timeline.getBoundingClientRect().top + scrollY;
+  const probe = scrollY + innerHeight*0.45 - tlTop;
+  let era = null;
+  for(const z of eraZones){ if(probe>=z.top && probe<z.bottom){ era=z.era; break; } }
+  if(!era){
+    if(eraZones.length){
+      era = probe < eraZones[0].top ? eraZones[0].era :
+            probe >= eraZones[eraZones.length-1].bottom ? eraZones[eraZones.length-1].era : curEra;
+    } else era = 'highrepublic';
+  }
+  const outsideTop = document.getElementById('outside').getBoundingClientRect().top;
+  if(outsideTop < innerHeight*0.5) era = 'outside';
+  if(era && era!==curEra){
+    curEra = era;
+    document.body.dataset.era = era;
+    hudName.textContent = ERAS[era].name;
+    hudSym.setAttribute('href','#'+ERAS[era].sym);
+  }
+}
+addEventListener('scroll', ()=>requestAnimationFrame(updateEraByScroll), {passive:true});
+
+/* ================= SZŰRŐK ================= */
+const typeChips = document.getElementById('typeChips');
+for(const tf of TYPE_FILTERS){
+  const b=document.createElement('button');
+  b.className='chip on'; b.textContent=tf.label; b.title=tf.label+" mutatása/elrejtése";
+  b.addEventListener('click',()=>{
+    if(state.types.has(tf.id)) state.types.delete(tf.id); else state.types.add(tf.id);
+    b.classList.toggle('on'); layout();
+  });
+  typeChips.appendChild(b);
+}
+document.getElementById('chipCanon').addEventListener('click',e=>{
+  state.canon=!state.canon; e.currentTarget.classList.toggle('on'); layout();
+});
+document.getElementById('chipLegends').addEventListener('click',e=>{
+  state.legends=!state.legends; e.currentTarget.classList.toggle('on'); layout();
+});
+
+/* ================= MODÁL ================= */
+const overlay=document.getElementById('overlay');
+function fmtDate(iso){
+  if(!iso) return "bejelentve — dátum később";
+  const [y,m,d]=iso.split('-').map(Number);
+  if(!m) return y+".";
+  return `${y}. ${HU_MONTHS[m-1]} ${d}.`;
+}
+function openModal(it){
+  document.getElementById('mtitle').textContent = it.title;
+  const hu=document.getElementById('mhu');
+  hu.textContent = (it.hu && it.hu!==it.title) ? "„"+it.hu+"”" : "";
+  hu.style.display = hu.textContent?'':'none';
+  const badges=document.getElementById('mbadges');
+  badges.innerHTML='';
+  const add=(cls,txt)=>{const s=document.createElement('span');s.className='badge '+cls;s.textContent=txt;badges.appendChild(s);};
+  add('', TYPES[it.type]);
+  add(it.canon?'b-canon':'b-legends', it.canon?'Kánon':'Legends');
+  if(it.era!=='outside') add('b-era', ERAS[it.era].name);
+  if(it.upcoming) add('b-soon','Hamarosan');
+  const meta=document.getElementById('mmeta');
+  const yl=yearLabel(it);
+  meta.innerHTML = `<b>Megjelenés:</b> ${fmtDate(it.rel)}` + (yl?`<br><b>Idővonalon:</b> ${yl}${it.y===0?' — a yavini csata éve':''}`:'');
+  document.getElementById('mdesc').textContent = it.desc;
+  const mc=document.getElementById('mcover');
+  mc.replaceWith(Object.assign(makeCover(it),{id:'mcover'}));
+  overlay.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){ overlay.classList.remove('open'); document.body.style.overflow=''; }
+document.getElementById('mclose').addEventListener('click',closeModal);
+overlay.addEventListener('click',e=>{ if(e.target===overlay) closeModal(); });
+addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+
+/* ================= INDÍTÁS ================= */
+let rszT, lastW = 0;
+function onResize(){ clearTimeout(rszT); rszT=setTimeout(()=>{
+  if(Math.abs(timeline.clientWidth-lastW)<2) return;
+  lastW = timeline.clientWidth; drawStars(); layout();
+},150); }
+addEventListener('resize', onResize);
+new ResizeObserver(onResize).observe(timeline);
+lastW = timeline.clientWidth;
+layout();
+setTimeout(updateEraByScroll, 100);
+</script>
+</body>
+</html>

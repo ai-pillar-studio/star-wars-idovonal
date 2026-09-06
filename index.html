@@ -1,0 +1,664 @@
+<!DOCTYPE html>
+<html lang="hu">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Star Wars – Galaktikus idővonal</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Barlow:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Pathway+Gothic+One&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent:#ffe81f; --accent2:#ffd76a; --glowA:rgba(255,232,31,.10); --glowB:rgba(90,140,255,.07);
+  --bg:#050608; --card:#0d1117; --line:rgba(255,232,31,.75);
+  --text:#e8e6df; --muted:#9aa0ac;
+}
+*{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg); color:var(--text);
+  font-family:'Barlow',system-ui,sans-serif;
+  overflow-x:hidden; min-height:100vh;
+  transition:background-color 1s ease;
+}
+/* ---------- csillagmező + éra háttérfények ---------- */
+#stars{position:fixed;inset:0;z-index:-3;pointer-events:none}
+#bg{position:fixed;inset:0;z-index:-2;pointer-events:none}
+.bglayer{position:absolute;inset:0;opacity:0;transition:opacity 1.4s ease}
+body[data-era="highrepublic"] .bglayer[data-era="highrepublic"],
+body[data-era="fall"]         .bglayer[data-era="fall"],
+body[data-era="reign"]        .bglayer[data-era="reign"],
+body[data-era="rebellion"]    .bglayer[data-era="rebellion"],
+body[data-era="newrepublic"]  .bglayer[data-era="newrepublic"],
+body[data-era="firstorder"]   .bglayer[data-era="firstorder"],
+body[data-era="newjedi"]      .bglayer[data-era="newjedi"],
+body[data-era="outside"]      .bglayer[data-era="outside"]{opacity:1}
+.bglayer[data-era="highrepublic"]{background:radial-gradient(ellipse 80% 55% at 75% 12%,rgba(255,216,120,.14),transparent 60%),radial-gradient(ellipse 60% 45% at 12% 75%,rgba(120,190,255,.10),transparent 65%)}
+.bglayer[data-era="fall"]{background:radial-gradient(ellipse 80% 55% at 70% 15%,rgba(224,140,70,.13),transparent 60%),radial-gradient(ellipse 60% 45% at 15% 80%,rgba(200,60,70,.11),transparent 60%)}
+.bglayer[data-era="reign"]{background:radial-gradient(ellipse 80% 55% at 70% 12%,rgba(150,170,190,.10),transparent 60%),radial-gradient(ellipse 65% 50% at 15% 80%,rgba(255,45,40,.10),transparent 60%)}
+.bglayer[data-era="rebellion"]{background:radial-gradient(ellipse 80% 55% at 72% 14%,rgba(255,150,50,.13),transparent 60%),radial-gradient(ellipse 60% 45% at 12% 78%,rgba(255,90,60,.09),transparent 60%)}
+.bglayer[data-era="newrepublic"]{background:radial-gradient(ellipse 80% 55% at 72% 12%,rgba(110,180,255,.12),transparent 60%),radial-gradient(ellipse 60% 45% at 14% 80%,rgba(200,225,255,.07),transparent 60%)}
+.bglayer[data-era="firstorder"]{background:radial-gradient(ellipse 80% 55% at 70% 12%,rgba(255,50,50,.13),transparent 55%),radial-gradient(ellipse 60% 50% at 15% 82%,rgba(120,20,25,.14),transparent 60%)}
+.bglayer[data-era="newjedi"]{background:radial-gradient(ellipse 80% 55% at 72% 12%,rgba(100,225,190,.12),transparent 60%),radial-gradient(ellipse 60% 45% at 15% 80%,rgba(255,215,105,.08),transparent 60%)}
+.bglayer[data-era="outside"]{background:radial-gradient(ellipse 80% 55% at 70% 15%,rgba(180,130,255,.12),transparent 60%)}
+.bgsym{position:absolute;right:-6vw;top:18vh;width:52vw;max-width:640px;opacity:.055;filter:drop-shadow(0 0 30px currentColor)}
+/* éra-akcentszínek */
+body[data-era="highrepublic"]{--accent:#ffd76a;--accent2:#9fd9ff;--line:rgba(255,215,106,.7)}
+body[data-era="fall"]{--accent:#e8a54b;--accent2:#d95f6a;--line:rgba(232,165,75,.7)}
+body[data-era="reign"]{--accent:#adc3d4;--accent2:#ff453a;--line:rgba(173,195,212,.65)}
+body[data-era="rebellion"]{--accent:#ffb13d;--accent2:#ff6a45;--line:rgba(255,177,61,.75)}
+body[data-era="newrepublic"]{--accent:#8ac6ff;--accent2:#d9ecff;--line:rgba(138,198,255,.7)}
+body[data-era="firstorder"]{--accent:#ff5450;--accent2:#c9ced6;--line:rgba(255,84,80,.7)}
+body[data-era="newjedi"]{--accent:#77e6c4;--accent2:#ffd76a;--line:rgba(119,230,196,.7)}
+body[data-era="outside"]{--accent:#c09aff;--accent2:#e8dcff;--line:rgba(192,154,255,.7)}
+
+/* ---------- fejléc ---------- */
+header{position:relative;text-align:center;padding:9vh 20px 5vh;z-index:2}
+.pre-title{font-style:italic;color:#6fa8dc;font-size:clamp(15px,2.2vw,21px);letter-spacing:.06em;margin-bottom:26px}
+.sw-logo{font-family:'Anton',Impact,sans-serif;color:#ffe81f;line-height:.86;letter-spacing:.02em;
+  font-size:clamp(64px,13vw,150px);text-transform:uppercase;
+  text-shadow:0 0 24px rgba(255,232,31,.28),0 0 90px rgba(255,232,31,.12);}
+.sw-logo .l1,.sw-logo .l2{display:block}
+.sub-title{font-family:'Pathway Gothic One',sans-serif;letter-spacing:.55em;text-indent:.55em;
+  font-size:clamp(16px,3vw,30px);color:var(--text);margin-top:22px;text-transform:uppercase}
+.intro{max-width:640px;margin:26px auto 0;color:var(--muted);font-size:15.5px;line-height:1.65}
+.intro b{color:var(--text)}
+.scroll-hint{margin-top:34px;color:var(--muted);font-size:13px;letter-spacing:.25em;text-transform:uppercase;animation:bob 2.2s ease-in-out infinite}
+@keyframes bob{0%,100%{transform:translateY(0);opacity:.55}50%{transform:translateY(7px);opacity:1}}
+
+/* ---------- vezérlősáv ---------- */
+#controls{position:sticky;top:0;z-index:50;
+  background:rgba(5,6,8,.82);backdrop-filter:blur(10px);-webkit-backdrop-filter:blur(10px);
+  border-bottom:1px solid rgba(255,255,255,.08);
+  padding:10px 16px;display:flex;flex-wrap:wrap;gap:10px 14px;align-items:center;justify-content:center}
+#eraHud{display:flex;align-items:center;gap:9px;min-width:210px;justify-content:center}
+#eraHud svg{width:26px;height:26px;color:var(--accent);filter:drop-shadow(0 0 6px var(--accent))}
+#eraHudName{font-family:'Pathway Gothic One',sans-serif;font-size:19px;letter-spacing:.18em;text-transform:uppercase;color:var(--accent);white-space:nowrap;transition:color .8s}
+.ctl-group{display:flex;gap:7px;flex-wrap:wrap;justify-content:center}
+.chip{cursor:pointer;user-select:none;border:1px solid rgba(255,255,255,.22);border-radius:999px;
+  padding:5px 13px;font-size:12.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--muted);
+  background:transparent;transition:all .25s;font-family:'Barlow';font-weight:600}
+.chip:hover{border-color:var(--accent);color:var(--text)}
+.chip.on{color:#0a0b0d;background:var(--accent);border-color:var(--accent);box-shadow:0 0 14px color-mix(in srgb,var(--accent) 50%,transparent)}
+.chip.sw-canon.on{background:#4da3ff;border-color:#4da3ff;box-shadow:0 0 14px rgba(77,163,255,.5)}
+.chip.sw-legends.on{background:#f5a623;border-color:#f5a623;box-shadow:0 0 14px rgba(245,166,35,.5)}
+#count{font-size:12px;color:var(--muted);letter-spacing:.1em;white-space:nowrap}
+
+/* ---------- idővonal ---------- */
+#wrap{position:relative;max-width:1280px;margin:0 auto;padding:0 8px}
+#timeline{position:relative;transition:height .8s cubic-bezier(.6,.1,.25,1)}
+#snake{position:absolute;inset:0;overflow:visible;z-index:1;pointer-events:none}
+#snake path{fill:none;stroke-width:3;stroke-linecap:round;opacity:0;transition:opacity .6s;
+  filter:drop-shadow(0 0 6px currentColor)}
+#snake path.show{opacity:.55}
+#snake .nodedot{transition:opacity .6s;opacity:0}
+#snake .nodedot.show{opacity:.9}
+
+/* éra-sávok az idővonalon belül */
+.era-band{position:absolute;left:0;right:0;z-index:0;border-radius:22px;opacity:0;
+  transition:transform .8s cubic-bezier(.6,.1,.25,1),height .8s cubic-bezier(.6,.1,.25,1),opacity .6s;
+  background:linear-gradient(180deg,rgba(255,255,255,.028),rgba(255,255,255,0) 130px)}
+.era-band.show{opacity:1}
+.era-head{position:absolute;left:0;right:0;z-index:2;text-align:center;opacity:0;pointer-events:none;
+  transition:transform .8s cubic-bezier(.6,.1,.25,1),opacity .6s;padding-top:34px}
+.era-head.show{opacity:1}
+.era-head .eh-sym{width:44px;height:44px;margin:0 auto 6px;display:block}
+.era-head h2{font-family:'Anton',Impact,sans-serif;font-size:clamp(26px,4.6vw,44px);letter-spacing:.1em;text-transform:uppercase;line-height:1.05}
+.era-head .eh-range{font-family:'Pathway Gothic One',sans-serif;font-size:15px;letter-spacing:.4em;text-indent:.4em;color:var(--muted);margin-top:6px;text-transform:uppercase}
+.era-head .eh-blurb{font-size:13.5px;color:var(--muted);margin-top:5px;font-style:italic}
+/* éra-fejléc színek */
+.era-head[data-era="highrepublic"] h2,.era-head[data-era="highrepublic"] .eh-sym{color:#ffd76a}
+.era-head[data-era="fall"] h2,.era-head[data-era="fall"] .eh-sym{color:#e8a54b}
+.era-head[data-era="reign"] h2,.era-head[data-era="reign"] .eh-sym{color:#adc3d4}
+.era-head[data-era="rebellion"] h2,.era-head[data-era="rebellion"] .eh-sym{color:#ffb13d}
+.era-head[data-era="newrepublic"] h2,.era-head[data-era="newrepublic"] .eh-sym{color:#8ac6ff}
+.era-head[data-era="firstorder"] h2,.era-head[data-era="firstorder"] .eh-sym{color:#ff5450}
+.era-head[data-era="newjedi"] h2,.era-head[data-era="newjedi"] .eh-sym{color:#77e6c4}
+.era-head h2{text-shadow:0 0 26px currentColor}
+.era-head .eh-sym{filter:drop-shadow(0 0 10px currentColor)}
+
+/* ---------- kártyák ---------- */
+.node{position:absolute;z-index:3;width:158px;margin-left:-79px;cursor:pointer;
+  transition:transform .8s cubic-bezier(.6,.1,.25,1),opacity .5s;
+  will-change:transform;text-align:center;border:none;background:none;color:inherit;font-family:inherit}
+.node.gone{opacity:0;pointer-events:none;transition:transform .5s,opacity .35s}
+.node.gone .inner{transform:scale(.55)}
+.node .inner{transition:transform .5s cubic-bezier(.34,1.4,.5,1)}
+.node:hover .inner,.node:focus-visible .inner{transform:translateY(-7px) scale(1.04)}
+.node:focus-visible{outline:2px solid var(--accent);outline-offset:4px;border-radius:12px}
+.cover{position:relative;width:132px;height:194px;margin:0 auto;border-radius:9px;overflow:hidden;
+  background:linear-gradient(160deg,#161b26,#0a0d13);
+  box-shadow:0 6px 22px rgba(0,0,0,.65),0 0 0 1px rgba(255,255,255,.09);
+  transition:box-shadow .3s}
+.node:hover .cover{box-shadow:0 10px 30px rgba(0,0,0,.8),0 0 18px color-mix(in srgb,var(--accent) 32%,transparent),0 0 0 1px var(--accent)}
+.cover img{width:100%;height:100%;object-fit:cover;display:block;opacity:0;transition:opacity .6s}
+.cover img.ok{opacity:1}
+.cover .ph{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:8px;padding:10px;
+  color:var(--muted);font-size:12px;line-height:1.35;text-align:center}
+.cover .ph .phico{font-size:30px;opacity:.7}
+.cover.hasimg .ph{display:none}
+.ribbon{position:absolute;top:9px;left:-32px;transform:rotate(-38deg);width:120px;padding:2.5px 0;
+  font-size:9.5px;font-weight:700;letter-spacing:.14em;text-align:center;text-transform:uppercase;z-index:2}
+.ribbon.legends{background:#f5a623;color:#20160a}
+.ribbon.soon{background:#3ddc84;color:#062315}
+.node .yr{margin-top:9px;font-family:'Pathway Gothic One',sans-serif;font-size:13.5px;letter-spacing:.22em;color:var(--accent);text-transform:uppercase;transition:color .8s}
+.node .ttl{margin-top:3px;font-size:13.5px;font-weight:600;line-height:1.25;color:var(--text);
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.node .typ{margin-top:2px;font-size:10.5px;letter-spacing:.14em;text-transform:uppercase;color:var(--muted)}
+
+/* ---------- modál ---------- */
+#overlay{position:fixed;inset:0;z-index:100;background:rgba(2,3,5,.82);backdrop-filter:blur(6px);
+  display:flex;align-items:center;justify-content:center;padding:22px;opacity:0;pointer-events:none;transition:opacity .3s}
+#overlay.open{opacity:1;pointer-events:auto}
+#modal{position:relative;max-width:780px;width:100%;max-height:88vh;overflow:auto;border-radius:16px;
+  background:linear-gradient(165deg,#10151f 0%,#080b10 70%);
+  border:1px solid color-mix(in srgb,var(--accent) 45%,transparent);
+  box-shadow:0 0 60px color-mix(in srgb,var(--accent) 18%,transparent),0 30px 80px rgba(0,0,0,.8);
+  display:flex;gap:26px;padding:28px;transform:translateY(18px) scale(.97);transition:transform .35s cubic-bezier(.3,1.3,.5,1)}
+#overlay.open #modal{transform:none}
+#modal .mcov{flex:0 0 228px}
+#modal .mcov .cover{width:228px;height:336px;border-radius:12px}
+#modal .minfo{flex:1;min-width:0}
+#modal h3{font-family:'Anton',Impact,sans-serif;font-size:clamp(22px,3.4vw,32px);letter-spacing:.04em;line-height:1.12;color:var(--accent);text-transform:uppercase;transition:color .8s}
+#modal .hu{font-size:16px;color:var(--text);font-style:italic;margin-top:5px}
+#modal .badges{display:flex;flex-wrap:wrap;gap:7px;margin:15px 0 13px}
+.badge{font-size:11px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;border-radius:5px;padding:4px 9px;
+  border:1px solid rgba(255,255,255,.2);color:var(--muted)}
+.badge.b-canon{background:rgba(77,163,255,.16);border-color:#4da3ff;color:#9dcbff}
+.badge.b-legends{background:rgba(245,166,35,.16);border-color:#f5a623;color:#ffd28a}
+.badge.b-era{background:color-mix(in srgb,var(--accent) 14%,transparent);border-color:var(--accent);color:var(--accent)}
+.badge.b-soon{background:rgba(61,220,132,.14);border-color:#3ddc84;color:#7fedb0}
+#modal .meta{font-size:14px;color:var(--muted);line-height:1.9;margin-bottom:14px}
+#modal .meta b{color:var(--text);font-weight:600}
+#modal .desc{font-size:15px;line-height:1.7;color:#d6d4cc}
+#mclose{position:absolute;top:12px;right:14px;background:none;border:none;color:var(--muted);font-size:30px;line-height:1;cursor:pointer;padding:6px;transition:color .2s,transform .2s}
+#mclose:hover{color:var(--accent);transform:rotate(90deg)}
+
+/* ---------- idővonalon kívül + lábléc ---------- */
+#outside{max-width:1100px;margin:30px auto 0;padding:50px 20px 20px;text-align:center}
+#outside h2{font-family:'Anton',Impact,sans-serif;font-size:clamp(24px,4vw,38px);letter-spacing:.12em;color:#c09aff;text-transform:uppercase;text-shadow:0 0 26px rgba(192,154,255,.4)}
+#outside .ob{color:var(--muted);font-size:14px;margin-top:8px;margin-bottom:30px}
+#outside .orow{display:flex;gap:34px;justify-content:center;flex-wrap:wrap}
+#outside .node{position:static;margin-left:0}
+footer{text-align:center;padding:70px 20px 40px;color:var(--muted);font-size:12.5px;line-height:2;letter-spacing:.04em}
+footer .fin{font-family:'Pathway Gothic One',sans-serif;letter-spacing:.5em;text-indent:.5em;font-size:15px;color:var(--accent);margin-bottom:10px;text-transform:uppercase;transition:color .8s}
+
+/* ---------- mobil ---------- */
+@media (max-width:640px){
+  #modal{flex-direction:column;padding:20px;align-items:center;text-align:center}
+  #modal .mcov .cover{width:180px;height:265px}
+  #modal .badges{justify-content:center}
+  #eraHud{min-width:0}
+  #eraHudName{font-size:16px}
+  .chip{padding:4px 10px;font-size:11px}
+  .node{width:150px;margin-left:-75px}
+}
+</style>
+</head>
+<body data-era="highrepublic">
+<canvas id="stars"></canvas>
+<div id="bg"></div>
+
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+<defs>
+  <!-- Jedi rend (stilizált) -->
+  <symbol id="sym-jedi" viewBox="0 0 100 100">
+    <g fill="currentColor">
+      <rect x="47" y="14" width="6" height="46" rx="3"/>
+      <circle cx="50" cy="64" r="5"/>
+      <path d="M50 88 C30 88 14 74 10 54 C18 66 26 71 34 73 C26 64 22 55 21 44 C27 57 35 64 43 67 C40 60 39 52 41 44 C44 56 47 62 50 64 C53 62 56 56 59 44 C61 52 60 60 57 67 C65 64 73 57 79 44 C78 55 74 64 66 73 C74 71 82 66 90 54 C86 74 70 88 50 88 Z"/>
+    </g>
+  </symbol>
+  <!-- Galaktikus Köztársaság (fogaskerék-címer) -->
+  <symbol id="sym-republic" viewBox="0 0 100 100">
+    <g fill="none" stroke="currentColor" stroke-width="6">
+      <circle cx="50" cy="50" r="24"/>
+    </g>
+    <g fill="currentColor">
+      <g id="rsp"><rect x="46.5" y="8" width="7" height="16" rx="2.5"/></g>
+      <use href="#rsp" transform="rotate(45 50 50)"/><use href="#rsp" transform="rotate(90 50 50)"/>
+      <use href="#rsp" transform="rotate(135 50 50)"/><use href="#rsp" transform="rotate(180 50 50)"/>
+      <use href="#rsp" transform="rotate(225 50 50)"/><use href="#rsp" transform="rotate(270 50 50)"/>
+      <use href="#rsp" transform="rotate(315 50 50)"/>
+      <circle cx="50" cy="50" r="8"/>
+    </g>
+  </symbol>
+  <!-- Birodalom -->
+  <symbol id="sym-empire" viewBox="0 0 100 100">
+    <g fill="currentColor">
+      <path d="M50 4 A46 46 0 1 0 50 96 A46 46 0 1 0 50 4 Z M50 14 A36 36 0 1 1 50 86 A36 36 0 1 1 50 14 Z" fill-rule="evenodd"/>
+      <g id="esp"><path d="M43 8 L57 8 L53 26 L47 26 Z"/></g>
+      <use href="#esp" transform="rotate(60 50 50)"/><use href="#esp" transform="rotate(120 50 50)"/>
+      <use href="#esp" transform="rotate(180 50 50)"/><use href="#esp" transform="rotate(240 50 50)"/>
+      <use href="#esp" transform="rotate(300 50 50)"/>
+      <path d="M50 24 L58 38 A18 18 0 1 1 42 38 Z"/>
+      <circle cx="50" cy="50" r="13"/>
+    </g>
+  </symbol>
+  <!-- Lázadók / starbird -->
+  <symbol id="sym-rebel" viewBox="0 0 100 100">
+    <g fill="currentColor">
+      <path d="M50 6 C56 20 60 30 57 38 L68 24 C74 34 74 46 66 56 C78 52 86 56 92 66 C80 64 72 68 66 76 C60 84 56 90 50 94 C44 90 40 84 34 76 C28 68 20 64 8 66 C14 56 22 52 34 56 C26 46 26 34 32 24 L43 38 C40 30 44 20 50 6 Z"/>
+    </g>
+  </symbol>
+  <!-- Új Köztársaság -->
+  <symbol id="sym-newrepublic" viewBox="0 0 100 100">
+    <g fill="none" stroke="currentColor" stroke-width="5"><circle cx="50" cy="50" r="43" stroke-dasharray="52 16"/></g>
+    <g fill="currentColor" transform="translate(50 52) scale(.62) translate(-50 -50)">
+      <path d="M50 6 C56 20 60 30 57 38 L68 24 C74 34 74 46 66 56 C78 52 86 56 92 66 C80 64 72 68 66 76 C60 84 56 90 50 94 C44 90 40 84 34 76 C28 68 20 64 8 66 C14 56 22 52 34 56 C26 46 26 34 32 24 L43 38 C40 30 44 20 50 6 Z"/>
+    </g>
+  </symbol>
+  <!-- Első Rend -->
+  <symbol id="sym-firstorder" viewBox="0 0 100 100">
+    <g fill="currentColor">
+      <circle cx="50" cy="50" r="26"/>
+      <g id="fsp"><path d="M44 4 L56 4 L54 22 L46 22 Z"/></g>
+      <use href="#fsp" transform="rotate(22.5 50 50)"/><use href="#fsp" transform="rotate(45 50 50)"/>
+      <use href="#fsp" transform="rotate(67.5 50 50)"/><use href="#fsp" transform="rotate(90 50 50)"/>
+      <use href="#fsp" transform="rotate(112.5 50 50)"/><use href="#fsp" transform="rotate(135 50 50)"/>
+      <use href="#fsp" transform="rotate(157.5 50 50)"/><use href="#fsp" transform="rotate(180 50 50)"/>
+      <use href="#fsp" transform="rotate(202.5 50 50)"/><use href="#fsp" transform="rotate(225 50 50)"/>
+      <use href="#fsp" transform="rotate(247.5 50 50)"/><use href="#fsp" transform="rotate(270 50 50)"/>
+      <use href="#fsp" transform="rotate(292.5 50 50)"/><use href="#fsp" transform="rotate(315 50 50)"/>
+      <use href="#fsp" transform="rotate(337.5 50 50)"/>
+    </g>
+    <circle cx="50" cy="50" r="32" fill="none" stroke="currentColor" stroke-width="3"/>
+  </symbol>
+  <!-- Idővonalon kívül -->
+  <symbol id="sym-outside" viewBox="0 0 100 100">
+    <g fill="none" stroke="currentColor" stroke-width="5">
+      <circle cx="50" cy="50" r="30"/>
+      <ellipse cx="50" cy="50" rx="46" ry="16" transform="rotate(-22 50 50)"/>
+    </g>
+    <circle cx="50" cy="50" r="7" fill="currentColor"/>
+  </symbol>
+</defs>
+</svg>
+
+<header>
+  <p class="pre-title">Egy messzi-messzi galaxisban játszódó történetek…</p>
+  <h1 class="sw-logo"><span class="l1">Star</span><span class="l2">Wars</span></h1>
+  <p class="sub-title">Galaktikus idővonal</p>
+  <p class="intro">Filmek, sorozatok, videójátékok, regények és képregények <b>egyetlen tekergő idővonalon</b>,
+    a Fényes Köztársaság fénykorától az Új Jedi Rend hajnaláig — az univerzumon belüli időrendben.
+    Kattints bármelyik borítóra a részletekért, és kapcsold a <b>Legends</b>-műveket ki-be a felső sávban!</p>
+  <p class="scroll-hint">▼ görgess az időben ▼</p>
+</header>
+
+<div id="controls">
+  <div id="eraHud"><svg><use id="eraHudSym" href="#sym-jedi"/></svg><span id="eraHudName">A Fényes Köztársaság</span></div>
+  <div class="ctl-group" id="typeChips"></div>
+  <div class="ctl-group">
+    <button class="chip sw-canon on" id="chipCanon" title="Disney-kánon művek">Kánon</button>
+    <button class="chip sw-legends on" id="chipLegends" title="Legends (korábbi kiterjesztett univerzum) művek">Legends</button>
+  </div>
+  <span id="count"></span>
+</div>
+
+<div id="wrap">
+  <div id="timeline">
+    <svg id="snake"></svg>
+  </div>
+</div>
+
+<section id="outside">
+  <h2>Idővonalon kívül</h2>
+  <p class="ob">Történetek, amelyek a kánon idővonalán kívül — alternatív valóságokban vagy újramesélésként — játszódnak.</p>
+  <div class="orow" id="outsideRow"></div>
+</section>
+
+<footer>
+  <p class="fin">Az Erő legyen veled</p>
+  <p>Rajongói hobbioldal · Adatok: Wookieepedia (starwars.fandom.com) · Borítók: Fandom / Lucasfilm / Disney / Marvel / Del Rey</p>
+  <p>A Star Wars és minden kapcsolódó név a Lucasfilm Ltd. védjegye. Ez az oldal nem kereskedelmi célú.</p>
+</footer>
+
+<div id="overlay">
+  <div id="modal" role="dialog" aria-modal="true">
+    <button id="mclose" aria-label="Bezárás">×</button>
+    <div class="mcov"><div class="cover" id="mcover"></div></div>
+    <div class="minfo">
+      <h3 id="mtitle"></h3>
+      <p class="hu" id="mhu"></p>
+      <div class="badges" id="mbadges"></div>
+      <p class="meta" id="mmeta"></p>
+      <p class="desc" id="mdesc"></p>
+    </div>
+  </div>
+</div>
+
+<script>
+/* ================= ADATOK ================= */
+const DATA = [{"id": "n0", "title": "Star Wars: Episode I – The Phantom Menace", "hu": "Baljós árnyak", "type": "film", "canon": true, "rel": "1999-05-19", "y": -32, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/7/75/EPI_TPM_poster.png/revision/latest/scale-to-width-down/321?cb=20250617214241", "desc": "A Skywalker-saga nyitánya: Qui-Gon Jinn és Obi-Wan Kenobi felfedezi a rabszolgasorban élő, kivételes erejű Anakin Skywalkert a Tatuinon, miközben a Kereskedelmi Szövetség blokád alá vonja a Naboo bolygót. A háttérben Darth Sidious szövi a Köztársaság bukásához vezető tervét.", "upcoming": false}, {"id": "n1", "title": "Star Wars: Episode II – Attack of the Clones", "hu": "A klónok támadása", "type": "film", "canon": true, "rel": "2002-05-16", "y": -22, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/d/dd/Attack-Clones-Poster.jpg/revision/latest/scale-to-width-down/325?cb=20250617225730", "desc": "Tíz évvel a naboo-i csata után a szeparatista mozgalom szakadás szélére sodorja a Köztársaságot. Anakin és Padmé között tiltott szerelem szövődik, Obi-Wan pedig egy titokban legyártott klónhadseregre bukkan — kitör a klónháború.", "upcoming": false}, {"id": "n2", "title": "Star Wars: The Clone Wars (film)", "hu": "Star Wars: A klónok háborúja", "type": "film", "canon": true, "rel": "2008-08-14", "y": -21.9, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/f/ff/The_Clone_Wars_film_poster.jpg/revision/latest/scale-to-width-down/324?cb=20250618011933", "desc": "Az azonos című animációs sorozat mozis nyitánya: Anakin Skywalker megkapja első padawanját, Ahsoka Tanót, és együtt kell kiszabadítaniuk Jabba elrabolt fiát, hogy a Köztársaság megnyerje a huttok támogatását.", "upcoming": false}, {"id": "n3", "title": "Star Wars: Episode III – Revenge of the Sith", "hu": "A Sith-ek bosszúja", "type": "film", "canon": true, "rel": "2005-05-19", "y": -19, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/e/e7/EPIII_RotS_poster.png/revision/latest/scale-to-width-down/325?cb=20250617231154", "desc": "A klónháborúk lezárása és a saga tragikus fordulópontja: Palpatine kancellár magához ragadja a teljhatalmat, kiadja a 66-os parancsot, Anakin Skywalker pedig elbukik, és Darth Vaderként újjászületve a Birodalom szolgálatába áll.", "upcoming": false}, {"id": "n4", "title": "Solo: A Star Wars Story", "hu": "Solo: Egy Star Wars-történet", "type": "film", "canon": true, "rel": "2018-05-25", "y": -10, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/a/a9/Solo_A_Star_Wars_Story_Theatrical_Poster.png/revision/latest/scale-to-width-down/324?cb=20180409011120", "desc": "A fiatal Han Solo első nagy kalandja: megismerkedik Csubakkával és Lando Calrissiannal, megszerzi az Ezeréves Sólymot, és teljesíti a hírhedt kesseli futamot — miközben a galaxis alvilágának kegyetlen törvényeit is megtanulja.", "upcoming": false}, {"id": "n5", "title": "Rogue One: A Star Wars Story", "hu": "Zsivány Egyes: Egy Star Wars-történet", "type": "film", "canon": true, "rel": "2016-12-16", "y": -0.6, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/5/59/RogueOne-AStarWarsStory-Theatricalposter.png/revision/latest/scale-to-width-down/324?cb=20161012214043", "desc": "Közvetlenül az Egy új remény előtt játszódó háborús film: Jyn Erso és egy elszánt lázadó csapat öngyilkos küldetésre indul, hogy megszerezze a Halálcsillag terveit. Áldozatuk nélkül nem születhetne meg az új remény.", "upcoming": false}, {"id": "n6", "title": "Star Wars: Episode IV – A New Hope", "hu": "Egy új remény", "type": "film", "canon": true, "rel": "1977-05-25", "y": 0, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/4/44/1977-StarWars-theatricalposter.jpg/revision/latest/scale-to-width-down/314?cb=20260130123909", "desc": "Az 1977-es film, amellyel minden kezdődött: Luke Skywalker, egy tatuini parasztfiú két droiddal, egy csempésszel és egy öreg jedivel a Lázadó Szövetség oldalára áll, megmenti Leia hercegnőt, és felrobbantja a Birodalom Halálcsillagát.", "upcoming": false}, {"id": "n7", "title": "Star Wars: Episode V – The Empire Strikes Back", "hu": "A Birodalom visszavág", "type": "film", "canon": true, "rel": "1980-05-21", "y": 3, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/e/e8/1980-EmpireStrikesBack-theatricalposter.jpg/revision/latest/scale-to-width-down/320?cb=20260130125325", "desc": "A saga legsötétebb fejezete: a Hoth-i vereség után Luke Yoda mesternél tanul a Dagobah-n, míg barátai Vader csapdájába sétálnak a Felhővárosban. A film a mozitörténet egyik leghíresebb fordulatával zárul: „Én vagyok az apád.”", "upcoming": false}, {"id": "n8", "title": "Star Wars: Episode VI – Return of the Jedi", "hu": "A Jedi visszatér", "type": "film", "canon": true, "rel": "1983-05-25", "y": 4, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/b/b2/ReturnOfTheJediPoster1983.jpg/revision/latest/scale-to-width-down/316?cb=20250617080341", "desc": "Az eredeti trilógia lezárása: Han Solo kiszabadul Jabba palotájából, az endori csatában elbukik a második Halálcsillag, Luke pedig megváltja apját — Anakin Skywalker végez az Uralkodóval, és beteljesíti a próféciát.", "upcoming": false}, {"id": "n9", "title": "Star Wars: The Mandalorian and Grogu", "hu": "A Mandalóri és Grogu", "type": "film", "canon": true, "rel": "2026-05-22", "y": 12, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/f/f2/TheMandalorianAndGrogu-TheatricalPoster.jpg/revision/latest/scale-to-width-down/324?cb=20260528061949", "desc": "A Star Wars 2026-ban visszatért a mozikba: Din Djarin és Grogu közös kalandja a sorozat harmadik évada után játszódik. Az Új Köztársaság megbízásából a birodalmi maradványok ellen harcolnak, útjuk során pedig ismét próbára tétetik a fogadott apa és fia közti kötelék.", "upcoming": false}, {"id": "n10", "title": "Star Wars: Episode VII – The Force Awakens", "hu": "Az ébredő Erő", "type": "film", "canon": true, "rel": "2015-12-18", "y": 34, "era": "firstorder", "img": "https://static.wikia.nocookie.net/starwars/images/f/fd/Star_Wars_Episode_VII_The_Force_Awakens.jpg/revision/latest/scale-to-width-down/324?cb=20250618012820", "desc": "Harminc évvel az endori csata után a Birodalom hamvaiból kiemelkedő Első Rend fenyegeti a galaxist. A jakkui guberáló Rey és a dezertőr rohamosztagos Finn az Ellenállás oldalán sodródik a konfliktusba — és megkezdődik Luke Skywalker keresése.", "upcoming": false}, {"id": "n11", "title": "Star Wars: Episode VIII – The Last Jedi", "hu": "Az utolsó Jedik", "type": "film", "canon": true, "rel": "2017-12-15", "y": 34.2, "era": "firstorder", "img": "https://static.wikia.nocookie.net/starwars/images/1/12/TheLastJediTheatricalPoster.jpg/revision/latest/scale-to-width-down/324?cb=20171010002420", "desc": "Rey a remeteként élő Luke Skywalkert győzködi, hogy térjen vissza, miközben az Első Rend bekeríti a menekülő Ellenállást. A film a jedi örökség, a kudarc és az áldozat témáit boncolgatja, és Luke utolsó, legendás kiállásával zárul.", "upcoming": false}, {"id": "n12", "title": "Star Wars: Episode IX – The Rise of Skywalker", "hu": "Skywalker kora", "type": "film", "canon": true, "rel": "2019-12-20", "y": 35, "era": "firstorder", "img": "https://static.wikia.nocookie.net/starwars/images/4/4c/TROSOneSheet.jpg/revision/latest/scale-to-width-down/324?cb=20191022091806", "desc": "A Skywalker-saga fináléja: a holtából visszatért Palpatine végső flottája ellen az egész galaxis összefog. Rey szembenéz származása titkával, Ben Solo megváltást nyer, a Sith-ek pedig örökre elbuknak az exegoli csatában.", "upcoming": false}, {"id": "n13", "title": "Star Wars: Starfighter", "hu": null, "type": "film", "canon": true, "rel": "2027-05-27", "y": 40, "era": "newjedi", "img": "https://static.wikia.nocookie.net/starwars/images/8/80/Star-Wars-Starfighter.png/revision/latest/scale-to-width-down/480?cb=20250418014450", "desc": "Shawn Levy készülő mozifilmje Ryan Goslinggal a főszerepben, amely a Skywalker kora után öt évvel játszódik — a mozikba 2027 májusában érkezik. Az Új Jedi Rend korszakának első nagy vászonra szánt kalandja.", "upcoming": true}, {"id": "n14", "title": "The Star Wars Holiday Special", "hu": "Star Wars ünnepi különkiadás", "type": "tvfilm", "canon": false, "rel": "1978-11-17", "y": 1, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/2/23/StarWarsHS.jpg/revision/latest/scale-to-width-down/333?cb=20060417210458", "desc": "A hírhedt 1978-as tévés különkiadás: Han Solo igyekszik hazajuttatni Csubakkát a Kashyyykra, hogy családjával ünnepelhesse az Életnapot. Ma már inkább kultikus kuriózum — itt tűnt fel először Boba Fett, egy animációs betétben.", "upcoming": false}, {"id": "n15", "title": "Caravan of Courage: An Ewok Adventure", "hu": "Az ewokok kalandjai", "type": "tvfilm", "canon": false, "rel": "1984-11-25", "y": 3.2, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/6/60/Caravan_bg.jpg/revision/latest/scale-to-width-down/306?cb=20140228114152", "desc": "Legends tévéfilm az Endor holdján: két hajótörött gyerek, Mace és Cindel az ewokok segítségével vág neki a vadonnak, hogy kiszabadítsa szüleiket az óriás Gorax karmai közül.", "upcoming": false}, {"id": "n16", "title": "Ewoks: The Battle for Endor", "hu": "Ewokok: Csata Endor bolygón", "type": "tvfilm", "canon": false, "rel": "1985-11-24", "y": 3.5, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/a/ad/Ilm-ewok2.jpg/revision/latest/scale-to-width-down/334?cb=20051107095944", "desc": "Az ewok-tévéfilmek folytatása, sötétebb tónusban: Cindel és Wicket a marauderek támadása után egy remete és egy ewok falu maradékával veszi fel a harcot Terak király és Charal boszorkány ellen.", "upcoming": false}, {"id": "n17", "title": "The Acolyte", "hu": "Az akolitus", "type": "liveaction", "canon": true, "rel": "2024-06-04", "y": -132, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/1/13/Acolyte-TeaserPoster.jpg/revision/latest/scale-to-width-down/480?cb=20240319153912", "desc": "A Főkorszak alkonyán, száz évvel a Baljós árnyak előtt játszódó krimi-sorozat: egy jedi mester és egykori padawanja veszélyes gyilkossági ügyben nyomoz, amely a Sith-ek árnyékába vezet. Egy évad készült belőle.", "upcoming": false}, {"id": "n18", "title": "Obi-Wan Kenobi", "hu": "Obi-Wan Kenobi", "type": "liveaction", "canon": true, "rel": "2022-05-27", "y": -9, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/2/25/StarWarsObiWanKenobi-Poster.png/revision/latest/scale-to-width-down/480?cb=20220713043824", "desc": "Ewan McGregor visszatérése a szerepéhez: a Tatuinon remetéskedő Obi-Wannak el kell hagynia rejtekét, hogy megmentse az elrabolt gyermek Leiát — útja során pedig szembekerül egykori tanítványával, Darth Vaderrel és az inkvizítorokkal.", "upcoming": false}, {"id": "n19", "title": "Andor", "hu": "Andor", "type": "liveaction", "canon": true, "rel": "2022-09-21", "y": -4, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/3/3b/Andor_Season_One_poster.jpg/revision/latest/scale-to-width-down/480?cb=20220623212226", "desc": "A kritikusok által legjobban értékelt Star Wars-sorozat: Cassian Andor útja a kisstílű tolvajtól a Zsivány Egyes elszánt kéméig. Felnőtt hangvételű politikai thriller a születő Lázadásról, a birodalmi elnyomás gépezetéről — két évadon át, egészen a Rogue One küszöbéig.", "upcoming": false}, {"id": "n20", "title": "The Mandalorian", "hu": "A Mandalóri", "type": "liveaction", "canon": true, "rel": "2019-11-12", "y": 9, "era": "newrepublic", "img": "https://upload.wikimedia.org/wikipedia/en/0/04/The_Mandalorian_season_1_poster.jpg", "desc": "A sorozat, amely új korszakot nyitott a Star Warsban: a magányos mandalóri fejvadász, Din Djarin egy rejtélyes, Erő-érzékeny gyermeket — Grogut — vesz védelmébe a Birodalom maradványai elől. Három évad, két Emmy-díj és a Baby Yoda-jelenség.", "upcoming": false}, {"id": "n21", "title": "The Book of Boba Fett", "hu": "Boba Fett könyve", "type": "liveaction", "canon": true, "rel": "2021-12-29", "y": 9.4, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/0/0c/BobaFettKeyArt.jpg/revision/latest/scale-to-width-down/480?cb=20211103040609", "desc": "A sarlaccból kimenekült legendás fejvadász, Boba Fett átveszi Jabba egykori bűnbirodalmát a Tatuinon. A sorozat feltárja, hogyan élte túl a Jedi visszatér eseményeit, és hogyan vált a tuszkenek fogságából a Mos Espa-i alvilág daimjójává.", "upcoming": false}, {"id": "n22", "title": "Star Wars: Skeleton Crew", "hu": "Star Wars: Csontvázlegénység", "type": "liveaction", "canon": true, "rel": "2024-12-02", "y": 9.45, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/2/29/SkeletonCrew-OfficialPoster.jpg/revision/latest/scale-to-width-down/480?cb=20241101174923", "desc": "Amblin-hangulatú kalandsorozat: négy gyerek egy rejtélyes űrhajóval véletlenül elhagyja eldugott otthonbolygóját, és a galaxis kalózoktól hemzsegő szegletében próbál hazatalálni — a Jude Law játszotta talányos Erő-használó segítségével.", "upcoming": false}, {"id": "n23", "title": "Ahsoka", "hu": "Ahsoka", "type": "liveaction", "canon": true, "rel": "2023-08-22", "y": 11, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/3/39/Ahsoka_Official_Poster.jpg/revision/latest/scale-to-width-down/480?cb=20230407134006", "desc": "Ahsoka Tano a Lázadók történetét folytatva Thrawn főadmirális visszatérésének nyomába ered, és egy másik galaxisba is átkel Sabine Wrennel és Ezra Bridgerrel. A második évad várhatóan 2026 végén / 2027 elején érkezik a Disney+-ra.", "upcoming": false}, {"id": "n24", "title": "Star Wars: Young Jedi Adventures", "hu": "Star Wars: Fiatal jedik kalandjai", "type": "animseries", "canon": true, "rel": "2023-05-04", "y": -231, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/1/1a/YJA_Official_Poster.jpg/revision/latest/scale-to-width-down/480?cb=20230327233300", "desc": "A legfiatalabbaknak szóló animációs sorozat a Főkorszak idejéből: jedi növendékek — köztük Kai Brightstar — tanulják az Erő és a barátság leckéit a Tenoo bolygón. Az első Star Wars-sorozat, amely kifejezetten óvodásoknak készült.", "upcoming": false}, {"id": "n25", "title": "Star Wars: Tales of the Jedi", "hu": "Star Wars: Jedi-történetek", "type": "animseries", "canon": true, "rel": "2022-10-26", "y": -22.4, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/b/bc/StarWarsTalesOfTheJedi-Poster-Getty.jpg/revision/latest/scale-to-width-down/480?cb=20221006070025", "desc": "Dave Filoni antológiája hat rövid, gyönyörűen animált epizódban: Ahsoka Tano életének állomásai és Dooku gróf lassú elsötétedése — két sors, amely a jedi rend tündöklését és vakságát tükrözi.", "upcoming": false}, {"id": "n26", "title": "Star Wars: The Clone Wars", "hu": "Star Wars: A klónok háborúja", "type": "animseries", "canon": true, "rel": "2008-10-03", "y": -21.8, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/d/dd/SWTCW-poster.jpg/revision/latest?cb=20070518031445", "desc": "A modern Star Wars-kánon gerince, hét évadon át: Anakin, Obi-Wan és Ahsoka kalandjai a klónháborúk frontjain. A sorozat tette igazán mélyé Anakin bukását, és olyan ikonikus karaktereket adott a sagának, mint Ahsoka Tano, Rex kapitány vagy a visszatérő Maul.", "upcoming": false}, {"id": "n27", "title": "Star Wars: The Bad Batch", "hu": "Star Wars: A Rossz Osztag", "type": "animseries", "canon": true, "rel": "2021-05-04", "y": -18.9, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/6/65/TBB_Season_2_poster.jpg/revision/latest/scale-to-width-down/480?cb=20221208004321", "desc": "A Klónok háborúja folytatása a Birodalom hajnalán: a 99-es kísérleti klónosztag — a Rossz Osztag — szembefordul az új renddel, és a kis Omega védelmezőjeként menekül a galaxison át. Három évadon keresztül futott.", "upcoming": false}, {"id": "n28", "title": "Star Wars: Tales of the Empire", "hu": "Star Wars: Birodalmi történetek", "type": "animseries", "canon": true, "rel": "2024-05-04", "y": -18.5, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/7/77/StarWarsTalesOfTheEmpire-Poster-Getty.png/revision/latest/scale-to-width-down/480?cb=20240404190930", "desc": "A Tales-antológia második része a sötét oldal felől: Morgan Elsbeth útja a nightsister-mészárlástól Thrawn szolgálatáig, valamint Barriss Offee sorsa az inkvizítorok között — hat epizódban.", "upcoming": false}, {"id": "n29", "title": "Star Wars: Maul – Shadow Lord", "hu": "Star Wars: Maul – Az árnyak ura", "type": "animseries", "canon": true, "rel": "2026-04-06", "y": -18.2, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/7/74/MaulShadowLord-OfficialPoster.jpg/revision/latest/scale-to-width-down/480?cb=20260124083152", "desc": "2026 áprilisában debütált animációs sorozat: egy évvel a Sith-ek bosszúja után Maul a birodalmi éra alvilágában építi saját árnybirodalmát, miközben tanítványt fogad. Sam Witwer ikonikus hangjával — a második évad már be is lett jelentve.", "upcoming": false}, {"id": "n30", "title": "Star Wars: Tales of the Underworld", "hu": "Star Wars: Alvilági történetek", "type": "animseries", "canon": true, "rel": "2025-05-04", "y": -17.5, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/b/b7/TotU-Poster.png/revision/latest/scale-to-width-down/480?cb=20250402174337", "desc": "A Tales-antológia harmadik felvonása a galaxis alvilágáról: Asajj Ventress új esélyt kap az életre, Cad Bane pedig a múltjával számol el. Hat epizód, 2025 májusától.", "upcoming": false}, {"id": "n31", "title": "Star Wars Rebels", "hu": "Star Wars: Lázadók", "type": "animseries", "canon": true, "rel": "2014-10-03", "y": -5, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/6/69/Star_Wars_Rebels_Poster.jpg/revision/latest/scale-to-width-down/480?cb=20260131045140", "desc": "A Szellem hajó legénysége — Hera, Kanan, Ezra, Sabine, Zeb és Chopper — a formálódó Lázadás egyik első sejtje. Négy évadon át ível a történetük a Birodalom árnyékától a lothali felszabadításig, olyan emlékezetes ellenfelekkel, mint Thrawn főadmirális.", "upcoming": false}, {"id": "n32", "title": "Star Wars Resistance", "hu": "Star Wars: Ellenállás", "type": "animseries", "canon": true, "rel": "2018-10-07", "y": 33.8, "era": "firstorder", "img": "https://static.wikia.nocookie.net/starwars/images/8/8d/StarWarsResistance-SeasonOne.jpg/revision/latest/scale-to-width-down/480?cb=20180918145021", "desc": "Az ébredő Erő előestéjén játszódó animációs sorozat: Kazuda Xiono, az Ellenállás újdonsült kéme egy óceáni üzemanyagtöltő állomáson, a Colossuson figyeli az Első Rend térnyerését. Két évadot élt meg, anime-ihlette látványvilággal.", "upcoming": false}, {"id": "n33", "title": "Star Wars: Clone Wars (2003)", "hu": "Klónok háborúja (2003)", "type": "animseries", "canon": false, "rel": "2003-11-07", "y": -21.7, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/1/1f/CloneWars.png/revision/latest?cb=20140412001106", "desc": "Genndy Tartakovsky Emmy-díjas, stilizált mikroepizód-sorozata a klónháborúkról — a Legends-kontinuitás része. Itt debütált Grievous tábornok, és itt vált legendássá Mace Windu és a jedik szinte szuperhősi ábrázolása.", "upcoming": false}, {"id": "n34", "title": "Star Wars: Droids", "hu": "Star Wars: Droidok", "type": "animseries", "canon": false, "rel": "1985-09-07", "y": -15, "era": "reign", "img": "https://upload.wikimedia.org/wikipedia/en/7/75/Star_Wars_Droids.jpg", "desc": "1985-ös rajzfilmsorozat R2-D2 és C-3PO korai kalandjairól, még az Egy új remény előtt: a két droid gazdáról gazdára vándorolva keveredik csempészek, fejvadászok és birodalmiak ügyeibe.", "upcoming": false}, {"id": "n35", "title": "Star Wars: Ewoks", "hu": "Star Wars: Ewokok", "type": "animseries", "canon": false, "rel": "1985-09-07", "y": 3.1, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/7/70/Ewoks_all.jpg/revision/latest/scale-to-width-down/480?cb=20210402201736", "desc": "A Droids testvérsorozata: Wicket és az ewokok mesés kalandjai az Endor erdőholdján, még a Jedi visszatér eseményei előtt. Két évadnyi könnyed, gyerekeknek szóló Legends-történet.", "upcoming": false}, {"id": "n36", "title": "Star Wars: Forces of Destiny", "hu": "Star Wars: A végzet erői", "type": "miniseries", "canon": true, "rel": "2017-07-03", "y": 0.1, "era": "rebellion", "img": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Forces_of_Destiny_Opening_Logo.png", "desc": "Rövid, 2-3 perces animációs epizódok a saga hősnőiről: Rey, Jyn, Sabine, Leia, Ahsoka és Padmé kisebb-nagyobb hőstettei a filmek és sorozatok jelenetei között. A korszakokon átívelő antológia a Lázadás korától a sequelekig ugrál.", "upcoming": false}, {"id": "n37", "title": "Star Wars Eclipse", "hu": null, "type": "game", "canon": true, "rel": null, "y": -230, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/7/76/Star_Wars_Eclipse_logo.png/revision/latest/scale-to-width-down/480?cb=20211217074403", "desc": "A Quantic Dream (Detroit: Become Human) fejlesztés alatt álló, narratív akció-kalandjátéka a Főkorszak idején — az első videójáték, amely a High Republic érában játszódik. Megjelenési dátuma még nincs.", "upcoming": true}, {"id": "n38", "title": "Star Wars Zero Company", "hu": null, "type": "game", "canon": true, "rel": "2026-08-27", "y": -20, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/5/59/StarWarsZeroCompanyArt2.png/revision/latest/scale-to-width-down/353?cb=20260606010950", "desc": "A Bit Reactor és a Respawn körökre osztott taktikai játéka (az XCOM veteránjaitól): a klónháborúk végnapjaiban egy elit különítmény, a Zero Company vezetését vesszük át. 2026. augusztus 27-én jelenik meg.", "upcoming": true}, {"id": "n39", "title": "Star Wars Jedi: Fallen Order", "hu": null, "type": "game", "canon": true, "rel": "2019-11-15", "y": -14, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/5/57/Fallen-Order-Box-Art.jpg/revision/latest/scale-to-width-down/384?cb=20190607015712", "desc": "A Respawn akció-kalandjátéka: Cal Kestis, a 66-os parancsot túlélő fiatal padawan a Birodalom inkvizítorai elől menekülve próbálja újjáéleszteni a jedi rend reményét. A modern Star Wars-játékok egyik legnagyobb sikere.", "upcoming": false}, {"id": "n40", "title": "Star Wars Jedi: Survivor", "hu": null, "type": "game", "canon": true, "rel": "2023-04-28", "y": -9, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/8/82/Star_Wars_Jedi_Survivor_cover_art.jpg/revision/latest/scale-to-width-down/384?cb=20221212004209", "desc": "A Fallen Order folytatása öt évvel később: az érett jedivé váló Cal Kestis a Birodalom szorításában egy rejtett menedék, Tanalorr titkát kutatja. Nagyobb világok, mélyebb harcrendszer és egy megrázó középső fejezet.", "upcoming": false}, {"id": "n41", "title": "Star Wars: Beyond Victory – A Mixed Reality Playset", "hu": null, "type": "game", "canon": true, "rel": "2025-10-07", "y": -10, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/b/b2/BeyondVictoryAnnounceArt.png/revision/latest/scale-to-width-down/480?cb=20250328031153", "desc": "Az ILM kevertvalóság-kísérlete Meta Quest platformra: egy fogatverseny-történet a Birodalom korából, amelyben a játéktér a nappalinkba költözik. 2025 októberében jelent meg.", "upcoming": false}, {"id": "n42", "title": "Vader Immortal: A Star Wars VR Series", "hu": null, "type": "game", "canon": true, "rel": "2019-05-21", "y": -1, "era": "rebellion", "img": "https://upload.wikimedia.org/wikipedia/en/5/5a/Vader_immortal.jpg", "desc": "Háromrészes VR-kaland: egy csempész a Mustafaron, Darth Vader erődjében találja magát, ahol a Sith nagyúr ősi ereklyék felkutatására kényszeríti. Az egyik legjobban sikerült Star Wars VR-élmény, David S. Goyer tollából.", "upcoming": false}, {"id": "n43", "title": "Star Wars Battlefront (2015)", "hu": null, "type": "game", "canon": true, "rel": "2015-11-17", "y": -0.4, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/f/fb/Battlefront_2015_Cover.jpg/revision/latest/scale-to-width-down/341?cb=20211024212736", "desc": "A DICE látványos többjátékos lövöldéje a galaktikus polgárháború ikonikus csatateréin, a Hoth-tól az Endorig. Kampányt nem kapott, de a Battle of Jakku DLC-vel a kánon egyik sorsdöntő csatáját is megidézte.", "upcoming": false}, {"id": "n44", "title": "Star Wars Outlaws", "hu": null, "type": "game", "canon": true, "rel": "2024-08-30", "y": 3.3, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/6/63/Star-Wars-Outlaws.png/revision/latest/scale-to-width-down/386?cb=20230611182953", "desc": "Az első nyílt világú Star Wars-játék a Ubisofttól: a vagány tolvaj, Kay Vess és társa, Nix a galaxis bűnszindikátusai — köztük a Zerek Besh — között lavírozva vállalja el élete legnagyobb balhéját, a Birodalom visszavág és a Jedi visszatér közti időszakban.", "upcoming": false}, {"id": "n45", "title": "Star Wars Battlefront II (2017)", "hu": null, "type": "game", "canon": true, "rel": "2017-11-09", "y": 4.2, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/d/da/Battlefront_2.jpg/revision/latest/scale-to-width-down/352?cb=20170415201655", "desc": "A folytatás már kánon kampányt is kapott: Iden Versio, az Inferno osztag parancsnoka az endori vereség után kérdőjelezi meg a Birodalom ügyét. A többjátékos mód mindhárom filmkorszak hőseit és csatatereit felvonultatja.", "upcoming": false}, {"id": "n46", "title": "Star Wars: Squadrons", "hu": null, "type": "game", "canon": true, "rel": "2020-10-02", "y": 4.6, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/d/d9/Star-Wars-Squadrons.jpg/revision/latest/scale-to-width-down/480?cb=20200612184722", "desc": "Pilótafülke-szimuláció a Jedi visszatér utáni hónapokból: az Új Köztársaság Vanguard és a Birodalom Titan századának pilótájaként éljük át a galaktikus polgárháború utolsó nagy űrcsatáit — akár VR-ben is.", "upcoming": false}, {"id": "n47", "title": "Star Wars: Uprising", "hu": null, "type": "game", "canon": true, "rel": "2015-09-10", "y": 4.8, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/8/8a/Star_Wars_Uprising_Poster.png/revision/latest/scale-to-width-down/308?cb=20150604161027", "desc": "Mobil akció-RPG az endori csata utáni hónapokból: az Anoat szektort lezáró birodalmi „Vasblokád” ellen szerveződő felkelést követi — az első játékok egyike, amely az új kánon űrét töltötte ki. Szerverei 2016-ban leálltak.", "upcoming": false}, {"id": "n48", "title": "Star Wars: Galactic Racer", "hu": null, "type": "game", "canon": true, "rel": "2026-10-06", "y": 5.2, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/5/56/GalacticRacerPoster.jpg/revision/latest/scale-to-width-down/320?cb=20260430231040", "desc": "Készülő versenyjáték, amely a fogatversenyzés adrenalinját hozza vissza a Star Warsba az Új Köztársaság korában — 2026 októberében érkezik.", "upcoming": true}, {"id": "n49", "title": "Star Wars: Hunters", "hu": null, "type": "game", "canon": true, "rel": "2024-06-04", "y": 9.2, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/5/5e/SWHunters-KeyArt.jpg/revision/latest/scale-to-width-down/480?cb=20220811162639", "desc": "Arénaharc-játék a Birodalom bukása utáni évekből: a Vespaara bolygó Arénájában a galaxis minden tájáról érkező vadászok — birodalmi veteránok, wookiee harcosok, droidok — csapnak össze a nézők szórakoztatására.", "upcoming": false}, {"id": "n50", "title": "Star Wars: Tales from the Galaxy's Edge", "hu": null, "type": "game", "canon": true, "rel": "2020-11-19", "y": 34.3, "era": "firstorder", "img": "https://static.wikia.nocookie.net/starwars/images/6/64/TalesGalaxysEdgePoster.jpg/revision/latest/scale-to-width-down/480?cb=20210811203350", "desc": "VR-kalandjáték a Batuu bolygón, a sequel-trilógia idején: egy droidtechnikusként keveredünk a Fekete Csúcs előőrs csempészei, ellenállói és az Első Rend járőrei közé. A Last Call kiegészítővel vált teljessé.", "upcoming": false}, {"id": "n51", "title": "The High Republic: Path of Deceit", "hu": null, "type": "novel", "canon": true, "rel": "2022-10-04", "y": -382, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/3/38/TheHighRepublic-PathOfDeceit.jpg/revision/latest/scale-to-width-down/317?cb=20220526233239", "desc": "A Főkorszak II. fázisának nyitánya, 150 évvel a Fényes Köztársaság aranykora előtt: a Nyitott Kéz szektája köré épülő ifjúsági regény, amelyben feltűnik a későbbi nagy ellenség, a Nihil gyökere.", "upcoming": false}, {"id": "n52", "title": "The High Republic: Convergence", "hu": null, "type": "novel", "canon": true, "rel": "2022-11-22", "y": -381.9, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/f/f4/HighRepublicConvergence-Cover.jpg/revision/latest/scale-to-width-down/316?cb=20220620193112", "desc": "Két háborúban álló bolygó, Eiram és E'ronoh viszálya fenyegeti a Külső Perem békéjét — a jedik közvetíteni próbálnak, miközben a háttérben ismeretlen erők szítják a konfliktust.", "upcoming": false}, {"id": "n53", "title": "The High Republic: Cataclysm", "hu": null, "type": "novel", "canon": true, "rel": "2023-04-04", "y": -381.6, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/2/2b/TheHighRepublic-Cataclysm-cover.jpg/revision/latest/scale-to-width-down/316?cb=20221018054601", "desc": "Az Eiram és E'ronoh körüli válság robbanásig jut: a II. fázis felnőtt regényeinek csúcspontja, amelyben a Nyitott Kéz igazi arca is lelepleződik.", "upcoming": false}, {"id": "n54", "title": "The High Republic: Path of Vengeance", "hu": null, "type": "novel", "canon": true, "rel": "2023-05-02", "y": -381.55, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/2/2a/TheHighRepublic-PathofVengeance-cover.jpg/revision/latest/scale-to-width-down/316?cb=20221010031440", "desc": "A II. fázis záró ifjúsági regénye: Marda Ro útja a hitbuzgó követőből a Nameless-lények prófétájává — a Nihil és a jedik évszázados konfliktusának eredettörténete.", "upcoming": false}, {"id": "n55", "title": "The High Republic: Light of the Jedi", "hu": "Fényes Köztársaság: A jedik fénye", "type": "novel", "canon": true, "rel": "2021-01-05", "y": -232, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/e/e2/Light_of_the_Jedi_cover.jpg/revision/latest/scale-to-width-down/316?cb=20200225020702", "desc": "A High Republic-korszak nagyszabású nyitánya: a Legacy Run katasztrófája után a jedik a Köztársaság aranykorának csúcsán néznek szembe egy új, kiszámíthatatlan ellenséggel — Marchion Ro Nihiljével.", "upcoming": false}, {"id": "n56", "title": "The High Republic: Into the Dark", "hu": null, "type": "novel", "canon": true, "rel": "2021-02-02", "y": -231.9, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/8/81/Into_the_Dark_cover.jpg/revision/latest/scale-to-width-down/320?cb=20200225074008", "desc": "Reath Silas, a könyvmoly padawan első igazi kalandja: egy elhagyatott űrállomáson ősi sötétség ébredezik. Claudia Gray ifjúsági regénye az I. fázis egyik legjobbja.", "upcoming": false}, {"id": "n57", "title": "The High Republic: The Rising Storm", "hu": null, "type": "novel", "canon": true, "rel": "2021-06-29", "y": -231, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/c/c8/TheHighRepublic-TheRisingStorm.jpg/revision/latest/scale-to-width-down/316?cb=20210120060833", "desc": "A Köztársaság Valo bolygón rendezett ünnepélyes seregszemléjére lesújt a Nihil — a korszak egyik legdrámaibb fordulópontja, amely után semmi sem marad a régiben.", "upcoming": false}, {"id": "n58", "title": "The High Republic: Out of the Shadows", "hu": null, "type": "novel", "canon": true, "rel": "2021-07-27", "y": -230.9, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/5/51/Star_Wars_The_High_Republic_Out_of_the_Shadows_final_cover.jpg/revision/latest/scale-to-width-down/320?cb=20210217035059", "desc": "Ifjúsági regény a Valo utáni hónapokból: egy fuvarozópilóta lány a jedik és a Nihil hatalmi játszmáinak kereszttüzébe kerül.", "upcoming": false}, {"id": "n59", "title": "The High Republic: The Fallen Star", "hu": null, "type": "novel", "canon": true, "rel": "2022-01-04", "y": -230, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/7/79/HighRepublicTheFallenStar-Cover.jpg/revision/latest/scale-to-width-down/316?cb=20210915222426", "desc": "Az I. fázis megrendítő csúcspontja: a Nihil végrehajtja legmerészebb csapását a jedik büszkesége, a Csillagfény Jelzőfény űrállomás ellen. Claudia Gray regénye a korszak legsötétebb órája.", "upcoming": false}, {"id": "n60", "title": "The High Republic: Midnight Horizon", "hu": null, "type": "novel", "canon": true, "rel": "2022-02-01", "y": -229.9, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/d/dc/HighRepublicMidnightHorizon.jpg/revision/latest/scale-to-width-down/320?cb=20210916182836", "desc": "A Csillagfény bukása után a Corellián nyomoz két jedi mester és padawanjaik — ifjúsági regény, amely a gyász és az újrakezdés hangján zárja az I. fázist.", "upcoming": false}, {"id": "n61", "title": "The High Republic: The Eye of Darkness", "hu": null, "type": "novel", "canon": true, "rel": "2023-11-14", "y": -228, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/b/b0/TheHighRepublic-TheEyeofDarkness-cover.jpg/revision/latest/scale-to-width-down/316?cb=20230705195428", "desc": "A III. fázis nyitánya: a Nihil Okklúziós Zónája mögött rekedt világok és jedik küzdelme — a galaxis kettészakadt, és Marchion Ro hatalma csúcsán áll.", "upcoming": false}, {"id": "n62", "title": "The High Republic: Defy the Storm", "hu": null, "type": "novel", "canon": true, "rel": "2024-03-05", "y": -227.9, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/7/79/TheHighRepublic-DefytheStorm-cover.jpg/revision/latest/scale-to-width-down/324?cb=20230721222810", "desc": "Ifjúsági regény az Okklúziós Zóna széléről: régi ismerősök fognak össze, hogy áttörjék a Nihil blokádját.", "upcoming": false}, {"id": "n63", "title": "The High Republic: Temptation of the Force", "hu": null, "type": "novel", "canon": true, "rel": "2024-06-11", "y": -227.8, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/2/2e/TheHighRepublic-TemptationoftheForce-cover.jpg/revision/latest/scale-to-width-down/316?cb=20240520141843", "desc": "Elzar Mann és Avar Kriss végre együtt veszi fel a harcot a Nihillel — miközben a Nameless-lények titka egyre nyugtalanítóbb mélységeket tár fel.", "upcoming": false}, {"id": "n64", "title": "The High Republic: Tears of the Nameless", "hu": null, "type": "novel", "canon": true, "rel": "2024-09-24", "y": -227.7, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/3/3b/TearsOfTheNameless-Cover.png/revision/latest/scale-to-width-down/320?cb=20240929070043", "desc": "Ifjúsági regény, amely a Nameless-lények eredetének nyomába ered — miközben a jedik rendje a teljes összeomlás szélén táncol.", "upcoming": false}, {"id": "n65", "title": "The High Republic: Into the Light", "hu": null, "type": "novel", "canon": true, "rel": "2025-04-01", "y": -227.6, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/4/45/TheHighRepublic-IntotheLight-cover.jpg/revision/latest/scale-to-width-down/325?cb=20241018205643", "desc": "A III. fázis utolsó előtti felnőtt regénye: a jedik ellentámadásba lendülnek, hogy visszafoglalják az elzárt zónát és leszámoljanak a Nihillel.", "upcoming": false}, {"id": "n66", "title": "The High Republic: Trials of the Jedi", "hu": null, "type": "novel", "canon": true, "rel": "2025-06-17", "y": -227.5, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/6/60/TheHighRepublic-TrialsoftheJedi-Cover.png/revision/latest/scale-to-width-down/316?cb=20250128161108", "desc": "Charles Soule regénye, a teljes High Republic-kezdeményezés 2025-ös nagy fináléja: a jedik utolsó, mindent eldöntő összecsapása Marchion Róval és a Nameless-lényekkel.", "upcoming": false}, {"id": "n67", "title": "The Acolyte: Wayseeker", "hu": null, "type": "novel", "canon": true, "rel": "2025-05-06", "y": -160, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/2/28/TheAcolyte-Wayseeker-cover3.jpg/revision/latest/scale-to-width-down/316?cb=20241114210410", "desc": "Az akolitus sorozathoz kapcsolódó regény Vernestra Rwoh-ról: a jedi mester évtizedekkel a sorozat eseményei előtt egy útkereső küldetésen szembesül a rend korlátaival.", "upcoming": false}, {"id": "n68", "title": "The Acolyte: The Crystal Crown", "hu": null, "type": "novel", "canon": true, "rel": "2025-07-29", "y": -134, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/1/18/TheAcolyte-TheCrystalCrown-Cover.jpg/revision/latest/scale-to-width-down/316?cb=20250524051956", "desc": "Az akolitus előzményregénye: Osha és Mae történetéhez kapcsolódó szálak a Főkorszak alkonyán.", "upcoming": false}, {"id": "n69", "title": "Padawan", "hu": null, "type": "novel", "canon": true, "rel": "2022-07-26", "y": -41, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/7/74/Padawan_cover.jpg/revision/latest/scale-to-width-down/316?cb=20220225073815", "desc": "A tinédzser Obi-Wan Kenobi első önálló kalandja: mesterétől elszakadva egy rejtélyes bolygón, felnőttek nélkül élő fiatalok között kell megtalálnia, mit jelent jedinek lenni.", "upcoming": false}, {"id": "n70", "title": "Master & Apprentice", "hu": "Mester és tanítvány", "type": "novel", "canon": true, "rel": "2019-04-16", "y": -40, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/c/c5/MasterApprentice-Hardcover.jpg/revision/latest/scale-to-width-down/318?cb=20181007232310", "desc": "Claudia Gray regénye Qui-Gon Jinn és a fiatal Obi-Wan feszültségekkel teli kapcsolatáról: egy diplomáciai küldetés a Pijal holdján próbára teszi a mester és padawanja közti bizalmat — és felsejlenek az ősi jedi próféciák is.", "upcoming": false}, {"id": "n71", "title": "The Living Force", "hu": null, "type": "novel", "canon": true, "rel": "2024-04-09", "y": -33, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/9/91/TheLivingForce.png/revision/latest/scale-to-width-down/316?cb=20230907175537", "desc": "John Jackson Miller regénye egy évvel a Baljós árnyak előtt: a teljes Jedi Tanács — mind a tizenkét mester — közösen száll ki a terepre, hogy megmentsen egy haldokló kolóniát.", "upcoming": false}, {"id": "n72", "title": "Queen's Peril", "hu": null, "type": "novel", "canon": true, "rel": "2020-06-02", "y": -32.1, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/1/1c/QueensPeril.png/revision/latest/scale-to-width-down/320?cb=20200618062128", "desc": "A frissen megválasztott, tizennégy éves Amidala királynő összeállítja szolgálólányai titkos csapatát — a Baljós árnyak eseményei alatt és előtt játszódó ifjúsági regény.", "upcoming": false}, {"id": "n73", "title": "Mace Windu: The Glass Abyss", "hu": null, "type": "novel", "canon": true, "rel": "2024-10-15", "y": -31.5, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/9/9a/MaceWinduTheGlassAbyss-revealcover.jpg/revision/latest/scale-to-width-down/316?cb=20231208144754", "desc": "Steven Barnes regénye: Qui-Gon halála után Mace Windu egy üvegsivatagos bűnvárosba utazik, hogy teljesítse elesett barátja utolsó kérését — közben saját harcos-filozófiájával is szembenéz.", "upcoming": false}, {"id": "n74", "title": "Queen's Shadow", "hu": "A királynő árnyéka", "type": "novel", "canon": true, "rel": "2019-03-05", "y": -28, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/0/0e/QueensShadow.png/revision/latest/scale-to-width-down/320?cb=20190305210550", "desc": "Padmé Amidala a királynői trónról a szenátusba lép át — E. K. Johnston regénye a szolgálólányok testvériségéről és a politika színfalai mögötti életről.", "upcoming": false}, {"id": "n75", "title": "Queen's Hope", "hu": null, "type": "novel", "canon": true, "rel": "2022-01-25", "y": -22.05, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/4/47/Queens_Hope_final_cover.jpg/revision/latest/scale-to-width-down/325?cb=20210618225638", "desc": "A Queen-trilógia zárása: a frissen, titokban férjhez ment Padmé a klónháború kitörésének napjaiban kémküldetést vállal, míg Sabé a helyét veszi át a szenátusban.", "upcoming": false}, {"id": "n76", "title": "Brotherhood", "hu": null, "type": "novel", "canon": true, "rel": "2022-05-10", "y": -21.95, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/3/3d/Brotherhood_Final_Cover.png/revision/latest/scale-to-width-down/315?cb=20220510224638", "desc": "Mike Chen regénye a klónháború első heteiből: a Cato Neimoidián történt merénylet ügyében Obi-Wan nyomoz, miközben ő és a frissen lovaggá ütött Anakin megtanulnak immár egyenrangú társakként — testvérekként — együtt harcolni.", "upcoming": false}, {"id": "n77", "title": "Thrawn Ascendancy: Chaos Rising", "hu": null, "type": "novel", "canon": true, "rel": "2020-09-01", "y": -19.45, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/4/4a/ChaosRising_cover.jpg/revision/latest/scale-to-width-down/316?cb=20200902230326", "desc": "Timothy Zahn trilógiájának nyitánya a galaxison túli Chiss Birodalomból: a fiatal Thrawn felemelkedése saját népe flottájában, még a Birodalommal való találkozása előtt.", "upcoming": false}, {"id": "n78", "title": "Dark Disciple", "hu": null, "type": "novel", "canon": true, "rel": "2015-07-07", "y": -19.4, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/9/90/Dark_Disciple_Cover.png/revision/latest/scale-to-width-down/316?cb=20141209194455", "desc": "A Klónok háborúja el nem készült epizódjaiból írt regény: a jedik Quinlan Vost bízzák meg Dooku gróf meggyilkolásával — társa pedig nem más, mint az egykori Sith-tanítvány, Asajj Ventress. Sötét, felnőtt hangvételű történet áldozatról és megváltásról.", "upcoming": false}, {"id": "n79", "title": "Star Wars Outlaws: Low Red Moon", "hu": null, "type": "novel", "canon": true, "rel": "2026-02-03", "y": -19.2, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/7/76/OutlawsLowRedMoon-Cover.jpg/revision/latest/scale-to-width-down/316?cb=20250922235839", "desc": "A Star Wars Outlaws játékhoz kapcsolódó 2026-os előzményregény a klónháborúk korából, amely a játék világának alvilági szereplőihez vezet vissza.", "upcoming": false}, {"id": "n80", "title": "Reign of the Empire: The Mask of Fear", "hu": null, "type": "novel", "canon": true, "rel": "2025-02-25", "y": -18.95, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/0/08/ROTE-TheMaskOfFear.jpg/revision/latest/scale-to-width-down/315?cb=20240729163725", "desc": "Az új Birodalom-trilógia nyitánya a Sith-ek bosszúja utáni hetekből: Mon Mothma, Bail Organa és Saw Gerrera három különböző úton próbál szembenézni azzal, hogy a demokrácia tapsvihar közepette halt meg.", "upcoming": false}, {"id": "n81", "title": "Master of Evil", "hu": null, "type": "novel", "canon": true, "rel": "2025-11-11", "y": -18.85, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/b/be/MasterOfEvil-Cover.png/revision/latest/scale-to-width-down/316?cb=20250410155352", "desc": "Adam Christopher Vader-regénye a Birodalom hajnaláról: a frissen páncélba zárt Sith nagyúr első évei, amikor a gyász és a gyűlölet még nyers erővel formálja a galaxis új rémét.", "upcoming": false}, {"id": "n82", "title": "Thrawn Ascendancy: Greater Good", "hu": null, "type": "novel", "canon": true, "rel": "2021-04-27", "y": -18.7, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/d/d1/GreaterGood.jpg/revision/latest/scale-to-width-down/316?cb=20201029174446", "desc": "A Chiss-trilógia középső kötete: Thrawn ellenfelei már nem flottákkal, hanem szavakkal és családi intrikákkal támadnak — a Chiss Birodalom belülről kezd repedezni.", "upcoming": false}, {"id": "n83", "title": "Thrawn Ascendancy: Lesser Evil", "hu": null, "type": "novel", "canon": true, "rel": "2021-11-16", "y": -18.6, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/3/3f/LesserEvil.jpg/revision/latest/scale-to-width-down/316?cb=20210402211907", "desc": "A trilógia zárása: Thrawn végső játszmája a Chiss Birodalom megmentéséért — és a döntés, amely a száműzetéséhez, a Birodalomhoz és a Star Wars Rebelsig vezető úthoz vezet.", "upcoming": false}, {"id": "n84", "title": "Sanctuary", "hu": null, "type": "novel", "canon": true, "rel": "2025-08-05", "y": -18, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/1/16/Sanctuary-Cover.jpg/revision/latest/scale-to-width-down/316?cb=20250207000237", "desc": "2025-ös kánonregény a birodalmi éra elejéről: menedéket kereső túlélők története a formálódó elnyomás árnyékában.", "upcoming": false}, {"id": "n85", "title": "Ahsoka", "hu": "Ahsoka", "type": "novel", "canon": true, "rel": "2016-10-11", "y": -17.8, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/d/d3/Ahsoka_novel_cover.png/revision/latest/scale-to-width-down/318?cb=20160715164545", "desc": "E. K. Johnston regénye a 66-os parancs után bujkáló Ahsoka Tanóról: a Raada holdján új életet kezdene, de a Birodalom megjelenése ismét harcra — és a Fulcrum-szerep vállalására — kényszeríti.", "upcoming": false}, {"id": "n86", "title": "Catalyst: A Rogue One Novel", "hu": "Katalizátor", "type": "novel", "canon": true, "rel": "2016-11-15", "y": -17, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/9/92/Catalyst_A_Rogue_One_Novel.png/revision/latest/scale-to-width-down/316?cb=20180211055827", "desc": "A Zsivány Egyes előzményregénye: Galen Erso és Orson Krennic évtizedes játszmája, amelynek tétje a Halálcsillag szuperlézere — és az Erso család sorsa.", "upcoming": false}, {"id": "n87", "title": "Thrawn", "hu": "Thrawn", "type": "novel", "canon": true, "rel": "2017-04-11", "y": -15, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/1/14/SoCalledThrawnNovel.png/revision/latest/scale-to-width-down/315?cb=20160805194404", "desc": "Timothy Zahn újraírt eredettörténete a kánonban: a száműzött chiss stratéga szédületes karrierje a birodalmi flottában, kadéttól a főadmirálisi rangig — oldalán Eli Vantóval.", "upcoming": false}, {"id": "n88", "title": "Lords of the Sith", "hu": "A Sith nagyurak", "type": "novel", "canon": true, "rel": "2015-04-28", "y": -14, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/6/6b/Lords_of_the_Sith.jpg/revision/latest/scale-to-width-down/315?cb=20210718053306", "desc": "Az Uralkodó és Vader hajója lezuhan a Ryloth felett, ahol Cham Syndulla felkelői vadásznak rájuk — ritka alkalom, amikor a két Sith nagyurat együtt, akcióban látjuk.", "upcoming": false}, {"id": "n89", "title": "Tarkin", "hu": "Tarkin", "type": "novel", "canon": true, "rel": "2014-11-04", "y": -13.9, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/d/df/TarkinCover.jpg/revision/latest/scale-to-width-down/315?cb=20140425191637", "desc": "James Luceno portréregénye a Birodalom leghidegebb elméjéről: Wilhuff Tarkin felemelkedése, neveltetése és a doktrína, amely a Halálcsillagig vezet.", "upcoming": false}, {"id": "n90", "title": "Inquisitor: Rise of the Red Blade", "hu": null, "type": "novel", "canon": true, "rel": "2023-07-18", "y": -13.5, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/f/f0/InquisitorRiseoftheRedBlade-cover.jpg/revision/latest/scale-to-width-down/316?cb=20221011193317", "desc": "Egy jedi lovagból lett inkvizítor története belülről: Iskat Akaris útja a rend bukásától a vörös pengéig — a sötét oldal lélektani rajza.", "upcoming": false}, {"id": "n91", "title": "Most Wanted", "hu": null, "type": "novel", "canon": true, "rel": "2018-05-25", "y": -13, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/6/60/Most_Wanted_book_cover.jpg/revision/latest/scale-to-width-down/320?cb=20180217015536", "desc": "A Solo előzménye: a tinédzser Han és Qi'ra még riválisként róják a Corellia utcáit, amikor egy balul sikerült üzlet közös menekülésre kényszeríti őket.", "upcoming": false}, {"id": "n92", "title": "Star Wars Jedi: Battle Scars", "hu": null, "type": "novel", "canon": true, "rel": "2023-03-07", "y": -11.2, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/0/04/Jedi_Battle_Scars_cover.jpg/revision/latest/scale-to-width-down/316?cb=20221203085940", "desc": "A Fallen Order és a Survivor közti évekből: Cal Kestis és a Mantis legénysége egy szökött rohamosztagos oldalán vállal veszélyes küldetést — a játékok rajongóinak kötelező.", "upcoming": false}, {"id": "n93", "title": "Crimson Climb", "hu": null, "type": "novel", "canon": true, "rel": "2023-10-10", "y": -11, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/f/f5/CrimsonClimb-revealcover.jpg/revision/latest/scale-to-width-down/318?cb=20230208001041", "desc": "Qi'ra útja a corelliai csatornáktól a Crimson Dawn belső köréig: E. K. Johnston ifjúsági regénye a túlélésről és az árról, amit a hatalomért fizetni kell.", "upcoming": false}, {"id": "n94", "title": "A New Dawn", "hu": "Új hajnal", "type": "novel", "canon": true, "rel": "2014-09-02", "y": -10.8, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/f/f6/A_New_Dawn-SWP.jpg/revision/latest/scale-to-width-down/361?cb=20170110083833", "desc": "Az új kánon első regénye: Kanan Jarrus és Hera Syndulla első találkozása a Gorse bolygón — a Rebels-legénység születése, John Jackson Miller tollából.", "upcoming": false}, {"id": "n95", "title": "Rebel Rising", "hu": null, "type": "novel", "canon": true, "rel": "2017-05-02", "y": -8, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/4/41/RebelRising-Hardcover.jpg/revision/latest/scale-to-width-down/320?cb=20180121202424", "desc": "Jyn Erso elveszett évei: Saw Gerrera neveltjeként partizánná válik, majd magára marad — az ifjúsági regény a Zsivány Egyes hősnőjének sebeit mutatja meg.", "upcoming": false}, {"id": "n96", "title": "Lost Stars", "hu": "Elveszett csillagok", "type": "novel", "canon": true, "rel": "2015-09-04", "y": -6, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/a/a2/LostStars.png/revision/latest/scale-to-width-down/318?cb=20150709005414", "desc": "Claudia Gray rajongói kedvence: két gyerekkori jóbarát — egy birodalmi tiszt és egy lázadó pilóta — szerelme, miközben a galaktikus polgárháború ellentétes oldalaira sodródnak, a Jakku csatájáig.", "upcoming": false}, {"id": "n97", "title": "Reign of the Empire: Edge of the Abyss", "hu": null, "type": "novel", "canon": true, "rel": "2026-09-15", "y": -5.9, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/0/00/ROTE-EdgeOfTheAbyss-Cover.png/revision/latest/scale-to-width-down/316?cb=20260310164917", "desc": "A Birodalom-trilógia 2026 szeptemberében érkező középső kötete: a Mask of Fear szereplői tovább csúsznak a nyílt ellenállás — vagy a behódolás — felé.", "upcoming": true}, {"id": "n98", "title": "Leia, Princess of Alderaan", "hu": "Leia, Alderaan hercegnője", "type": "novel", "canon": true, "rel": "2017-09-01", "y": -3, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/1/11/LeiaPrincessofAlderaan-Hardcover.jpg/revision/latest/scale-to-width-down/318?cb=20170708131542", "desc": "A tizenhat éves Leia Organa beavatása: miközben trónörökösi próbáit teljesíti, rájön, hogy szülei titokban lázadást szerveznek — Claudia Gray ifjúsági regénye, amelyben Amilyn Holdo is feltűnik.", "upcoming": false}, {"id": "n99", "title": "Thrawn: Alliances", "hu": "Thrawn: Szövetségek", "type": "novel", "canon": true, "rel": "2018-07-24", "y": -2, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/c/c8/Thrawn_Alliances_cover.png/revision/latest/scale-to-width-down/315?cb=20200826220634", "desc": "Két idősík, két szövetség: Thrawn és Vader közös birodalmi küldetése — párhuzamosan azzal, amikor a klónháborúban Thrawn még Anakin Skywalkerrel találkozott.", "upcoming": false}, {"id": "n100", "title": "Thrawn: Treason", "hu": "Thrawn: Árulás", "type": "novel", "canon": true, "rel": "2019-07-23", "y": -1.2, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/3/3f/ThrawnTreason.jpg/revision/latest/scale-to-width-down/316?cb=20190204205531", "desc": "A Thrawn-trilógia zárása: a főadmirális a Halálcsillag-projekt árnyékában manőverezik a birodalmi udvari intrikák és a chiss lojalitás között — közvetlenül a Rebels fináléja előtt.", "upcoming": false}, {"id": "n101", "title": "Battlefront II: Inferno Squad", "hu": "Battlefront II: Inferno osztag", "type": "novel", "canon": true, "rel": "2017-07-19", "y": 0.2, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/b/b6/Star_Wars_Battlefront_II_Inferno_Squad.jpg/revision/latest/scale-to-width-down/316?cb=20170727214334", "desc": "A Battlefront II játék előzménye: közvetlenül a Halálcsillag pusztulása után Iden Versio elit osztaga beépül a Saw Gerrera-féle partizánok maradékai közé.", "upcoming": false}, {"id": "n102", "title": "Heir to the Jedi", "hu": "A Jedi örököse", "type": "novel", "canon": true, "rel": "2015-03-03", "y": 0.4, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/c/c2/Heir_to_the_Jedi.jpg/revision/latest/scale-to-width-down/315?cb=20140425200555", "desc": "Egyes szám első személyű Luke-regény a yavini csata utáni hónapokból: a fiatal hős mester nélkül, magában próbálja megérteni az Erőt egy veszélyes mentőakció közben.", "upcoming": false}, {"id": "n103", "title": "Battlefront: Twilight Company", "hu": "Battlefront: Alkony század", "type": "novel", "canon": true, "rel": "2015-11-03", "y": 3.1, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/9/91/Battlefront_Twilight_Company_cover.jpg/revision/latest/scale-to-width-down/316?cb=20150828172004", "desc": "A lázadás gyalogságának háborús regénye: a 61-es mobil gyalogság, az Alkony század visszavonulása és helytállása a Hoth utáni sötét hónapokban — nyers, katonai nézőpontú Star Wars.", "upcoming": false}, {"id": "n104", "title": "The Princess and the Scoundrel", "hu": null, "type": "novel", "canon": true, "rel": "2022-08-16", "y": 4.3, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/8/8b/PrincessandtheScoundrel-cover.jpg/revision/latest/scale-to-width-down/316?cb=20220514221806", "desc": "Han és Leia esküvője és mézeshetei — közvetlenül az endori győzelem után, egy luxus-űrhajón, ahol a Birodalom árnyéka a nászútra is elér.", "upcoming": false}, {"id": "n105", "title": "Aftermath", "hu": "Utóhatás", "type": "novel", "canon": true, "rel": "2015-09-04", "y": 4.4, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/8/88/Aftermath.jpg/revision/latest/scale-to-width-down/316?cb=20170509004040", "desc": "Chuck Wendig trilógiájának nyitánya az endori csata után: a Birodalom szétesőben, az Új Köztársaság születőben — Norra Wexley és csapata birodalmi főtiszteket vadászik az Akiva felett.", "upcoming": false}, {"id": "n106", "title": "Alphabet Squadron", "hu": null, "type": "novel", "canon": true, "rel": "2019-06-11", "y": 4.5, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/9/9d/Alphabet_Squadron.svg/revision/latest/scale-to-width-down/480?cb=20260312111120", "desc": "Öt pilóta, ötféle vadászgép, egy közös trauma: az Alexander Freed-trilógia a polgárháború utolsó felvonásának lélektani háborús regénye, a Shadow Wing birodalmi ászai ellen.", "upcoming": false}, {"id": "n107", "title": "Aftermath: Life Debt", "hu": "Utóhatás: Életadósság", "type": "novel", "canon": true, "rel": "2016-07-12", "y": 5.0, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/8/80/AftermathLifeDebt-Hardcover.jpg/revision/latest/scale-to-width-down/316?cb=20170509144831", "desc": "A trilógia középső kötete: Han Solo és Csubakka a Kashyyyk felszabadítására indul, míg Norráék a szökésben lévő Rae Sloane admirálist üldözik.", "upcoming": false}, {"id": "n108", "title": "Shadow Fall: An Alphabet Squadron Novel", "hu": null, "type": "novel", "canon": true, "rel": "2020-06-23", "y": 5.1, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/a/af/ShadowFall.png/revision/latest/scale-to-width-down/316?cb=20200617182813", "desc": "Az Alphabet Squadron folytatása: csapda a Cerberon-rendszerben, ahol Yrica Quell múltja utoléri a századot — a trilógia legsötétebb kötete.", "upcoming": false}, {"id": "n109", "title": "Aftermath: Empire's End", "hu": "Utóhatás: A Birodalom vége", "type": "novel", "canon": true, "rel": "2017-02-21", "y": 5.3, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/9/9c/Aftermath-EmpiresEnd-Hardcover.png/revision/latest/scale-to-width-down/315?cb=20170225022028", "desc": "A Birodalom végnapjai: minden szál a Jakku sivatagbolygója felé fut, ahol a birodalmi flotta maradéka megvívja az utolsó, megsemmisítő csatát az Új Köztársasággal.", "upcoming": false}, {"id": "n110", "title": "Victory's Price: An Alphabet Squadron Novel", "hu": null, "type": "novel", "canon": true, "rel": "2021-03-02", "y": 5.4, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/8/89/VictorysPrice.jpg/revision/latest/scale-to-width-down/316?cb=20210131075536", "desc": "A trilógia fináléja: az Alphabet század a jakkui végjáték felé sodródik, ahol a bosszú és a megbocsátás közt kell választani — méltó zárása az új kánon legjobb regényfolyamának.", "upcoming": false}, {"id": "n111", "title": "Last Shot", "hu": null, "type": "novel", "canon": true, "rel": "2018-04-17", "y": 7, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/4/49/Last_Shot_Han_cover.jpg/revision/latest/scale-to-width-down/316?cb=20180416204915", "desc": "Han Solo és Lando Calrissian közös kalandja több idősíkon: egy droidokat fanatizáló őrült terve ellen a régi csirkefogóknak ismét össze kell állniuk — pár évvel az endori csata után.", "upcoming": false}, {"id": "n112", "title": "Poe Dameron: Free Fall", "hu": null, "type": "novel", "canon": true, "rel": "2020-08-04", "y": 19, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/c/c2/PoeDameronFreeFall.jpg/revision/latest/scale-to-width-down/310?cb=20200514183531", "desc": "A tinédzser Poe Dameron elszökik a Yavin 4-ről, és a hírhedt Zsinór-fűszercsempészek közé keveredik — itt derül ki, honnan ismeri Zorii Blisst és a Kijimit.", "upcoming": false}, {"id": "n113", "title": "Shadow of the Sith", "hu": null, "type": "novel", "canon": true, "rel": "2022-06-28", "y": 21, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/e/e5/Shadow-of-the-Sith-Cover.jpg/revision/latest/scale-to-width-down/316?cb=20220324191944", "desc": "A Skywalker kora előzményeit feltáró regény: Luke Skywalker és Lando Calrissian a Sith-ek exegoli árnyát kutatja, miközben a kis Rey szülei menekülnek a múlt elől.", "upcoming": false}, {"id": "n114", "title": "Bloodline", "hu": "Vérvonal", "type": "novel", "canon": true, "rel": "2016-05-03", "y": 28, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/0/0b/SW_Bloodline_cover.jpg/revision/latest/scale-to-width-down/316?cb=20160206211144", "desc": "Claudia Gray politikai drámája hat évvel Az ébredő Erő előtt: Leia szenátori karrierje összeomlik, amikor a galaxis megtudja, ki volt az apja — és megszületik az Ellenállás gondolata.", "upcoming": false}, {"id": "n115", "title": "Force Collector", "hu": null, "type": "novel", "canon": true, "rel": "2019-10-04", "y": 32, "era": "firstorder", "img": "https://static.wikia.nocookie.net/starwars/images/8/8c/ForceCollector-Egmont.jpg/revision/latest/scale-to-width-down/338?cb=20191025191801", "desc": "Egy Erő-érzékeny tinédzser, Karr Nuq Sin ereklyék érintésén keresztül látja a jedik múltját — ifjúsági regény, amely az ébredő Erő előestéjén kutatja, mi maradt a jedi örökségből.", "upcoming": false}, {"id": "n116", "title": "Eyes Like Stars", "hu": null, "type": "novel", "canon": true, "rel": "2026-07-21", "y": 33, "era": "firstorder", "img": "https://static.wikia.nocookie.net/starwars/images/c/cd/EyesLikeStars-Cover.jpg/revision/latest/scale-to-width-down/324?cb=20260126030454", "desc": "2026 júliusában megjelenő kánonregény az Első Rend felemelkedésének éveiből.", "upcoming": true}, {"id": "n117", "title": "Phasma", "hu": "Phasma", "type": "novel", "canon": true, "rel": "2017-09-01", "y": 33.9, "era": "firstorder", "img": "https://static.wikia.nocookie.net/starwars/images/f/f2/Phasma-Hardcover.png/revision/latest/scale-to-width-down/316?cb=20170630180824", "desc": "A krómpáncélos kapitány eredettörténete: Phasma útja a posztapokaliptikus Parnassos pusztaságaitól az Első Rend elitjéig — egy fogoly vallomásán keresztül elmesélve.", "upcoming": false}, {"id": "n118", "title": "Galaxy's Edge: Black Spire", "hu": null, "type": "novel", "canon": true, "rel": "2019-08-27", "y": 34.4, "era": "firstorder", "img": "https://static.wikia.nocookie.net/starwars/images/b/b6/GalaxysEdgeBlackSpire.png/revision/latest/scale-to-width-down/316?cb=20190325201402", "desc": "Az Ellenállás kémje, Vi Moradi a Batuu Fekete Csúcs előőrsén szervez sejtet az Első Rend ellen — a Galaxy's Edge park világát megalapozó regény.", "upcoming": false}, {"id": "n119", "title": "A Crash of Fate", "hu": null, "type": "novel", "canon": true, "rel": "2019-08-06", "y": 34.45, "era": "firstorder", "img": "https://static.wikia.nocookie.net/starwars/images/8/8a/ACrashofFate.png/revision/latest/scale-to-width-down/344?cb=20190808231603", "desc": "Két gyerekkori barát találkozik újra a Batuun egy sorsfordító nap alatt — ifjúsági regény a Galaxy's Edge világából.", "upcoming": false}, {"id": "n120", "title": "Resistance Reborn", "hu": null, "type": "novel", "canon": true, "rel": "2019-11-05", "y": 34.42, "era": "firstorder", "img": "https://static.wikia.nocookie.net/starwars/images/4/4b/Resistance-reborn-final-cover.jpg/revision/latest/scale-to-width-down/316?cb=20191101221804", "desc": "Az utolsó Jedik és a Skywalker kora közti híd: a crait-i vereség után Leia, Poe és a maroknyi túlélő szövetségeseket gyűjt a galaxisban az utolsó felvonáshoz.", "upcoming": false}, {"id": "n121", "title": "The Last Order", "hu": null, "type": "novel", "canon": true, "rel": "2025-10-21", "y": 35.45, "era": "newjedi", "img": "https://static.wikia.nocookie.net/starwars/images/e/e7/TheLastOrder-Cover.jpg/revision/latest/scale-to-width-down/316?cb=20260129044145", "desc": "Kwame Mbalia 2025-ös ifjúsági regénye közvetlenül a Skywalker kora után: az Ellenállás egy hajónyi, az Első Rend által elrabolt fiatalt ment meg — az újjáépítés korszakának első története.", "upcoming": false}, {"id": "n122", "title": "Star Wars: The High Republic (Marvel)", "hu": null, "type": "comic", "canon": true, "rel": "2021-01-06", "y": -231.8, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/4/40/TheHighRepublicComicIssue1.jpg/revision/latest/scale-to-width-down/312?cb=20200910190958", "desc": "A High Republic-kezdeményezés fő képregénysorozata: Keeve Trennis jedi lovag kalandjai a Csillagfény Jelzőfényen és azon túl — mindhárom fázison átívelő Marvel-széria.", "upcoming": false}, {"id": "n123", "title": "Star Wars: The High Republic Adventures", "hu": null, "type": "comic", "canon": true, "rel": "2021-02-03", "y": -231.7, "era": "highrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/c/c2/The_High_Republic_Adventures_TPB_final_cover.jpg/revision/latest/scale-to-width-down/316?cb=20210310163953", "desc": "A Főkorszak ifjúsági képregénysorozata: padawanok és fiatal jedik a Nihil-válság sűrűjében — előbb az IDW, majd a Dark Horse gondozásában.", "upcoming": false}, {"id": "n124", "title": "Darth Maul (2017)", "hu": null, "type": "comic", "canon": true, "rel": "2017-02-01", "y": -33, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/1/1e/Star_Wars_Darth_Maul_1.png/revision/latest/scale-to-width-down/312?cb=20190211005829", "desc": "A Baljós árnyak előtt: a türelmetlen Sith-tanítvány titokban jedi vérre szomjazik, és egy elrabolt padawan nyomába ered — Maul első kánon-minisorozata.", "upcoming": false}, {"id": "n125", "title": "Obi-Wan & Anakin", "hu": null, "type": "comic", "canon": true, "rel": "2016-01-06", "y": -30, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/c/c6/Obi-Wan_and_Anakin_1_cover_CBR.jpg/revision/latest/scale-to-width-down/312?cb=20190219023018", "desc": "Charles Soule minisorozata a ritkán látott időszakból: a padawan Anakin és mestere egy elszigetelt, háborúba fagyott bolygón ragad — miközben Palpatine már szövögeti hálóját a fiú körül.", "upcoming": false}, {"id": "n126", "title": "Jedi of the Republic – Mace Windu", "hu": null, "type": "comic", "canon": true, "rel": "2017-08-30", "y": -21.9, "era": "fall", "img": "https://static.wikia.nocookie.net/starwars/images/c/c1/WinduJediOfRepublic.png/revision/latest/scale-to-width-down/480?cb=20240412050628", "desc": "Mace Windu a klónháború első heteiben: a jedi tábornokká válás dilemmái egy dzsungelbolygón vívott küldetésen.", "upcoming": false}, {"id": "n127", "title": "Kanan: The Last Padawan", "hu": null, "type": "comic", "canon": true, "rel": "2015-04-01", "y": -19.1, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/a/a1/Kanan_The_Last_Padawan_1_Cover.png/revision/latest/scale-to-width-down/316?cb=20180128071331", "desc": "Hogyan lett a padawan Caleb Dume-ból Kanan Jarrus: a 66-os parancs túlélése, menekülés és újjászületés — a Rebels rajongóinak alapmű.", "upcoming": false}, {"id": "n128", "title": "Darth Vader: Dark Lord of the Sith (2017)", "hu": null, "type": "comic", "canon": true, "rel": "2017-06-07", "y": -18.98, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/9/9a/Darth_VaderDark_Lord_of_the_Sith.jpg/revision/latest/scale-to-width-down/312?cb=20190223230434", "desc": "Charles Soule sorozata Vader első lépéseiről: a vörös kristály megtörése, az inkvizítorok kiképzése és a jedik levadászása — sokak szerint a legjobb kánon Star Wars-képregény.", "upcoming": false}, {"id": "n129", "title": "Obi-Wan (2022)", "hu": null, "type": "comic", "canon": true, "rel": "2022-05-04", "y": -8.5, "era": "reign", "img": "https://static.wikia.nocookie.net/starwars/images/b/bd/Obiwan1-final-cover.jpg/revision/latest/scale-to-width-down/312?cb=20250822015515", "desc": "A tatuini remete naplója: Obi-Wan életének öt korszaka öt füzetben, az ifjonc évektől a sivatagi magányig.", "upcoming": false}, {"id": "n130", "title": "Princess Leia (2015)", "hu": null, "type": "comic", "canon": true, "rel": "2015-03-04", "y": 0.15, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/c/cc/Star_Wars_Princess_Leia_Vol_1_1.jpg/revision/latest/scale-to-width-down/316?cb=20150227143818", "desc": "Közvetlenül a yavini csata után: Leia az Alderaan szétszóródott túlélőit gyűjti össze a galaxisból, mielőtt a Birodalom végezne velük.", "upcoming": false}, {"id": "n131", "title": "Star Wars (2015)", "hu": null, "type": "comic", "canon": true, "rel": "2015-01-14", "y": 0.3, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/2/2c/Star_Wars_Marvel_2015_John_Cassaday_Special_Edition.jpg/revision/latest/scale-to-width-down/324?cb=20141021202543", "desc": "A Marvel visszatérésének zászlóshajója: Luke, Leia és Han kalandjai az Egy új remény és A Birodalom visszavág között — 75 füzeten át, Vader elleni macska-egér játékkal.", "upcoming": false}, {"id": "n132", "title": "Darth Vader (2015)", "hu": null, "type": "comic", "canon": true, "rel": "2015-02-11", "y": 0.35, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/f/f0/Star_Wars_Darth_Vader_Vol_1_1.jpg/revision/latest/scale-to-width-down/316?cb=20150205184155", "desc": "Kieron Gillen sorozata a Halálcsillag elvesztése után kegyvesztett Vaderről, aki saját titkos játszmába kezd — itt debütál a rajongói kedvenc gonosz droidpáros, a BT-1 és a 0-0-0, valamint Doctor Aphra.", "upcoming": false}, {"id": "n133", "title": "Star Wars: Vader Down", "hu": null, "type": "comic", "canon": true, "rel": "2015-11-18", "y": 0.45, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/a/a8/Star_Wars_Vader_Down_1_Final_Cover.jpg/revision/latest/scale-to-width-down/316?cb=20151024205149", "desc": "A Star Wars és a Darth Vader sorozatok első nagy crossovere: Vader gépe lezuhan a Vrogas Vason, és a teljes lázadó flotta rárontja magát — ő pedig egymaga áll ki egy hadsereg ellen.", "upcoming": false}, {"id": "n134", "title": "The Screaming Citadel", "hu": null, "type": "comic", "canon": true, "rel": "2017-05-10", "y": 0.48, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/5/56/CitadelOfKthathatn-TheScreamingCitadel1.jpg/revision/latest/scale-to-width-down/480?cb=20171203150223", "desc": "Gótikus horror-crossover: Luke és Doctor Aphra egy vámpírkirálynő fellegvárába merészkedik, hogy megfejtsen egy ősi jedi ereklyét.", "upcoming": false}, {"id": "n135", "title": "Doctor Aphra (2016)", "hu": null, "type": "comic", "canon": true, "rel": "2016-12-07", "y": 1.0, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/c/c0/Doctor_Aphra_1.jpg/revision/latest/scale-to-width-down/312?cb=20190512173634", "desc": "Az új kánon legnépszerűbb saját karaktere: a gátlástalan régészdoktornő, Aphra túlélni próbálja saját átveréseit — morálisan romlott, zseniálisan szórakoztató sorozat.", "upcoming": false}, {"id": "n136", "title": "Star Wars (2020)", "hu": null, "type": "comic", "canon": true, "rel": "2020-01-01", "y": 3.35, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/4/45/Star-wars-2020-issue-1-cover.jpg/revision/latest/scale-to-width-down/316?cb=20191004202907", "desc": "A Birodalom visszavág utáni hónapok: a szétvert lázadó flotta újjászervezése, Luke a fénykardja és önmaga keresésében — a Marvel-főcím második nagy korszaka.", "upcoming": false}, {"id": "n137", "title": "Darth Vader (2020)", "hu": null, "type": "comic", "canon": true, "rel": "2020-02-05", "y": 3.4, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/b/b3/Dark_Heart_of_the_Sith_solicitation.jpg/revision/latest/scale-to-width-down/316?cb=20201108014928", "desc": "Greg Pak sorozata: a „Nem én vagyok az apád” elhangzása után Vader Padmé múltjának nyomába ered — az út az Exegolig és a Skywalker kora előzményeiig vezet.", "upcoming": false}, {"id": "n138", "title": "Bounty Hunters (2020)", "hu": null, "type": "comic", "canon": true, "rel": "2020-03-11", "y": 3.5, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/f/ff/BountyHunters-1.jpg/revision/latest/scale-to-width-down/312?cb=20200311180121", "desc": "Boba Fett, Bossk, Valance és a galaxis legveszélyesebb fejvadászai egy régi árulás szálait varrják el — hosszan futó sorozat a Birodalom visszavág utáni alvilágból.", "upcoming": false}, {"id": "n139", "title": "War of the Bounty Hunters", "hu": null, "type": "comic", "canon": true, "rel": "2021-05-05", "y": 3.6, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/5/5f/WOTBH1Giuseppe_Camuncoli.jpg/revision/latest/scale-to-width-down/480?cb=20210319051133", "desc": "Nagyszabású crossover-esemény: Boba Fett elveszíti a karbonitba fagyasztott Han Solót, akiért az egész alvilág — és a Crimson Dawn — versenybe száll.", "upcoming": false}, {"id": "n140", "title": "Crimson Reign", "hu": null, "type": "comic", "canon": true, "rel": "2021-12-08", "y": 3.7, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/e/ef/CR1-cover.jpg/revision/latest/scale-to-width-down/312?cb=20211205014326", "desc": "A Qi'ra vezette Crimson Dawn nyílt háborút hirdet a Sith-ek uralma ellen — a Soule-féle crossover-trilógia középső felvonása.", "upcoming": false}, {"id": "n141", "title": "Hidden Empire", "hu": null, "type": "comic", "canon": true, "rel": "2022-11-16", "y": 3.8, "era": "rebellion", "img": "https://static.wikia.nocookie.net/starwars/images/1/1d/HiddenEmpire1-final-cover.jpg/revision/latest/scale-to-width-down/312?cb=20221103063611", "desc": "A trilógia zárása: Qi'ra végső terve az Uralkodó és Vader ellen egy ősi Sith-rituálé körül forog — a kimenetele visszhangzik a Jedi visszatérig.", "upcoming": false}, {"id": "n142", "title": "Shattered Empire", "hu": null, "type": "comic", "canon": true, "rel": "2015-09-09", "y": 4.35, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/c/c2/Star_Wars_Shattered_Empire_1_cover.jpg/revision/latest/scale-to-width-down/316?cb=20180131013651", "desc": "Az endori győzelem másnapja: Poe Dameron szülei, Shara Bey és Kes Dameron az Uralkodó posztumusz bosszúhadjárata ellen harcolnak — az első „Journey to The Force Awakens” történet.", "upcoming": false}, {"id": "n143", "title": "Star Wars: Battle of Jakku", "hu": null, "type": "comic", "canon": true, "rel": "2024-10-02", "y": 4.9, "era": "newrepublic", "img": "https://static.wikia.nocookie.net/starwars/images/8/8f/Battle-of-Jakku-1-Title-Cover.jpg/revision/latest/scale-to-width-down/316?cb=20241230160352", "desc": "2024-25-ös crossover-trilógia, amely végre képregényben meséli el a galaktikus polgárháború utolsó nagy csatáját és a Birodalom kapitulációját.", "upcoming": false}, {"id": "n144", "title": "The Rise of Kylo Ren", "hu": null, "type": "comic", "canon": true, "rel": "2019-12-18", "y": 28.4, "era": "firstorder", "img": "https://static.wikia.nocookie.net/starwars/images/5/56/TheRiseofKyloRen-1.jpg/revision/latest/scale-to-width-down/312?cb=20191220044930", "desc": "Ben Solo bukása: a jedi templom leégésének éjszakája, menekülés a Ren lovagjaihoz — Charles Soule minisorozata megmutatja, hogyan született Kylo Ren.", "upcoming": false}, {"id": "n145", "title": "Poe Dameron (2016)", "hu": null, "type": "comic", "canon": true, "rel": "2016-04-06", "y": 33.4, "era": "firstorder", "img": "https://static.wikia.nocookie.net/starwars/images/1/18/Poe_Dameron_1_final_cover.jpg/revision/latest/scale-to-width-down/312?cb=20190117132419", "desc": "A Fekete Század akcióban: Poe és pilótái Lor San Tekka nyomát kutatják az Első Rend orra előtt — a sorozat egyenesen Az ébredő Erő nyitányába torkollik.", "upcoming": false}, {"id": "n146", "title": "Captain Phasma", "hu": null, "type": "comic", "canon": true, "rel": "2017-09-06", "y": 34.25, "era": "firstorder", "img": "https://static.wikia.nocookie.net/starwars/images/2/2f/Captain_Phasma_1.jpg/revision/latest/scale-to-width-down/312?cb=20180203053439", "desc": "Hogyan mászott ki Phasma a szemétledobóból a Starkiller bázis pusztulásakor — és hogyan tüntette el az árulásának nyomait: minisorozat a két sequel-film között.", "upcoming": false}, {"id": "n147", "title": "Star Wars: Legacy of Vader", "hu": null, "type": "comic", "canon": true, "rel": "2025-02-05", "y": 34.48, "era": "firstorder", "img": "https://static.wikia.nocookie.net/starwars/images/a/a6/LegacyofVader1-solicit-cover.jpg/revision/latest/scale-to-width-down/311?cb=20241121215412", "desc": "2025 nagy Marvel-sorozata: az immár Legfőbb Vezér Kylo Ren nagyapja örökségének nyomába ered a Mustafartól a birodalmi múlt romjaiig — Charles Soule visszatérése a karakterhez.", "upcoming": false}, {"id": "n148", "title": "Star Wars: Visions", "hu": "Star Wars: Látomások", "type": "animseries", "canon": true, "rel": "2021-09-22", "y": null, "era": "outside", "img": "https://static.wikia.nocookie.net/starwars/images/5/55/Visions-EnglishPoster.png/revision/latest/scale-to-width-down/480?cb=20210915153859", "desc": "Antológia, amelyben a világ legjobb animációs stúdiói — az anime nagyjaitól az Aardmanig — mesélnek szabadon, a kánon kötöttségei nélkül Star Wars-történeteket. Három kötete jelent meg (2021, 2023, 2025), a kritikusok kedvence.", "upcoming": false}, {"id": "n149", "title": "Star Wars: Galaxy of Adventures", "hu": "Star Wars: Kalandok galaxisa", "type": "miniseries", "canon": true, "rel": "2018-11-30", "y": null, "era": "outside", "img": "https://static.wikia.nocookie.net/starwars/images/9/9b/Star_Wars_Galaxy_of_Adventures_poster.jpg/revision/latest/scale-to-width-down/480?cb=20181128175357", "desc": "Percnyi hosszúságú, dinamikus websorozat, amely a saga ikonikus pillanatait meséli újra fiatal közönségnek, stilizált animációval — Luke-tól Vaderen át Reyig.", "upcoming": false}];
+const ERAS = {
+  highrepublic:{name:"A Fényes Köztársaság",en:"The High Republic",range:"kb. 500–100 BBY",blurb:"A Köztársaság aranykora — a jedik a béke és a fény őrzői.",sym:"sym-jedi"},
+  fall:{name:"A Jedik bukása",en:"Fall of the Jedi",range:"kb. 45–19 BBY",blurb:"Baljós árnyak, klónháborúk — és a Köztársaság lassú halála.",sym:"sym-republic"},
+  reign:{name:"A Birodalom uralma",en:"Reign of the Empire",range:"19–5 BBY",blurb:"A Birodalom vasmarokkal szorít, a jedik bujdosnak.",sym:"sym-empire"},
+  rebellion:{name:"A Lázadás kora",en:"Age of Rebellion",range:"5 BBY–4 ABY",blurb:"Egy szikrából lángtenger: a Lázadó Szövetség háborúja.",sym:"sym-rebel"},
+  newrepublic:{name:"Az Új Köztársaság",en:"The New Republic",range:"4–34 ABY",blurb:"Újjáépítés a Birodalom romjain — de az árnyék nem tűnt el.",sym:"sym-newrepublic"},
+  firstorder:{name:"Az Első Rend felemelkedése",en:"Rise of the First Order",range:"kb. 28–35 ABY",blurb:"Az Első Rend árnyéka és az Ellenállás születése.",sym:"sym-firstorder"},
+  newjedi:{name:"Az Új Jedi Rend",en:"New Jedi Order",range:"35 ABY –",blurb:"Új nemzedék, új rend — a jövő története most íródik.",sym:"sym-jedi"},
+  outside:{name:"Idővonalon kívül",en:"Beyond the Timeline",range:"",blurb:"",sym:"sym-outside"}
+};
+const ERA_ORDER = ["highrepublic","fall","reign","rebellion","newrepublic","firstorder","newjedi"];
+const TYPES = {
+  film:"Film", tvfilm:"TV-film", liveaction:"Élőszereplős sorozat", animseries:"Animációs sorozat",
+  miniseries:"Minisorozat", game:"Videójáték", novel:"Regény", comic:"Képregény"
+};
+const TYPE_FILTERS = [
+  {id:"screen", label:"Filmek", types:["film","tvfilm"], ico:"🎬"},
+  {id:"live",   label:"Sorozatok", types:["liveaction"], ico:"📺"},
+  {id:"anim",   label:"Animáció", types:["animseries","miniseries"], ico:"✨"},
+  {id:"game",   label:"Játékok", types:["game"], ico:"🎮"},
+  {id:"novel",  label:"Regények", types:["novel"], ico:"📖"},
+  {id:"comic",  label:"Képregények", types:["comic"], ico:"💥"},
+];
+const TYPE_ICO = {film:"🎬",tvfilm:"🎬",liveaction:"📺",animseries:"✨",miniseries:"✨",game:"🎮",novel:"📖",comic:"💥"};
+const HU_MONTHS = ["január","február","március","április","május","június","július","augusztus","szeptember","október","november","december"];
+
+/* ================= CSILLAGMEZŐ ================= */
+const starCv = document.getElementById('stars');
+function drawStars(){
+  const c = starCv, dpr = Math.min(window.devicePixelRatio||1, 2);
+  c.width = innerWidth*dpr; c.height = innerHeight*dpr;
+  c.style.width = innerWidth+'px'; c.style.height = innerHeight+'px';
+  const g = c.getContext('2d'); g.scale(dpr,dpr);
+  g.clearRect(0,0,innerWidth,innerHeight);
+  const n = Math.round(innerWidth*innerHeight/3800);
+  for(let i=0;i<n;i++){
+    const x=Math.random()*innerWidth, y=Math.random()*innerHeight;
+    const r=Math.random(); const rad = r>.985?1.6:r>.9?1.1:.6;
+    g.globalAlpha = .25+Math.random()*.75;
+    g.fillStyle = r>.965 ? '#cfe4ff' : r<.06 ? '#ffe9c9' : '#ffffff';
+    g.beginPath(); g.arc(x,y,rad,0,7); g.fill();
+  }
+  g.globalAlpha = 1;
+}
+drawStars();
+
+/* háttér-fényrétegek + vízjel szimbólumok */
+const bg = document.getElementById('bg');
+for(const era of [...ERA_ORDER,"outside"]){
+  const d = document.createElement('div');
+  d.className='bglayer'; d.dataset.era=era;
+  d.innerHTML = `<svg class="bgsym" style="color:#fff" viewBox="0 0 100 100"><use href="#${ERAS[era].sym}"/></svg>`;
+  bg.appendChild(d);
+}
+
+/* ================= ÁLLAPOT ================= */
+const state = {
+  canon:true, legends:true,
+  types:new Set(TYPE_FILTERS.map(t=>t.id)),
+};
+function passFilters(it){
+  if(it.canon && !state.canon) return false;
+  if(!it.canon && !state.legends) return false;
+  const tf = TYPE_FILTERS.find(t=>t.types.includes(it.type));
+  return tf ? state.types.has(tf.id) : true;
+}
+
+/* ================= KÁRTYA-ELEM GYÁR ================= */
+const timeline = document.getElementById('timeline');
+const snake = document.getElementById('snake');
+const nodeEls = new Map();   // id -> element
+const eraEls  = new Map();   // era -> {head, band}
+
+function yearLabel(it){
+  if(it.y===null || it.y===undefined) return "";
+  const n = Math.round(Math.abs(it.y));
+  if(n===0) return "0 ABY";
+  return "kb. "+n+" "+(it.y<0?"BBY":"ABY");
+}
+function makeCover(it, big){
+  const cov = document.createElement('div');
+  cov.className='cover';
+  const ph = document.createElement('div');
+  ph.className='ph';
+  ph.innerHTML = `<span class="phico">${TYPE_ICO[it.type]||"⭐"}</span><span>${it.title}</span>`;
+  cov.appendChild(ph);
+  if(it.img){
+    const img = document.createElement('img');
+    img.loading='lazy'; img.referrerPolicy='no-referrer'; img.alt=it.title+" borító";
+    img.src=it.img;
+    img.onload = ()=>{ img.classList.add('ok'); cov.classList.add('hasimg'); };
+    img.onerror= ()=>{ img.remove(); };
+    cov.appendChild(img);
+  }
+  if(!it.canon){ const r=document.createElement('span'); r.className='ribbon legends'; r.textContent='Legends'; cov.appendChild(r); }
+  else if(it.upcoming){ const r=document.createElement('span'); r.className='ribbon soon'; r.textContent='Hamarosan'; cov.appendChild(r); }
+  return cov;
+}
+function makeNode(it){
+  const b = document.createElement('button');
+  b.className='node'; b.dataset.id=it.id;
+  const inner = document.createElement('div'); inner.className='inner';
+  inner.appendChild(makeCover(it));
+  const yr = document.createElement('div'); yr.className='yr'; yr.textContent = yearLabel(it);
+  const ttl= document.createElement('div'); ttl.className='ttl'; ttl.textContent = it.hu || it.title;
+  const typ= document.createElement('div'); typ.className='typ'; typ.textContent = TYPES[it.type];
+  inner.appendChild(yr); inner.appendChild(ttl); inner.appendChild(typ);
+  b.appendChild(inner);
+  b.addEventListener('click',()=>openModal(it));
+  return b;
+}
+/* fő idővonal node-ok */
+for(const it of DATA.filter(d=>d.era!=='outside')){
+  const el = makeNode(it);
+  el.classList.add('gone');
+  timeline.appendChild(el);
+  nodeEls.set(it.id, el);
+}
+/* éra fejlécek + sávok */
+for(const era of ERA_ORDER){
+  const band = document.createElement('div');
+  band.className='era-band'; band.dataset.era=era;
+  const head = document.createElement('div');
+  head.className='era-head'; head.dataset.era=era;
+  head.innerHTML = `<svg class="eh-sym" viewBox="0 0 100 100"><use href="#${ERAS[era].sym}"/></svg>
+    <h2>${ERAS[era].name}</h2>
+    <div class="eh-range">${ERAS[era].en} · ${ERAS[era].range}</div>
+    <div class="eh-blurb">${ERAS[era].blurb}</div>`;
+  timeline.appendChild(band); timeline.appendChild(head);
+  eraEls.set(era,{head,band});
+}
+/* idővonalon kívüli polc */
+const orow = document.getElementById('outsideRow');
+for(const it of DATA.filter(d=>d.era==='outside')) orow.appendChild(makeNode(it));
+
+/* ================= ELRENDEZÉS (kígyó) ================= */
+let eraZones = []; // {era, top, bottom} — a görgetéses éra-váltáshoz
+function layout(){
+  const W = Math.min(timeline.clientWidth, 1264);
+  const isMobile = W < 560;
+  const cols = isMobile ? 2 : W<800 ? 3 : W<1050 ? 4 : 5;
+  const colW = W/cols;
+  const rowH = 305, headH = 190, topPad = 20;
+  const eraIdx = e => ERA_ORDER.indexOf(e);
+  const visible = DATA.filter(d=>d.era!=='outside' && passFilters(d))
+    .sort((a,b)=> (eraIdx(a.era)-eraIdx(b.era)) || (a.y-b.y));
+
+  let yCur = topPad, idx = 0, dir = 1, prevEra = null;
+  const pts = [];
+  const zones = [];
+  const usedEras = new Set();
+
+  for(const it of visible){
+    if(it.era !== prevEra){
+      if(idx>0){ yCur += rowH; idx=0; dir=-dir; }
+      if(zones.length) zones[zones.length-1].bottom = yCur;
+      const eh = eraEls.get(it.era);
+      eh.head.style.transform = `translateY(${yCur}px)`;
+      eh.band.style.transform = `translateY(${yCur+12}px)`;
+      eh.head.classList.add('show'); eh.band.classList.add('show');
+      usedEras.add(it.era);
+      zones.push({era:it.era, top:yCur});
+      yCur += headH; prevEra = it.era;
+    }
+    const col = dir===1 ? idx : cols-1-idx;
+    const x = (col+.5)*colW;
+    const yC = yCur + rowH/2 - 22;
+    const el = nodeEls.get(it.id);
+    el.style.transform = `translate(${x}px,${yC-118}px)`;
+    el.classList.remove('gone');
+    pts.push({x,y:yC,era:it.era});
+    idx++;
+    if(idx===cols){ idx=0; yCur+=rowH; dir=-dir; }
+  }
+  if(idx>0) yCur += rowH;
+  if(zones.length) zones[zones.length-1].bottom = yCur;
+  /* sáv magasságok */
+  for(const z of zones){
+    const b = eraEls.get(z.era).band;
+    b.style.height = (z.bottom - z.top - 6)+'px';
+  }
+  for(const [era,eh] of eraEls){
+    if(!usedEras.has(era)){ eh.head.classList.remove('show'); eh.band.classList.remove('show'); }
+  }
+  /* eltűnő node-ok */
+  const visIds = new Set(visible.map(v=>v.id));
+  for(const [id,el] of nodeEls) if(!visIds.has(id)) el.classList.add('gone');
+
+  timeline.style.height = (yCur+30)+'px';
+  drawSnake(pts, W);
+  eraZones = zones.map(z=>({...z}));
+  document.getElementById('count').textContent = visible.length + " történet az idővonalon";
+  requestAnimationFrame(updateEraByScroll);
+}
+
+/* kígyóvonal kirajzolása éránként színezve */
+const ERA_LINE = {highrepublic:"#ffd76a",fall:"#e8a54b",reign:"#aebfd0",rebellion:"#ffb13d",
+                  newrepublic:"#8ac6ff",firstorder:"#ff5450",newjedi:"#77e6c4"};
+function drawSnake(pts, W){
+  snake.innerHTML='';
+  snake.setAttribute('width', timeline.clientWidth);
+  snake.setAttribute('height', parseFloat(timeline.style.height)||0);
+  if(pts.length<2) return;
+  let chunks=[], cur={era:pts[0].era, pts:[pts[0]]};
+  for(let i=1;i<pts.length;i++){
+    cur.pts.push(pts[i]);
+    if(pts[i].era!==cur.era){ chunks.push(cur); cur={era:pts[i].era, pts:[pts[i]]}; }
+  }
+  chunks.push(cur);
+  for(const ch of chunks){
+    if(ch.pts.length<2) continue;
+    let d=`M ${ch.pts[0].x} ${ch.pts[0].y}`;
+    for(let i=1;i<ch.pts.length;i++){
+      const a=ch.pts[i-1], b=ch.pts[i];
+      if(Math.abs(b.y-a.y)<1){
+        const mx=(a.x+b.x)/2;
+        d+=` C ${mx} ${a.y+26}, ${mx} ${b.y+26}, ${b.x} ${b.y}`;
+      }else{
+        const out = a.x>W/2 ? 1 : -1;
+        const ext = Math.min(150, W*0.12)*out;
+        d+=` C ${a.x+ext} ${a.y+40}, ${b.x+ext} ${b.y-40}, ${b.x} ${b.y}`;
+      }
+    }
+    const p=document.createElementNS('http://www.w3.org/2000/svg','path');
+    p.setAttribute('d',d); p.setAttribute('stroke',ERA_LINE[ch.era]||'#ffe81f');
+    p.style.color = ERA_LINE[ch.era]||'#ffe81f';
+    snake.appendChild(p);
+    requestAnimationFrame(()=>p.classList.add('show'));
+  }
+  for(const pt of pts){
+    const c=document.createElementNS('http://www.w3.org/2000/svg','circle');
+    c.setAttribute('cx',pt.x); c.setAttribute('cy',pt.y); c.setAttribute('r',4.5);
+    c.setAttribute('fill',ERA_LINE[pt.era]||'#ffe81f');
+    c.classList.add('nodedot');
+    c.style.filter=`drop-shadow(0 0 5px ${ERA_LINE[pt.era]})`;
+    snake.appendChild(c);
+    requestAnimationFrame(()=>c.classList.add('show'));
+  }
+}
+
+/* ================= ÉRA A GÖRGETÉS SZERINT ================= */
+const hudName = document.getElementById('eraHudName');
+const hudSym  = document.getElementById('eraHudSym');
+let curEra = null;
+function updateEraByScroll(){
+  const tlTop = timeline.getBoundingClientRect().top + scrollY;
+  const probe = scrollY + innerHeight*0.45 - tlTop;
+  let era = null;
+  for(const z of eraZones){ if(probe>=z.top && probe<z.bottom){ era=z.era; break; } }
+  if(!era){
+    if(eraZones.length){
+      era = probe < eraZones[0].top ? eraZones[0].era :
+            probe >= eraZones[eraZones.length-1].bottom ? eraZones[eraZones.length-1].era : curEra;
+    } else era = 'highrepublic';
+  }
+  const outsideTop = document.getElementById('outside').getBoundingClientRect().top;
+  if(outsideTop < innerHeight*0.5) era = 'outside';
+  if(era && era!==curEra){
+    curEra = era;
+    document.body.dataset.era = era;
+    hudName.textContent = ERAS[era].name;
+    hudSym.setAttribute('href','#'+ERAS[era].sym);
+  }
+}
+addEventListener('scroll', ()=>requestAnimationFrame(updateEraByScroll), {passive:true});
+
+/* ================= SZŰRŐK ================= */
+const typeChips = document.getElementById('typeChips');
+for(const tf of TYPE_FILTERS){
+  const b=document.createElement('button');
+  b.className='chip on'; b.textContent=tf.label; b.title=tf.label+" mutatása/elrejtése";
+  b.addEventListener('click',()=>{
+    if(state.types.has(tf.id)) state.types.delete(tf.id); else state.types.add(tf.id);
+    b.classList.toggle('on'); layout();
+  });
+  typeChips.appendChild(b);
+}
+document.getElementById('chipCanon').addEventListener('click',e=>{
+  state.canon=!state.canon; e.currentTarget.classList.toggle('on'); layout();
+});
+document.getElementById('chipLegends').addEventListener('click',e=>{
+  state.legends=!state.legends; e.currentTarget.classList.toggle('on'); layout();
+});
+
+/* ================= MODÁL ================= */
+const overlay=document.getElementById('overlay');
+function fmtDate(iso){
+  if(!iso) return "bejelentve — dátum később";
+  const [y,m,d]=iso.split('-').map(Number);
+  if(!m) return y+".";
+  return `${y}. ${HU_MONTHS[m-1]} ${d}.`;
+}
+function openModal(it){
+  document.getElementById('mtitle').textContent = it.title;
+  const hu=document.getElementById('mhu');
+  hu.textContent = (it.hu && it.hu!==it.title) ? "„"+it.hu+"”" : "";
+  hu.style.display = hu.textContent?'':'none';
+  const badges=document.getElementById('mbadges');
+  badges.innerHTML='';
+  const add=(cls,txt)=>{const s=document.createElement('span');s.className='badge '+cls;s.textContent=txt;badges.appendChild(s);};
+  add('', TYPES[it.type]);
+  add(it.canon?'b-canon':'b-legends', it.canon?'Kánon':'Legends');
+  if(it.era!=='outside') add('b-era', ERAS[it.era].name);
+  if(it.upcoming) add('b-soon','Hamarosan');
+  const meta=document.getElementById('mmeta');
+  const yl=yearLabel(it);
+  meta.innerHTML = `<b>Megjelenés:</b> ${fmtDate(it.rel)}` + (yl?`<br><b>Idővonalon:</b> ${yl}${it.y===0?' — a yavini csata éve':''}`:'');
+  document.getElementById('mdesc').textContent = it.desc;
+  const mc=document.getElementById('mcover');
+  mc.replaceWith(Object.assign(makeCover(it),{id:'mcover'}));
+  overlay.classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeModal(){ overlay.classList.remove('open'); document.body.style.overflow=''; }
+document.getElementById('mclose').addEventListener('click',closeModal);
+overlay.addEventListener('click',e=>{ if(e.target===overlay) closeModal(); });
+addEventListener('keydown',e=>{ if(e.key==='Escape') closeModal(); });
+
+/* ================= INDÍTÁS ================= */
+let rszT, lastW = 0;
+function onResize(){ clearTimeout(rszT); rszT=setTimeout(()=>{
+  if(Math.abs(timeline.clientWidth-lastW)<2) return;
+  lastW = timeline.clientWidth; drawStars(); layout();
+},150); }
+addEventListener('resize', onResize);
+new ResizeObserver(onResize).observe(timeline);
+lastW = timeline.clientWidth;
+layout();
+setTimeout(updateEraByScroll, 100);
+</script>
+</body>
+</html>
