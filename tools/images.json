@@ -2,789 +2,939 @@
  "Star Wars: Episode I The Phantom Menace": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/7/75/EPI_TPM_poster.png/revision/latest/scale-to-width-down/321?cb=20250617214241",
   "missing": false,
-  "final": "Star Wars: Episode I The Phantom Menace"
+  "final": "Star Wars: Episode I The Phantom Menace",
+  "local": "images/epi-tpm-poster.webp"
  },
  "Star Wars: Episode II Attack of the Clones": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/d/dd/Attack-Clones-Poster.jpg/revision/latest/scale-to-width-down/325?cb=20250617225730",
   "missing": false,
-  "final": "Star Wars: Episode II Attack of the Clones"
+  "final": "Star Wars: Episode II Attack of the Clones",
+  "local": "images/attack-clones-poster.webp"
  },
  "Star Wars: The Clone Wars (film)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/f/ff/The_Clone_Wars_film_poster.jpg/revision/latest/scale-to-width-down/324?cb=20250618011933",
   "missing": false,
-  "final": "Star Wars: The Clone Wars (film)"
+  "final": "Star Wars: The Clone Wars (film)",
+  "local": "images/the-clone-wars-film-poster.webp"
  },
  "Star Wars: Episode III Revenge of the Sith": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/e/e7/EPIII_RotS_poster.png/revision/latest/scale-to-width-down/325?cb=20250617231154",
   "missing": false,
-  "final": "Star Wars: Episode III Revenge of the Sith"
+  "final": "Star Wars: Episode III Revenge of the Sith",
+  "local": "images/epiii-rots-poster.webp"
  },
  "Solo: A Star Wars Story": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/a/a9/Solo_A_Star_Wars_Story_Theatrical_Poster.png/revision/latest/scale-to-width-down/324?cb=20180409011120",
   "missing": false,
-  "final": "Solo: A Star Wars Story"
+  "final": "Solo: A Star Wars Story",
+  "local": "images/solo-a-star-wars-story-theatrical-poster.webp"
  },
  "Rogue One: A Star Wars Story": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/5/59/RogueOne-AStarWarsStory-Theatricalposter.png/revision/latest/scale-to-width-down/324?cb=20161012214043",
   "missing": false,
-  "final": "Rogue One: A Star Wars Story"
+  "final": "Rogue One: A Star Wars Story",
+  "local": "images/rogueone-astarwarsstory-theatricalposter.webp"
  },
  "Star Wars: Episode IV A New Hope": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/4/44/1977-StarWars-theatricalposter.jpg/revision/latest/scale-to-width-down/314?cb=20260130123909",
   "missing": false,
-  "final": "Star Wars: Episode IV A New Hope"
+  "final": "Star Wars: Episode IV A New Hope",
+  "local": "images/1977-starwars-theatricalposter.webp"
  },
  "Star Wars: Episode V The Empire Strikes Back": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/e/e8/1980-EmpireStrikesBack-theatricalposter.jpg/revision/latest/scale-to-width-down/320?cb=20260130125325",
   "missing": false,
-  "final": "Star Wars: Episode V The Empire Strikes Back"
+  "final": "Star Wars: Episode V The Empire Strikes Back",
+  "local": "images/1980-empirestrikesback-theatricalposter.webp"
  },
  "Star Wars: Episode VI Return of the Jedi": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/b/b2/ReturnOfTheJediPoster1983.jpg/revision/latest/scale-to-width-down/316?cb=20250617080341",
   "missing": false,
-  "final": "Star Wars: Episode VI Return of the Jedi"
+  "final": "Star Wars: Episode VI Return of the Jedi",
+  "local": "images/returnofthejediposter1983.webp"
  },
  "The Mandalorian and Grogu": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/f/f2/TheMandalorianAndGrogu-TheatricalPoster.jpg/revision/latest/scale-to-width-down/324?cb=20260528061949",
   "missing": false,
-  "final": "Star Wars: The Mandalorian and Grogu"
+  "final": "Star Wars: The Mandalorian and Grogu",
+  "local": "images/themandalorianandgrogu-theatricalposter.webp"
  },
  "Star Wars: Episode VII The Force Awakens": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/f/fd/Star_Wars_Episode_VII_The_Force_Awakens.jpg/revision/latest/scale-to-width-down/324?cb=20250618012820",
   "missing": false,
-  "final": "Star Wars: Episode VII The Force Awakens"
+  "final": "Star Wars: Episode VII The Force Awakens",
+  "local": "images/star-wars-episode-vii-the-force-awakens.webp"
  },
  "Star Wars: Episode VIII The Last Jedi": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/1/12/TheLastJediTheatricalPoster.jpg/revision/latest/scale-to-width-down/324?cb=20171010002420",
   "missing": false,
-  "final": "Star Wars: Episode VIII The Last Jedi"
+  "final": "Star Wars: Episode VIII The Last Jedi",
+  "local": "images/thelastjeditheatricalposter.webp"
  },
  "Star Wars: Episode IX The Rise of Skywalker": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/4/4c/TROSOneSheet.jpg/revision/latest/scale-to-width-down/324?cb=20191022091806",
   "missing": false,
-  "final": "Star Wars: Episode IX The Rise of Skywalker"
+  "final": "Star Wars: Episode IX The Rise of Skywalker",
+  "local": "images/trosonesheet.webp"
  },
  "Star Wars: Starfighter": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/8/80/Star-Wars-Starfighter.png/revision/latest/scale-to-width-down/480?cb=20250418014450",
   "missing": false,
-  "final": "Star Wars: Starfighter"
+  "final": "Star Wars: Starfighter",
+  "local": "images/star-wars-starfighter.webp"
  },
  "The Star Wars Holiday Special": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/2/23/StarWarsHS.jpg/revision/latest/scale-to-width-down/333?cb=20060417210458",
   "missing": false,
-  "final": "The Star Wars Holiday Special"
+  "final": "The Star Wars Holiday Special",
+  "local": "images/starwarshs.webp"
  },
  "Caravan of Courage: An Ewok Adventure": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/6/60/Caravan_bg.jpg/revision/latest/scale-to-width-down/306?cb=20140228114152",
   "missing": false,
-  "final": "Caravan of Courage: An Ewok Adventure"
+  "final": "Caravan of Courage: An Ewok Adventure",
+  "local": "images/caravan-bg.webp"
  },
  "Ewoks: The Battle for Endor": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/a/ad/Ilm-ewok2.jpg/revision/latest/scale-to-width-down/334?cb=20051107095944",
   "missing": false,
-  "final": "Ewoks: The Battle for Endor"
+  "final": "Ewoks: The Battle for Endor",
+  "local": "images/ilm-ewok2.webp"
  },
  "The Acolyte": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/1/13/Acolyte-TeaserPoster.jpg/revision/latest/scale-to-width-down/480?cb=20240319153912",
   "missing": false,
   "final": "Star Wars: The Acolyte",
-  "src": "fandom-poster"
+  "src": "fandom-poster",
+  "local": "images/acolyte-teaserposter.webp"
  },
  "Obi-Wan Kenobi (television series)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/2/25/StarWarsObiWanKenobi-Poster.png/revision/latest/scale-to-width-down/480?cb=20220713043824",
   "missing": false,
   "final": "Star Wars: Obi-Wan Kenobi",
-  "src": "fandom-poster"
+  "src": "fandom-poster",
+  "local": "images/starwarsobiwankenobi-poster.webp"
  },
  "Andor (television series)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/3/3b/Andor_Season_One_poster.jpg/revision/latest/scale-to-width-down/480?cb=20220623212226",
   "missing": false,
   "final": "Star Wars: Andor",
-  "src": "fandom-poster"
+  "src": "fandom-poster",
+  "local": "images/andor-season-one-poster.webp"
  },
  "The Mandalorian": {
   "thumb": "https://upload.wikimedia.org/wikipedia/en/0/04/The_Mandalorian_season_1_poster.jpg",
   "missing": false,
   "final": "Star Wars: The Mandalorian",
-  "src": "wikipedia-infobox"
+  "src": "wikipedia-infobox",
+  "local": "images/the-mandalorian-season-1-poster.jpg"
  },
  "The Book of Boba Fett": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/0/0c/BobaFettKeyArt.jpg/revision/latest/scale-to-width-down/480?cb=20211103040609",
   "missing": false,
   "final": "Star Wars: The Book of Boba Fett",
-  "src": "fandom-poster"
+  "src": "fandom-poster",
+  "local": "images/bobafettkeyart.webp"
  },
  "Star Wars: Skeleton Crew": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/2/29/SkeletonCrew-OfficialPoster.jpg/revision/latest/scale-to-width-down/480?cb=20241101174923",
   "missing": false,
   "final": "Star Wars: Skeleton Crew",
-  "src": "fandom-poster"
+  "src": "fandom-poster",
+  "local": "images/skeletoncrew-officialposter.webp"
  },
  "Ahsoka (television series)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/3/39/Ahsoka_Official_Poster.jpg/revision/latest/scale-to-width-down/480?cb=20230407134006",
   "missing": false,
   "final": "Star Wars: Ahsoka",
-  "src": "wikipedia-infobox"
+  "src": "wikipedia-infobox",
+  "local": "images/ahsoka-official-poster.webp"
  },
  "Star Wars: Young Jedi Adventures": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/1/1a/YJA_Official_Poster.jpg/revision/latest/scale-to-width-down/480?cb=20230327233300",
   "missing": false,
   "final": "Star Wars: Young Jedi Adventures",
-  "src": "fandom-poster"
+  "src": "fandom-poster",
+  "local": "images/yja-official-poster.webp"
  },
  "Star Wars: Tales of the Jedi (television series)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/b/bc/StarWarsTalesOfTheJedi-Poster-Getty.jpg/revision/latest/scale-to-width-down/480?cb=20221006070025",
   "missing": false,
   "final": "Star Wars: Tales of the Jedi (television series)",
-  "src": "fandom-poster"
+  "src": "fandom-poster",
+  "local": "images/starwarstalesofthejedi-poster-getty.webp"
  },
  "Star Wars: The Clone Wars": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/d/dd/SWTCW-poster.jpg/revision/latest?cb=20070518031445",
   "missing": false,
   "final": "Star Wars: The Clone Wars",
-  "src": "fandom-poster"
+  "src": "fandom-poster",
+  "local": "images/swtcw-poster.webp"
  },
  "Star Wars: The Bad Batch": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/6/65/TBB_Season_2_poster.jpg/revision/latest/scale-to-width-down/480?cb=20221208004321",
   "missing": false,
   "final": "Star Wars: The Bad Batch",
-  "src": "fandom-poster"
+  "src": "fandom-poster",
+  "local": "images/tbb-season-2-poster.webp"
  },
  "Star Wars: Tales of the Empire": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/7/77/StarWarsTalesOfTheEmpire-Poster-Getty.png/revision/latest/scale-to-width-down/480?cb=20240404190930",
   "missing": false,
   "final": "Star Wars: Tales of the Empire",
-  "src": "fandom-poster"
+  "src": "fandom-poster",
+  "local": "images/starwarstalesoftheempire-poster-getty.webp"
  },
  "Maul - Shadow Lord": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/7/74/MaulShadowLord-OfficialPoster.jpg/revision/latest/scale-to-width-down/480?cb=20260124083152",
   "missing": false,
   "final": "Star Wars: Maul - Shadow Lord",
-  "src": "fandom-poster"
+  "src": "fandom-poster",
+  "local": "images/maulshadowlord-officialposter.webp"
  },
  "Star Wars: Tales of the Underworld": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/b/b7/TotU-Poster.png/revision/latest/scale-to-width-down/480?cb=20250402174337",
   "missing": false,
   "final": "Star Wars: Tales of the Underworld",
-  "src": "fandom-poster"
+  "src": "fandom-poster",
+  "local": "images/totu-poster.webp"
  },
  "Star Wars Rebels": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/6/69/Star_Wars_Rebels_Poster.jpg/revision/latest/scale-to-width-down/480?cb=20260131045140",
   "missing": false,
   "final": "Star Wars Rebels",
-  "src": "fandom-poster"
+  "src": "fandom-poster",
+  "local": "images/star-wars-rebels-poster.webp"
  },
  "Star Wars Resistance": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/8/8d/StarWarsResistance-SeasonOne.jpg/revision/latest/scale-to-width-down/480?cb=20180918145021",
   "missing": false,
   "final": "Star Wars Resistance",
-  "src": "wikipedia-infobox"
+  "src": "wikipedia-infobox",
+  "local": "images/starwarsresistance-seasonone.webp"
  },
  "Star Wars: Clone Wars": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/1/1f/CloneWars.png/revision/latest?cb=20140412001106",
   "missing": false,
-  "final": "Star Wars: Clone Wars"
+  "final": "Star Wars: Clone Wars",
+  "local": "images/clonewars.webp"
  },
  "Star Wars: Droids": {
   "thumb": "https://upload.wikimedia.org/wikipedia/en/7/75/Star_Wars_Droids.jpg",
   "missing": false,
   "final": "Star Wars: Droids: The Adventures of R2-D2 and C-3PO",
-  "src": "wikipedia"
+  "src": "wikipedia",
+  "local": "images/star-wars-droids.jpg"
  },
  "Star Wars: Ewoks": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/7/70/Ewoks_all.jpg/revision/latest/scale-to-width-down/480?cb=20210402201736",
   "missing": false,
-  "final": "Ewoks (television series)"
+  "final": "Ewoks (television series)",
+  "local": "images/ewoks-all.webp"
  },
  "Star Wars Forces of Destiny": {
   "thumb": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Forces_of_Destiny_Opening_Logo.png",
   "missing": false,
   "final": "Star Wars Forces of Destiny",
-  "src": "wikipedia"
+  "src": "wikipedia",
+  "local": "images/forces-of-destiny-opening-logo.png"
  },
  "Star Wars Eclipse": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/7/76/Star_Wars_Eclipse_logo.png/revision/latest/scale-to-width-down/480?cb=20211217074403",
   "missing": false,
-  "final": "Star Wars Eclipse"
+  "final": "Star Wars Eclipse",
+  "local": "images/star-wars-eclipse-logo.webp"
  },
  "Star Wars Zero Company": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/5/59/StarWarsZeroCompanyArt2.png/revision/latest/scale-to-width-down/353?cb=20260606010950",
   "missing": false,
-  "final": "Star Wars Zero Company"
+  "final": "Star Wars Zero Company",
+  "local": "images/starwarszerocompanyart2.webp"
  },
  "Star Wars Jedi: Fallen Order": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/5/57/Fallen-Order-Box-Art.jpg/revision/latest/scale-to-width-down/384?cb=20190607015712",
   "missing": false,
-  "final": "Star Wars Jedi: Fallen Order"
+  "final": "Star Wars Jedi: Fallen Order",
+  "local": "images/fallen-order-box-art.webp"
  },
  "Star Wars Jedi: Survivor": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/8/82/Star_Wars_Jedi_Survivor_cover_art.jpg/revision/latest/scale-to-width-down/384?cb=20221212004209",
   "missing": false,
-  "final": "Star Wars Jedi: Survivor"
+  "final": "Star Wars Jedi: Survivor",
+  "local": "images/star-wars-jedi-survivor-cover-art.webp"
  },
  "Star Wars: Beyond Victory - A Mixed Reality Playset": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/b/b2/BeyondVictoryAnnounceArt.png/revision/latest/scale-to-width-down/480?cb=20250328031153",
   "missing": false,
-  "final": "Star Wars: Beyond Victory - A Mixed Reality Playset"
+  "final": "Star Wars: Beyond Victory - A Mixed Reality Playset",
+  "local": "images/beyondvictoryannounceart.webp"
  },
  "Vader Immortal: A Star Wars VR Series": {
   "thumb": "https://upload.wikimedia.org/wikipedia/en/5/5a/Vader_immortal.jpg",
   "missing": false,
   "final": "Vader Immortal: A Star Wars VR Series",
-  "src": "wikipedia"
+  "src": "wikipedia",
+  "local": "images/vader-immortal.jpg"
  },
  "Star Wars Battlefront (DICE)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/f/fb/Battlefront_2015_Cover.jpg/revision/latest/scale-to-width-down/341?cb=20211024212736",
   "missing": false,
-  "final": "Star Wars Battlefront"
+  "final": "Star Wars Battlefront",
+  "local": "images/battlefront-2015-cover.webp"
  },
  "Star Wars Outlaws": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/6/63/Star-Wars-Outlaws.png/revision/latest/scale-to-width-down/386?cb=20230611182953",
   "missing": false,
-  "final": "Star Wars Outlaws"
+  "final": "Star Wars Outlaws",
+  "local": "images/star-wars-outlaws.webp"
  },
  "Star Wars Battlefront II": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/d/da/Battlefront_2.jpg/revision/latest/scale-to-width-down/352?cb=20170415201655",
   "missing": false,
-  "final": "Star Wars Battlefront II"
+  "final": "Star Wars Battlefront II",
+  "local": "images/battlefront-2.webp"
  },
  "Star Wars: Squadrons": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/d/d9/Star-Wars-Squadrons.jpg/revision/latest/scale-to-width-down/480?cb=20200612184722",
   "missing": false,
-  "final": "Star Wars: Squadrons"
+  "final": "Star Wars: Squadrons",
+  "local": "images/star-wars-squadrons.webp"
  },
  "Star Wars: Uprising": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/8/8a/Star_Wars_Uprising_Poster.png/revision/latest/scale-to-width-down/308?cb=20150604161027",
   "missing": false,
-  "final": "Star Wars: Uprising"
+  "final": "Star Wars: Uprising",
+  "local": "images/star-wars-uprising-poster.webp"
  },
  "Star Wars: Galactic Racer": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/5/56/GalacticRacerPoster.jpg/revision/latest/scale-to-width-down/320?cb=20260430231040",
   "missing": false,
-  "final": "Star Wars: Galactic Racer"
+  "final": "Star Wars: Galactic Racer",
+  "local": "images/galacticracerposter.webp"
  },
  "Star Wars: Hunters": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/5/5e/SWHunters-KeyArt.jpg/revision/latest/scale-to-width-down/480?cb=20220811162639",
   "missing": false,
-  "final": "Star Wars: Hunters"
+  "final": "Star Wars: Hunters",
+  "local": "images/swhunters-keyart.webp"
  },
  "Star Wars: Tales from the Galaxy's Edge": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/6/64/TalesGalaxysEdgePoster.jpg/revision/latest/scale-to-width-down/480?cb=20210811203350",
   "missing": false,
-  "final": "Star Wars: Tales from the Galaxy's Edge"
+  "final": "Star Wars: Tales from the Galaxy's Edge",
+  "local": "images/talesgalaxysedgeposter.webp"
  },
  "Star Wars: Visions": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/5/55/Visions-EnglishPoster.png/revision/latest/scale-to-width-down/480?cb=20210915153859",
   "missing": false,
   "final": "Star Wars: Visions",
-  "src": "fandom-poster"
+  "src": "fandom-poster",
+  "local": "images/visions-englishposter.webp"
  },
  "Star Wars Galaxy of Adventures": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/9/9b/Star_Wars_Galaxy_of_Adventures_poster.jpg/revision/latest/scale-to-width-down/480?cb=20181128175357",
   "missing": false,
   "final": "Star Wars Galaxy of Adventures",
-  "src": "fandom-poster"
+  "src": "fandom-poster",
+  "local": "images/star-wars-galaxy-of-adventures-poster.webp"
  },
  "The High Republic: Path of Deceit": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/3/38/TheHighRepublic-PathOfDeceit.jpg/revision/latest/scale-to-width-down/317?cb=20220526233239",
   "missing": false,
-  "final": "The High Republic: Path of Deceit"
+  "final": "The High Republic: Path of Deceit",
+  "local": "images/thehighrepublic-pathofdeceit.webp"
  },
  "The High Republic: Convergence": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/f/f4/HighRepublicConvergence-Cover.jpg/revision/latest/scale-to-width-down/316?cb=20220620193112",
   "missing": false,
-  "final": "The High Republic: Convergence"
+  "final": "The High Republic: Convergence",
+  "local": "images/highrepublicconvergence-cover.webp"
  },
  "The High Republic: Cataclysm": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/2/2b/TheHighRepublic-Cataclysm-cover.jpg/revision/latest/scale-to-width-down/316?cb=20221018054601",
   "missing": false,
-  "final": "The High Republic: Cataclysm"
+  "final": "The High Republic: Cataclysm",
+  "local": "images/thehighrepublic-cataclysm-cover.webp"
  },
  "The High Republic: Path of Vengeance": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/2/2a/TheHighRepublic-PathofVengeance-cover.jpg/revision/latest/scale-to-width-down/316?cb=20221010031440",
   "missing": false,
-  "final": "The High Republic: Path of Vengeance"
+  "final": "The High Republic: Path of Vengeance",
+  "local": "images/thehighrepublic-pathofvengeance-cover.webp"
  },
  "The High Republic: Light of the Jedi": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/e/e2/Light_of_the_Jedi_cover.jpg/revision/latest/scale-to-width-down/316?cb=20200225020702",
   "missing": false,
-  "final": "The High Republic: Light of the Jedi"
+  "final": "The High Republic: Light of the Jedi",
+  "local": "images/light-of-the-jedi-cover.webp"
  },
  "The High Republic: Into the Dark": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/8/81/Into_the_Dark_cover.jpg/revision/latest/scale-to-width-down/320?cb=20200225074008",
   "missing": false,
-  "final": "The High Republic: Into the Dark"
+  "final": "The High Republic: Into the Dark",
+  "local": "images/into-the-dark-cover.webp"
  },
  "The High Republic: The Rising Storm": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/c/c8/TheHighRepublic-TheRisingStorm.jpg/revision/latest/scale-to-width-down/316?cb=20210120060833",
   "missing": false,
-  "final": "The High Republic: The Rising Storm"
+  "final": "The High Republic: The Rising Storm",
+  "local": "images/thehighrepublic-therisingstorm.webp"
  },
  "The High Republic: Out of the Shadows": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/5/51/Star_Wars_The_High_Republic_Out_of_the_Shadows_final_cover.jpg/revision/latest/scale-to-width-down/320?cb=20210217035059",
   "missing": false,
-  "final": "The High Republic: Out of the Shadows"
+  "final": "The High Republic: Out of the Shadows",
+  "local": "images/star-wars-the-high-republic-out-of-the-shadows-final-cover.webp"
  },
  "The High Republic: The Fallen Star": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/7/79/HighRepublicTheFallenStar-Cover.jpg/revision/latest/scale-to-width-down/316?cb=20210915222426",
   "missing": false,
-  "final": "The High Republic: The Fallen Star"
+  "final": "The High Republic: The Fallen Star",
+  "local": "images/highrepublicthefallenstar-cover.webp"
  },
  "The High Republic: Midnight Horizon": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/d/dc/HighRepublicMidnightHorizon.jpg/revision/latest/scale-to-width-down/320?cb=20210916182836",
   "missing": false,
-  "final": "The High Republic: Midnight Horizon"
+  "final": "The High Republic: Midnight Horizon",
+  "local": "images/highrepublicmidnighthorizon.webp"
  },
  "The High Republic: The Eye of Darkness": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/b/b0/TheHighRepublic-TheEyeofDarkness-cover.jpg/revision/latest/scale-to-width-down/316?cb=20230705195428",
   "missing": false,
-  "final": "The High Republic: The Eye of Darkness"
+  "final": "The High Republic: The Eye of Darkness",
+  "local": "images/thehighrepublic-theeyeofdarkness-cover.webp"
  },
  "The High Republic: Defy the Storm": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/7/79/TheHighRepublic-DefytheStorm-cover.jpg/revision/latest/scale-to-width-down/324?cb=20230721222810",
   "missing": false,
-  "final": "The High Republic: Defy the Storm"
+  "final": "The High Republic: Defy the Storm",
+  "local": "images/thehighrepublic-defythestorm-cover.webp"
  },
  "The High Republic: Temptation of the Force": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/2/2e/TheHighRepublic-TemptationoftheForce-cover.jpg/revision/latest/scale-to-width-down/316?cb=20240520141843",
   "missing": false,
-  "final": "The High Republic: Temptation of the Force"
+  "final": "The High Republic: Temptation of the Force",
+  "local": "images/thehighrepublic-temptationoftheforce-cover.webp"
  },
  "The High Republic: Tears of the Nameless": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/3/3b/TearsOfTheNameless-Cover.png/revision/latest/scale-to-width-down/320?cb=20240929070043",
   "missing": false,
-  "final": "The High Republic: Tears of the Nameless"
+  "final": "The High Republic: Tears of the Nameless",
+  "local": "images/tearsofthenameless-cover.webp"
  },
  "The High Republic: Into the Light": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/4/45/TheHighRepublic-IntotheLight-cover.jpg/revision/latest/scale-to-width-down/325?cb=20241018205643",
   "missing": false,
-  "final": "The High Republic: Into the Light"
+  "final": "The High Republic: Into the Light",
+  "local": "images/thehighrepublic-intothelight-cover.webp"
  },
  "The High Republic: Trials of the Jedi": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/6/60/TheHighRepublic-TrialsoftheJedi-Cover.png/revision/latest/scale-to-width-down/316?cb=20250128161108",
   "missing": false,
-  "final": "The High Republic: Trials of the Jedi"
+  "final": "The High Republic: Trials of the Jedi",
+  "local": "images/thehighrepublic-trialsofthejedi-cover.webp"
  },
  "The Acolyte: Wayseeker": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/2/28/TheAcolyte-Wayseeker-cover3.jpg/revision/latest/scale-to-width-down/316?cb=20241114210410",
   "missing": false,
-  "final": "The Acolyte: Wayseeker"
+  "final": "The Acolyte: Wayseeker",
+  "local": "images/theacolyte-wayseeker-cover3.webp"
  },
  "The Acolyte: The Crystal Crown": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/1/18/TheAcolyte-TheCrystalCrown-Cover.jpg/revision/latest/scale-to-width-down/316?cb=20250524051956",
   "missing": false,
-  "final": "The Acolyte: The Crystal Crown"
+  "final": "The Acolyte: The Crystal Crown",
+  "local": "images/theacolyte-thecrystalcrown-cover.webp"
  },
  "Padawan (novel)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/7/74/Padawan_cover.jpg/revision/latest/scale-to-width-down/316?cb=20220225073815",
   "missing": false,
-  "final": "Padawan (novel)"
+  "final": "Padawan (novel)",
+  "local": "images/padawan-cover.webp"
  },
  "Master & Apprentice": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/c/c5/MasterApprentice-Hardcover.jpg/revision/latest/scale-to-width-down/318?cb=20181007232310",
   "missing": false,
-  "final": "Master & Apprentice"
+  "final": "Master & Apprentice",
+  "local": "images/masterapprentice-hardcover.webp"
  },
  "The Living Force": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/9/91/TheLivingForce.png/revision/latest/scale-to-width-down/316?cb=20230907175537",
   "missing": false,
-  "final": "The Living Force"
+  "final": "The Living Force",
+  "local": "images/thelivingforce.webp"
  },
  "Queen's Peril": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/1/1c/QueensPeril.png/revision/latest/scale-to-width-down/320?cb=20200618062128",
   "missing": false,
-  "final": "Queen's Peril"
+  "final": "Queen's Peril",
+  "local": "images/queensperil.webp"
  },
  "Mace Windu: The Glass Abyss": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/9/9a/MaceWinduTheGlassAbyss-revealcover.jpg/revision/latest/scale-to-width-down/316?cb=20231208144754",
   "missing": false,
-  "final": "Mace Windu: The Glass Abyss"
+  "final": "Mace Windu: The Glass Abyss",
+  "local": "images/macewindutheglassabyss-revealcover.webp"
  },
  "Queen's Shadow": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/0/0e/QueensShadow.png/revision/latest/scale-to-width-down/320?cb=20190305210550",
   "missing": false,
-  "final": "Queen's Shadow"
+  "final": "Queen's Shadow",
+  "local": "images/queensshadow.webp"
  },
  "Queen's Hope": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/4/47/Queens_Hope_final_cover.jpg/revision/latest/scale-to-width-down/325?cb=20210618225638",
   "missing": false,
-  "final": "Queen's Hope"
+  "final": "Queen's Hope",
+  "local": "images/queens-hope-final-cover.webp"
  },
  "Brotherhood (novel)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/3/3d/Brotherhood_Final_Cover.png/revision/latest/scale-to-width-down/315?cb=20220510224638",
   "missing": false,
-  "final": "Brotherhood (novel)"
+  "final": "Brotherhood (novel)",
+  "local": "images/brotherhood-final-cover.webp"
  },
  "Thrawn Ascendancy: Chaos Rising": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/4/4a/ChaosRising_cover.jpg/revision/latest/scale-to-width-down/316?cb=20200902230326",
   "missing": false,
-  "final": "Thrawn Ascendancy: Chaos Rising"
+  "final": "Thrawn Ascendancy: Chaos Rising",
+  "local": "images/chaosrising-cover.webp"
  },
  "Dark Disciple": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/9/90/Dark_Disciple_Cover.png/revision/latest/scale-to-width-down/316?cb=20141209194455",
   "missing": false,
-  "final": "Dark Disciple"
+  "final": "Dark Disciple",
+  "local": "images/dark-disciple-cover.webp"
  },
  "Star Wars Outlaws: Low Red Moon": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/7/76/OutlawsLowRedMoon-Cover.jpg/revision/latest/scale-to-width-down/316?cb=20250922235839",
   "missing": false,
-  "final": "Star Wars Outlaws: Low Red Moon"
+  "final": "Star Wars Outlaws: Low Red Moon",
+  "local": "images/outlawslowredmoon-cover.webp"
  },
  "Reign of the Empire: The Mask of Fear": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/0/08/ROTE-TheMaskOfFear.jpg/revision/latest/scale-to-width-down/315?cb=20240729163725",
   "missing": false,
-  "final": "Reign of the Empire: The Mask of Fear"
+  "final": "Reign of the Empire: The Mask of Fear",
+  "local": "images/rote-themaskoffear.webp"
  },
  "Master of Evil": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/b/be/MasterOfEvil-Cover.png/revision/latest/scale-to-width-down/316?cb=20250410155352",
   "missing": false,
-  "final": "Master of Evil"
+  "final": "Master of Evil",
+  "local": "images/masterofevil-cover.webp"
  },
  "Thrawn Ascendancy: Greater Good": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/d/d1/GreaterGood.jpg/revision/latest/scale-to-width-down/316?cb=20201029174446",
   "missing": false,
-  "final": "Thrawn Ascendancy: Greater Good"
+  "final": "Thrawn Ascendancy: Greater Good",
+  "local": "images/greatergood.webp"
  },
  "Thrawn Ascendancy: Lesser Evil": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/3/3f/LesserEvil.jpg/revision/latest/scale-to-width-down/316?cb=20210402211907",
   "missing": false,
-  "final": "Thrawn Ascendancy: Lesser Evil"
+  "final": "Thrawn Ascendancy: Lesser Evil",
+  "local": "images/lesserevil.webp"
  },
  "Sanctuary (novel)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/1/16/Sanctuary-Cover.jpg/revision/latest/scale-to-width-down/316?cb=20250207000237",
   "missing": false,
-  "final": "Sanctuary: A Bad Batch Novel"
+  "final": "Sanctuary: A Bad Batch Novel",
+  "local": "images/sanctuary-cover.webp"
  },
  "Ahsoka (novel)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/d/d3/Ahsoka_novel_cover.png/revision/latest/scale-to-width-down/318?cb=20160715164545",
   "missing": false,
-  "final": "Ahsoka (novel)"
+  "final": "Ahsoka (novel)",
+  "local": "images/ahsoka-novel-cover.webp"
  },
  "Catalyst: A Rogue One Novel": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/9/92/Catalyst_A_Rogue_One_Novel.png/revision/latest/scale-to-width-down/316?cb=20180211055827",
   "missing": false,
-  "final": "Catalyst: A Rogue One Novel"
+  "final": "Catalyst: A Rogue One Novel",
+  "local": "images/catalyst-a-rogue-one-novel.webp"
  },
  "Thrawn (novel)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/1/14/SoCalledThrawnNovel.png/revision/latest/scale-to-width-down/315?cb=20160805194404",
   "missing": false,
-  "final": "Thrawn (novel)"
+  "final": "Thrawn (novel)",
+  "local": "images/socalledthrawnnovel.webp"
  },
  "Lords of the Sith": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/6/6b/Lords_of_the_Sith.jpg/revision/latest/scale-to-width-down/315?cb=20210718053306",
   "missing": false,
-  "final": "Lords of the Sith"
+  "final": "Lords of the Sith",
+  "local": "images/lords-of-the-sith.webp"
  },
  "Tarkin (novel)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/d/df/TarkinCover.jpg/revision/latest/scale-to-width-down/315?cb=20140425191637",
   "missing": false,
-  "final": "Tarkin (novel)"
+  "final": "Tarkin (novel)",
+  "local": "images/tarkincover.webp"
  },
  "Inquisitor: Rise of the Red Blade": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/f/f0/InquisitorRiseoftheRedBlade-cover.jpg/revision/latest/scale-to-width-down/316?cb=20221011193317",
   "missing": false,
-  "final": "Inquisitor: Rise of the Red Blade"
+  "final": "Inquisitor: Rise of the Red Blade",
+  "local": "images/inquisitorriseoftheredblade-cover.webp"
  },
  "Most Wanted": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/6/60/Most_Wanted_book_cover.jpg/revision/latest/scale-to-width-down/320?cb=20180217015536",
   "missing": false,
-  "final": "Most Wanted"
+  "final": "Most Wanted",
+  "local": "images/most-wanted-book-cover.webp"
  },
  "Star Wars Jedi: Battle Scars": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/0/04/Jedi_Battle_Scars_cover.jpg/revision/latest/scale-to-width-down/316?cb=20221203085940",
   "missing": false,
-  "final": "Star Wars Jedi: Battle Scars"
+  "final": "Star Wars Jedi: Battle Scars",
+  "local": "images/jedi-battle-scars-cover.webp"
  },
  "Crimson Climb": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/f/f5/CrimsonClimb-revealcover.jpg/revision/latest/scale-to-width-down/318?cb=20230208001041",
   "missing": false,
-  "final": "Crimson Climb"
+  "final": "Crimson Climb",
+  "local": "images/crimsonclimb-revealcover.webp"
  },
  "A New Dawn": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/f/f6/A_New_Dawn-SWP.jpg/revision/latest/scale-to-width-down/361?cb=20170110083833",
   "missing": false,
-  "final": "A New Dawn"
+  "final": "A New Dawn",
+  "local": "images/a-new-dawn-swp.webp"
  },
  "Rebel Rising": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/4/41/RebelRising-Hardcover.jpg/revision/latest/scale-to-width-down/320?cb=20180121202424",
   "missing": false,
-  "final": "Rebel Rising"
+  "final": "Rebel Rising",
+  "local": "images/rebelrising-hardcover.webp"
  },
  "Lost Stars": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/a/a2/LostStars.png/revision/latest/scale-to-width-down/318?cb=20150709005414",
   "missing": false,
-  "final": "Lost Stars"
+  "final": "Lost Stars",
+  "local": "images/loststars.webp"
  },
  "Reign of the Empire: Edge of the Abyss": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/0/00/ROTE-EdgeOfTheAbyss-Cover.png/revision/latest/scale-to-width-down/316?cb=20260310164917",
   "missing": false,
-  "final": "Reign of the Empire: Edge of the Abyss"
+  "final": "Reign of the Empire: Edge of the Abyss",
+  "local": "images/rote-edgeoftheabyss-cover.webp"
  },
  "Leia, Princess of Alderaan": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/1/11/LeiaPrincessofAlderaan-Hardcover.jpg/revision/latest/scale-to-width-down/318?cb=20170708131542",
   "missing": false,
-  "final": "Leia, Princess of Alderaan"
+  "final": "Leia, Princess of Alderaan",
+  "local": "images/leiaprincessofalderaan-hardcover.webp"
  },
  "Thrawn: Alliances": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/c/c8/Thrawn_Alliances_cover.png/revision/latest/scale-to-width-down/315?cb=20200826220634",
   "missing": false,
-  "final": "Thrawn: Alliances"
+  "final": "Thrawn: Alliances",
+  "local": "images/thrawn-alliances-cover.webp"
  },
  "Thrawn: Treason": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/3/3f/ThrawnTreason.jpg/revision/latest/scale-to-width-down/316?cb=20190204205531",
   "missing": false,
-  "final": "Thrawn: Treason"
+  "final": "Thrawn: Treason",
+  "local": "images/thrawntreason.webp"
  },
  "Battlefront II: Inferno Squad": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/b/b6/Star_Wars_Battlefront_II_Inferno_Squad.jpg/revision/latest/scale-to-width-down/316?cb=20170727214334",
   "missing": false,
-  "final": "Battlefront II: Inferno Squad"
+  "final": "Battlefront II: Inferno Squad",
+  "local": "images/star-wars-battlefront-ii-inferno-squad.webp"
  },
  "Heir to the Jedi": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/c/c2/Heir_to_the_Jedi.jpg/revision/latest/scale-to-width-down/315?cb=20140425200555",
   "missing": false,
-  "final": "Heir to the Jedi"
+  "final": "Heir to the Jedi",
+  "local": "images/heir-to-the-jedi.webp"
  },
  "Battlefront: Twilight Company": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/9/91/Battlefront_Twilight_Company_cover.jpg/revision/latest/scale-to-width-down/316?cb=20150828172004",
   "missing": false,
-  "final": "Battlefront: Twilight Company"
+  "final": "Battlefront: Twilight Company",
+  "local": "images/battlefront-twilight-company-cover.webp"
  },
  "The Princess and the Scoundrel": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/8/8b/PrincessandtheScoundrel-cover.jpg/revision/latest/scale-to-width-down/316?cb=20220514221806",
   "missing": false,
-  "final": "The Princess and the Scoundrel"
+  "final": "The Princess and the Scoundrel",
+  "local": "images/princessandthescoundrel-cover.webp"
  },
  "Aftermath (novel)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/8/88/Aftermath.jpg/revision/latest/scale-to-width-down/316?cb=20170509004040",
   "missing": false,
-  "final": "Aftermath (novel)"
+  "final": "Aftermath (novel)",
+  "local": "images/aftermath.webp"
  },
  "Alphabet Squadron": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/9/9d/Alphabet_Squadron.svg/revision/latest/scale-to-width-down/480?cb=20260312111120",
   "missing": false,
-  "final": "Alphabet Squadron"
+  "final": "Alphabet Squadron",
+  "local": "images/alphabet-squadron.webp"
  },
  "Aftermath: Life Debt": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/8/80/AftermathLifeDebt-Hardcover.jpg/revision/latest/scale-to-width-down/316?cb=20170509144831",
   "missing": false,
-  "final": "Aftermath: Life Debt"
+  "final": "Aftermath: Life Debt",
+  "local": "images/aftermathlifedebt-hardcover.webp"
  },
  "Shadow Fall": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/a/af/ShadowFall.png/revision/latest/scale-to-width-down/316?cb=20200617182813",
   "missing": false,
-  "final": "Shadow Fall: An Alphabet Squadron Novel"
+  "final": "Shadow Fall: An Alphabet Squadron Novel",
+  "local": "images/shadowfall.webp"
  },
  "Aftermath: Empire's End": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/9/9c/Aftermath-EmpiresEnd-Hardcover.png/revision/latest/scale-to-width-down/315?cb=20170225022028",
   "missing": false,
-  "final": "Aftermath: Empire's End"
+  "final": "Aftermath: Empire's End",
+  "local": "images/aftermath-empiresend-hardcover.webp"
  },
  "Victory's Price": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/8/89/VictorysPrice.jpg/revision/latest/scale-to-width-down/316?cb=20210131075536",
   "missing": false,
-  "final": "Victory's Price: An Alphabet Squadron Novel"
+  "final": "Victory's Price: An Alphabet Squadron Novel",
+  "local": "images/victorysprice.webp"
  },
  "Last Shot": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/4/49/Last_Shot_Han_cover.jpg/revision/latest/scale-to-width-down/316?cb=20180416204915",
   "missing": false,
-  "final": "Last Shot"
+  "final": "Last Shot",
+  "local": "images/last-shot-han-cover.webp"
  },
  "Poe Dameron: Free Fall": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/c/c2/PoeDameronFreeFall.jpg/revision/latest/scale-to-width-down/310?cb=20200514183531",
   "missing": false,
-  "final": "Poe Dameron: Free Fall"
+  "final": "Poe Dameron: Free Fall",
+  "local": "images/poedameronfreefall.webp"
  },
  "Shadow of the Sith": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/e/e5/Shadow-of-the-Sith-Cover.jpg/revision/latest/scale-to-width-down/316?cb=20220324191944",
   "missing": false,
-  "final": "Shadow of the Sith"
+  "final": "Shadow of the Sith",
+  "local": "images/shadow-of-the-sith-cover.webp"
  },
  "Bloodline (novel)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/0/0b/SW_Bloodline_cover.jpg/revision/latest/scale-to-width-down/316?cb=20160206211144",
   "missing": false,
-  "final": "Bloodline (novel)"
+  "final": "Bloodline (novel)",
+  "local": "images/sw-bloodline-cover.webp"
  },
  "Force Collector": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/8/8c/ForceCollector-Egmont.jpg/revision/latest/scale-to-width-down/338?cb=20191025191801",
   "missing": false,
-  "final": "Force Collector"
+  "final": "Force Collector",
+  "local": "images/forcecollector-egmont.webp"
  },
  "Eyes Like Stars": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/c/cd/EyesLikeStars-Cover.jpg/revision/latest/scale-to-width-down/324?cb=20260126030454",
   "missing": false,
-  "final": "Eyes Like Stars"
+  "final": "Eyes Like Stars",
+  "local": "images/eyeslikestars-cover.webp"
  },
  "Phasma (novel)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/f/f2/Phasma-Hardcover.png/revision/latest/scale-to-width-down/316?cb=20170630180824",
   "missing": false,
-  "final": "Phasma (novel)"
+  "final": "Phasma (novel)",
+  "local": "images/phasma-hardcover.webp"
  },
  "Galaxy's Edge: Black Spire": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/b/b6/GalaxysEdgeBlackSpire.png/revision/latest/scale-to-width-down/316?cb=20190325201402",
   "missing": false,
-  "final": "Galaxy's Edge: Black Spire"
+  "final": "Galaxy's Edge: Black Spire",
+  "local": "images/galaxysedgeblackspire.webp"
  },
  "A Crash of Fate": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/8/8a/ACrashofFate.png/revision/latest/scale-to-width-down/344?cb=20190808231603",
   "missing": false,
-  "final": "A Crash of Fate"
+  "final": "A Crash of Fate",
+  "local": "images/acrashoffate.webp"
  },
  "Resistance Reborn": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/4/4b/Resistance-reborn-final-cover.jpg/revision/latest/scale-to-width-down/316?cb=20191101221804",
   "missing": false,
-  "final": "Resistance Reborn"
+  "final": "Resistance Reborn",
+  "local": "images/resistance-reborn-final-cover.webp"
  },
  "The Last Order": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/e/e7/TheLastOrder-Cover.jpg/revision/latest/scale-to-width-down/316?cb=20260129044145",
   "missing": false,
-  "final": "The Last Order"
+  "final": "The Last Order",
+  "local": "images/thelastorder-cover.webp"
  },
  "Star Wars: The High Republic": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/4/40/TheHighRepublicComicIssue1.jpg/revision/latest/scale-to-width-down/312?cb=20200910190958",
   "missing": false,
   "final": "Star Wars: The High Republic",
-  "src": "fandom-issue1"
+  "src": "fandom-issue1",
+  "local": "images/thehighrepubliccomicissue1.webp"
  },
  "Star Wars: The High Republic Adventures, Volume One": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/c/c2/The_High_Republic_Adventures_TPB_final_cover.jpg/revision/latest/scale-to-width-down/316?cb=20210310163953",
   "missing": false,
-  "final": "Star Wars: The High Republic Adventures, Volume One"
+  "final": "Star Wars: The High Republic Adventures, Volume One",
+  "local": "images/the-high-republic-adventures-tpb-final-cover.webp"
  },
  "Star Wars: Darth Maul (2017)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/1/1e/Star_Wars_Darth_Maul_1.png/revision/latest/scale-to-width-down/312?cb=20190211005829",
   "missing": false,
   "final": "Star Wars: Darth Maul (2017)",
-  "src": "fandom-issue1"
+  "src": "fandom-issue1",
+  "local": "images/star-wars-darth-maul-1.webp"
  },
  "Star Wars: Obi-Wan and Anakin": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/c/c6/Obi-Wan_and_Anakin_1_cover_CBR.jpg/revision/latest/scale-to-width-down/312?cb=20190219023018",
   "missing": false,
   "final": "Star Wars: Obi-Wan and Anakin",
-  "src": "fandom-issue1"
+  "src": "fandom-issue1",
+  "local": "images/obi-wan-and-anakin-1-cover-cbr.webp"
  },
  "Star Wars: Jedi of the Republic – Mace Windu": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/c/c1/WinduJediOfRepublic.png/revision/latest/scale-to-width-down/480?cb=20240412050628",
   "missing": false,
-  "final": "Star Wars: Jedi of the Republic – Mace Windu"
+  "final": "Star Wars: Jedi of the Republic – Mace Windu",
+  "local": "images/windujediofrepublic.webp"
  },
  "Star Wars: Kanan": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/a/a1/Kanan_The_Last_Padawan_1_Cover.png/revision/latest/scale-to-width-down/316?cb=20180128071331",
   "missing": false,
   "final": "Star Wars: Kanan",
-  "src": "fandom-issue1"
+  "src": "fandom-issue1",
+  "local": "images/kanan-the-last-padawan-1-cover.webp"
  },
  "Darth Vader: Dark Lord of the Sith": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/9/9a/Darth_VaderDark_Lord_of_the_Sith.jpg/revision/latest/scale-to-width-down/312?cb=20190223230434",
   "missing": false,
   "final": "Star Wars: Darth Vader (2017)",
-  "src": "fandom-issue1"
+  "src": "fandom-issue1",
+  "local": "images/darth-vaderdark-lord-of-the-sith.webp"
  },
  "Star Wars: Obi-Wan (comic series)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/b/bd/Obiwan1-final-cover.jpg/revision/latest/scale-to-width-down/312?cb=20250822015515",
   "missing": false,
   "final": "Star Wars: Obi-Wan (comic series)",
-  "src": "fandom-issue1"
+  "src": "fandom-issue1",
+  "local": "images/obiwan1-final-cover.webp"
  },
  "Star Wars: Princess Leia": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/c/cc/Star_Wars_Princess_Leia_Vol_1_1.jpg/revision/latest/scale-to-width-down/316?cb=20150227143818",
   "missing": false,
   "final": "Star Wars: Princess Leia",
-  "src": "fandom-issue1"
+  "src": "fandom-issue1",
+  "local": "images/star-wars-princess-leia-vol-1-1.webp"
  },
  "Star Wars (2015)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/2/2c/Star_Wars_Marvel_2015_John_Cassaday_Special_Edition.jpg/revision/latest/scale-to-width-down/324?cb=20141021202543",
   "missing": false,
-  "final": "Star Wars (2015)"
+  "final": "Star Wars (2015)",
+  "local": "images/star-wars-marvel-2015-john-cassaday-special-edition.webp"
  },
  "Darth Vader (2015)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/f/f0/Star_Wars_Darth_Vader_Vol_1_1.jpg/revision/latest/scale-to-width-down/316?cb=20150205184155",
   "missing": false,
   "final": "Star Wars: Darth Vader (2015)",
-  "src": "fandom-issue1"
+  "src": "fandom-issue1",
+  "local": "images/star-wars-darth-vader-vol-1-1.webp"
  },
  "Vader Down": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/a/a8/Star_Wars_Vader_Down_1_Final_Cover.jpg/revision/latest/scale-to-width-down/316?cb=20151024205149",
   "missing": false,
   "final": "Star Wars: Vader Down",
-  "src": "fandom-issue1"
+  "src": "fandom-issue1",
+  "local": "images/star-wars-vader-down-1-final-cover.webp"
  },
  "The Screaming Citadel": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/5/56/CitadelOfKthathatn-TheScreamingCitadel1.jpg/revision/latest/scale-to-width-down/480?cb=20171203150223",
   "missing": false,
-  "final": "Citadel of Ktath'atn"
+  "final": "Citadel of Ktath'atn",
+  "local": "images/citadelofkthathatn-thescreamingcitadel1.webp"
  },
  "Star Wars: Doctor Aphra (2016)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/c/c0/Doctor_Aphra_1.jpg/revision/latest/scale-to-width-down/312?cb=20190512173634",
   "missing": false,
   "final": "Star Wars: Doctor Aphra (2016)",
-  "src": "fandom-issue1"
+  "src": "fandom-issue1",
+  "local": "images/doctor-aphra-1.webp"
  },
  "Star Wars (2020)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/4/45/Star-wars-2020-issue-1-cover.jpg/revision/latest/scale-to-width-down/316?cb=20191004202907",
   "missing": false,
-  "final": "Star Wars (2020)"
+  "final": "Star Wars (2020)",
+  "local": "images/star-wars-2020-issue-1-cover.webp"
  },
  "Darth Vader (2020)": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/b/b3/Dark_Heart_of_the_Sith_solicitation.jpg/revision/latest/scale-to-width-down/316?cb=20201108014928",
   "missing": false,
-  "final": "Star Wars: Darth Vader (2020)"
+  "final": "Star Wars: Darth Vader (2020)",
+  "local": "images/dark-heart-of-the-sith-solicitation.webp"
  },
  "Star Wars: Bounty Hunters": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/f/ff/BountyHunters-1.jpg/revision/latest/scale-to-width-down/312?cb=20200311180121",
   "missing": false,
   "final": "Star Wars: Bounty Hunters",
-  "src": "fandom-issue1"
+  "src": "fandom-issue1",
+  "local": "images/bountyhunters-1.webp"
  },
  "War of the Bounty Hunters": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/5/5f/WOTBH1Giuseppe_Camuncoli.jpg/revision/latest/scale-to-width-down/480?cb=20210319051133",
   "missing": false,
-  "final": "War of the Bounty Hunters"
+  "final": "War of the Bounty Hunters",
+  "local": "images/wotbh1giuseppe-camuncoli.webp"
  },
  "Crimson Reign": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/e/ef/CR1-cover.jpg/revision/latest/scale-to-width-down/312?cb=20211205014326",
   "missing": false,
   "final": "Star Wars: Crimson Reign",
-  "src": "fandom-issue1"
+  "src": "fandom-issue1",
+  "local": "images/cr1-cover.webp"
  },
  "Hidden Empire": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/1/1d/HiddenEmpire1-final-cover.jpg/revision/latest/scale-to-width-down/312?cb=20221103063611",
   "missing": false,
   "final": "Star Wars: Hidden Empire",
-  "src": "fandom-issue1"
+  "src": "fandom-issue1",
+  "local": "images/hiddenempire1-final-cover.webp"
  },
  "Shattered Empire": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/c/c2/Star_Wars_Shattered_Empire_1_cover.jpg/revision/latest/scale-to-width-down/316?cb=20180131013651",
   "missing": false,
   "final": "Star Wars: Shattered Empire",
-  "src": "fandom-issue1"
+  "src": "fandom-issue1",
+  "local": "images/star-wars-shattered-empire-1-cover.webp"
  },
  "Star Wars: Battle of Jakku": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/8/8f/Battle-of-Jakku-1-Title-Cover.jpg/revision/latest/scale-to-width-down/316?cb=20241230160352",
   "missing": false,
-  "final": "Star Wars: Battle of Jakku"
+  "final": "Star Wars: Battle of Jakku",
+  "local": "images/battle-of-jakku-1-title-cover.webp"
  },
  "Star Wars: The Rise of Kylo Ren": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/5/56/TheRiseofKyloRen-1.jpg/revision/latest/scale-to-width-down/312?cb=20191220044930",
   "missing": false,
   "final": "Star Wars: The Rise of Kylo Ren",
-  "src": "fandom-issue1"
+  "src": "fandom-issue1",
+  "local": "images/theriseofkyloren-1.webp"
  },
  "Star Wars: Poe Dameron": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/1/18/Poe_Dameron_1_final_cover.jpg/revision/latest/scale-to-width-down/312?cb=20190117132419",
   "missing": false,
   "final": "Star Wars: Poe Dameron",
-  "src": "fandom-issue1"
+  "src": "fandom-issue1",
+  "local": "images/poe-dameron-1-final-cover.webp"
  },
  "Star Wars: Captain Phasma": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/2/2f/Captain_Phasma_1.jpg/revision/latest/scale-to-width-down/312?cb=20180203053439",
   "missing": false,
   "final": "Star Wars: Captain Phasma",
-  "src": "fandom-issue1"
+  "src": "fandom-issue1",
+  "local": "images/captain-phasma-1.webp"
  },
  "Star Wars: Legacy of Vader": {
   "thumb": "https://static.wikia.nocookie.net/starwars/images/a/a6/LegacyofVader1-solicit-cover.jpg/revision/latest/scale-to-width-down/311?cb=20241121215412",
   "missing": false,
-  "final": "Star Wars: Legacy of Vader"
+  "final": "Star Wars: Legacy of Vader",
+  "local": "images/legacyofvader1-solicit-cover.webp"
  }
 }

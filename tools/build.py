@@ -19,7 +19,9 @@ ALL = SCREEN + NOVELS + COMICS + OFFTIMELINE
 out = []
 for i, it in enumerate(ALL):
     era = it.get('era') or default_era(it['y'])
-    img = images.get(it['wook'], {}).get('thumb')
+    rec = images.get(it['wook'], {})
+    # a repóban tárolt kép az elsődleges; hotlink csak tartalékként
+    img = rec.get('local') or rec.get('thumb')
     out.append(dict(
         id='n%d' % i, title=it['title'], hu=it.get('hu'), type=it['type'],
         canon=it['canon'], rel=it.get('rel'), y=it['y'], era=era,
@@ -34,7 +36,8 @@ dest_dir = '/Users/simonadamtamas/Documents/ClaudeCode/hobby projects/star-wars-
 os.makedirs(dest_dir, exist_ok=True)
 dest = os.path.join(dest_dir, 'index.html')
 open(dest, 'w').write(html)
-print('items:', len(out), '| with img:', sum(1 for o in out if o['img']))
+print('items:', len(out), '| with img:', sum(1 for o in out if o['img']),
+      '| local:', sum(1 for o in out if o['img'] and not o['img'].startswith('http')))
 from collections import Counter
 print(Counter(o['era'] for o in out))
 print(Counter(o['type'] for o in out))
