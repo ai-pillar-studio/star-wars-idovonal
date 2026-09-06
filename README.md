@@ -10,14 +10,20 @@ in-universe (BBY/ABY) sorrendben, kánon/Legends és típus szerinti szűrőkkel
 
 - `index.html` – maga a weboldal, egyetlen önálló fájl (nincs build, nincs futásidejű függőség)
 - `images/` – a borítóképek; az oldal relatív útvonalon hivatkozik rájuk
+- `CONTENT.md` – az összes szereplő mű generált listája (a frissítés kiindulópontja)
 - `tools/` – az adat-pipeline, ami az `index.html`-t generálja; részletek: [tools/README.md](tools/README.md)
 
 ## Bővítés
 
 ```bash
 cd tools
-python3 fetch_images.py && python3 download_images.py && python3 build.py
+python3 fetch_images.py && python3 download_images.py && python3 build.py && python3 validate.py
 ```
+
+A teljes frissítési munkafolyamat — friss tartalmak felkutatása, felvétele, publikálás —
+a `star-wars-frissites` skillben van leírva:
+[.claude/skills/star-wars-frissites/SKILL.md](.claude/skills/star-wars-frissites/SKILL.md).
+Claude Code sessionben elég annyi, hogy *„frissítsd a Star Wars projektet"*.
 
 ## Jogi megjegyzés
 

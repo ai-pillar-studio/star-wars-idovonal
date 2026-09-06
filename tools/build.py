@@ -42,3 +42,7 @@ from collections import Counter
 print(Counter(o['era'] for o in out))
 print(Counter(o['type'] for o in out))
 print('written:', dest, '(%.0f KB)' % (os.path.getsize(dest)/1024))
+
+# a tartalomlista mindig együtt frissül az oldallal, hogy ne csússzon el
+import make_manifest
+make_manifest.main()

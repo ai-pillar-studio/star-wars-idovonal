@@ -9,10 +9,12 @@ ha bővíteni szeretnéd az adatbázist (pl. Legends regények/képregények pó
 - `fetch_images.py` – borító-URL-ek lekérése a Fandom API-ból az adatfájlok `wook` mezője alapján
 - `download_images.py` – a borítók letöltése a `../images/` mappába (idempotens: meglévőt nem tölt újra)
 - `index_template.html` – a weboldal sablonja (a `/*__DATA__*/[]` helyére kerül az adat)
-- `build.py` – összefűzi az adatokat a sablonnal → `../index.html`
+- `build.py` – összefűzi az adatokat a sablonnal → `../index.html` + `../CONTENT.md`
+- `make_manifest.py` – a `../CONTENT.md` tartalomlista generálása (a build.py hívja)
+- `validate.py` – épségellenőrzés; nem nulla kilépési kóddal áll le, ha hiba van
 
 Új elem hozzáadása: vedd fel a megfelelő data_*.py listába, futtasd:
-`python3 fetch_images.py && python3 download_images.py && python3 build.py`
+`python3 fetch_images.py && python3 download_images.py && python3 build.py && python3 validate.py`
 
 A képek a repóban vannak (`../images/`), az oldal relatív útvonalon hivatkozik rájuk —
 nincs futásidejű függés a Fandom szervereitől. Ha egy képet nem sikerült letölteni,
