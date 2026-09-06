@@ -1,5 +1,7 @@
 # -*- coding: utf-8 -*-
-import json, urllib.request, urllib.parse, time
+import json, os, urllib.request, urllib.parse, time
+
+HERE = os.path.dirname(os.path.abspath(__file__))
 from data_screen import SCREEN, OFFTIMELINE
 from data_books import NOVELS, COMICS
 
@@ -51,7 +53,34 @@ for i in range(0, len(uniq), 50):
     result.update(fandom_images(batch))
     time.sleep(0.5)
 
+# A meglévő borítók RÖGZÍTETTEK. A Fandom időnként lecseréli egy cikk fő képét
+# (jellemzően plakátról sorozatlogóra), és e nélkül minden futás átírná az addigi
+# borítókat — az oldal kinézete magától, észrevétlenül romlana. Ezért amelyik
+# műnek már van letöltött képe, azt érintetlenül hagyjuk; csak az új művek
+# borítója jön a friss API-válaszból.
+#
+# Szándékos frissítéshez:  python3 fetch_images.py --refresh
+import sys as _sys
+refresh = '--refresh' in _sys.argv
+
+try:
+    prev = json.load(open('images.json'))
+except (IOError, ValueError):
+    prev = {}
+
+pinned = 0
+for title, rec in result.items():
+    old_rec = prev.get(title) or {}
+    local = old_rec.get('local')
+    if local and not refresh and os.path.exists(os.path.join(HERE, '..', local)):
+        # a régi rekord marad, a friss thumb URL-t eldobjuk
+        result[title] = dict(old_rec)
+        pinned += 1
+
 json.dump(result, open('images.json','w'), ensure_ascii=False, indent=1)
+print('rögzített (változatlanul hagyott) borító:', pinned,
+      '| friss URL:', len(result) - pinned,
+      '| --refresh' if refresh else '')
 nf = [t for t,v in result.items() if v['missing']]
 noimg = [t for t,v in result.items() if not v['missing'] and not v['thumb']]
 print('MISSING PAGES (%d):' % len(nf));  [print('  -', t) for t in nf]

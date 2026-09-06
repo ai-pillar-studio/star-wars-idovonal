@@ -11,21 +11,19 @@ a forrás a `tools/data_screen.py` és a `tools/data_books.py`, ez a lista a
 | Cím | Magyar cím | Típus | Megjelenés | Wookieepedia |
 |---|---|---|---|---|
 | Star Wars Eclipse |  | Videójáték | — | Star Wars Eclipse |
-| Eyes Like Stars |  | Regény | 2026-07-21 | Eyes Like Stars |
-| Star Wars Zero Company |  | Videójáték | 2026-08-27 | Star Wars Zero Company |
 | Reign of the Empire: Edge of the Abyss |  | Regény | 2026-09-15 | Reign of the Empire: Edge of the Abyss |
 | Star Wars: Galactic Racer |  | Videójáték | 2026-10-06 | Star Wars: Galactic Racer |
-| Star Wars: Starfighter |  | Film | 2027-05-27 | Star Wars: Starfighter |
+| Star Wars: Starfighter |  | Film | 2027-05-28 | Star Wars: Starfighter |
 
 ## Teljes lista (megjelenés szerint, legújabb elöl)
 
 | Cím | Magyar cím | Típus | Megjelenés | In-universe | Kánon | Wookieepedia |
 |---|---|---|---|---|---|---|
-| Star Wars: Starfighter _(még nem jelent meg)_ |  | Film | 2027-05-27 | 40 ABY | kánon | Star Wars: Starfighter |
+| Star Wars: Starfighter _(még nem jelent meg)_ |  | Film | 2027-05-28 | 40 ABY | kánon | Star Wars: Starfighter |
 | Star Wars: Galactic Racer _(még nem jelent meg)_ |  | Videójáték | 2026-10-06 | 5.2 ABY | kánon | Star Wars: Galactic Racer |
 | Reign of the Empire: Edge of the Abyss _(még nem jelent meg)_ |  | Regény | 2026-09-15 | 5.9 BBY | kánon | Reign of the Empire: Edge of the Abyss |
-| Star Wars Zero Company _(még nem jelent meg)_ |  | Videójáték | 2026-08-27 | 20 BBY | kánon | Star Wars Zero Company |
-| Eyes Like Stars _(még nem jelent meg)_ |  | Regény | 2026-07-21 | 33 ABY | kánon | Eyes Like Stars |
+| Star Wars Zero Company |  | Videójáték | 2026-08-27 | 19 BBY | kánon | Star Wars Zero Company |
+| Eyes Like Stars |  | Regény | 2026-07-21 | 33 ABY | kánon | Eyes Like Stars |
 | Star Wars: The Mandalorian and Grogu | A Mandalóri és Grogu | Film | 2026-05-22 | 12 ABY | kánon | The Mandalorian and Grogu |
 | Star Wars: Maul – Shadow Lord | Star Wars: Maul – Az árnyak ura | Animációs sorozat | 2026-04-06 | 18.2 BBY | kánon | Maul - Shadow Lord |
 | Star Wars Outlaws: Low Red Moon |  | Regény | 2026-02-03 | 19.2 BBY | kánon | Star Wars Outlaws: Low Red Moon |
