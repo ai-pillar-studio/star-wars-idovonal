@@ -12,6 +12,8 @@ ha bővíteni szeretnéd az adatbázist (pl. Legends regények/képregények pó
 - `build.py` – összefűzi az adatokat a sablonnal → `../index.html` + `../CONTENT.md`
 - `make_manifest.py` – a `../CONTENT.md` tartalomlista generálása (a build.py hívja)
 - `validate.py` – épségellenőrzés; nem nulla kilépési kóddal áll le, ha hiba van
+- `lookup.py` – egy Wookieepedia-cikk tényadatai (megjelenés, in-universe év, szerző,
+  kiadói ismertető) az infoboxból: `python3 lookup.py "Cím"`
 
 Új elem hozzáadása: vedd fel a megfelelő data_*.py listába, futtasd:
 `python3 fetch_images.py && python3 download_images.py && python3 build.py && python3 validate.py`

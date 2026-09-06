@@ -46,15 +46,31 @@ Mit keress:
 Ha nincs semmi új, **ne találj ki semmit** — jelentsd, hogy nincs változás,
 és állj meg. Üres commitot ne csinálj.
 
-## 3. Ellenőrzés hozzáadás előtt
+## 3. Ellenőrzés hozzáadás előtt — `lookup.py`
 
-Minden jelöltre, mielőtt felveszed:
+Minden jelöltet a Wookieepedia infoboxából ellenőrizz, ne a keresési találatok
+szövegéből és **soha ne emlékezetből**:
 
-- legyen **valódi Wookieepedia-cikk** — a cikk pontos címe kerül a `wook` mezőbe;
-  ezt a 4. lépésben a `fetch_images.py` gépileg is visszaigazolja
-- legyen **forrás** a megjelenési dátumra és az in-universe évre
-- az in-universe évet **ne becsüld meg**. Ha nem található megbízható adat, tedd az
-  `OFFTIMELINE` listába (ez az „idővonalon kívül" szakasz), és jelezd a felhasználónak
+```bash
+python3 tools/lookup.py "Eyes Like Stars" "Star Wars Zero Company"
+```
+
+Kiírja a cikk tényadatait: `release date`, **`timeline`** (ebből jön az in-universe
+év), `author`/`writer`/`director`/`developer`, `publisher`, `media type`, és a kiadói
+ismertetőt, amiből a magyar `desc` írható. Ha a cikk nem létezik, azt is megmondja —
+ilyenkor rossz a `wook` cím, keresd meg a pontosat.
+
+Szabályok:
+
+- **az in-universe évet a `timeline` mezőből vedd**, ne becsüld meg. Ha a mező hiányzik
+  vagy nem egyértelmű, a mű az `OFFTIMELINE` listába kerül, és jelezd a felhasználónak
+- tartományt (`19 BBY–18 BBY`) a kezdetéhez közeli értékkel vegyél fel, és a `desc`-ben
+  utalj rá, hogy a cselekmény átível
+- a `release date`-et is innen vedd, ne a hírportálokról
+
+**A `WebFetch` a starwars.fandom.com-on nem működik** (a Fandom 402-t ad rá), ezért a
+cikkek tartalmához a `lookup.py`-t használd. A `WebSearch` arra jó, hogy *megtaláld*,
+mi az új — az ellenőrzés viszont mindig a `lookup.py`.
 
 ## 4. Az adat felvétele
 
@@ -150,5 +166,8 @@ Foglald össze a felhasználónak:
 - ne szerkeszd kézzel az `index.html`-t vagy a `CONTENT.md`-t — mindkettő generált
 - ne találj ki művet, dátumot vagy in-universe évet forrás nélkül
 - ne pushold, ha a `validate.py` hibát jelez
+- **soha ne futtass `rm -rf`-et** takarításra. Ha egy szkript rossz helyre írt fájlt,
+  a szkriptet javítsd, a szemetet pedig néven nevezve, egyesével töröld — abszolút
+  útvonalra menő rekurzív törlés tilos
 - ne csinálj üres commitot vagy üres PR-t, ha nincs változás
 - felügyelet nélküli futásnál soha ne pushold közvetlenül a main-re
