@@ -108,6 +108,23 @@ python3 fetch_images.py && python3 download_images.py && python3 build.py && pyt
 
 ## 7. Publikálás
 
+Két mód van. **Ha a futás felügyelet nélküli** (havi routine, ütemezett futás),
+mindig a PR-mód a helyes — kivéve, ha a felhasználó kifejezetten mást kér.
+
+### PR-mód (felügyelet nélküli futásnál ez a kötelező)
+
+```bash
+git checkout -b frissites-$(date +%Y-%m)
+git add -A && git commit
+git push -u origin frissites-$(date +%Y-%m)
+gh pr create --title "..." --body "..."
+```
+
+A PR leírása tartalmazza tételenként: mi került be, milyen **forrás** alapján,
+mi az in-universe éve, és mit hagytál ki és miért. A main-re **ne** pusholj.
+
+### Közvetlen mód (csak ha a felhasználó jelen van és ezt kéri)
+
 ```bash
 git add -A && git commit && git push origin main
 ```
@@ -133,4 +150,5 @@ Foglald össze a felhasználónak:
 - ne szerkeszd kézzel az `index.html`-t vagy a `CONTENT.md`-t — mindkettő generált
 - ne találj ki művet, dátumot vagy in-universe évet forrás nélkül
 - ne pushold, ha a `validate.py` hibát jelez
-- ne csinálj üres commitot, ha nincs változás
+- ne csinálj üres commitot vagy üres PR-t, ha nincs változás
+- felügyelet nélküli futásnál soha ne pushold közvetlenül a main-re
