@@ -4,7 +4,7 @@ Magyar nyelvű, egyfájlos rajongói oldal: ~150 Star Wars-mű (filmek, sorozato
 videójátékok, regények, képregények) kígyózó, korszakonként témázott idővonalon,
 in-universe (BBY/ABY) sorrendben, kánon/Legends és típus szerinti szűrőkkel.
 
-**Élő oldal:** https://PLACEHOLDER
+**Élő oldal:** https://ai-pillar-studio.github.io/star-wars-idovonal/
 
 ## Felépítés
 
