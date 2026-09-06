@@ -32,9 +32,10 @@ tpl = open('index_template.html').read()
 assert '/*__DATA__*/[]' in tpl
 html = tpl.replace('/*__DATA__*/[]', json.dumps(out, ensure_ascii=False))
 
-dest_dir = '/Users/simonadamtamas/Documents/ClaudeCode/hobby projects/star-wars-idovonal'
-os.makedirs(dest_dir, exist_ok=True)
-dest = os.path.join(dest_dir, 'index.html')
+# A repo gyökere a szkripthez képest — bedrótozott abszolút útvonal helyett,
+# ami klónozott másolatban vagy más gépen mellétrafálna.
+HERE = os.path.dirname(os.path.abspath(__file__))
+dest = os.path.join(HERE, '..', 'index.html')
 open(dest, 'w').write(html)
 print('items:', len(out), '| with img:', sum(1 for o in out if o['img']),
       '| local:', sum(1 for o in out if o['img'] and not o['img'].startswith('http')))
